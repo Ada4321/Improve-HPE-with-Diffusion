@@ -1,0 +1,142 @@
+2023-07-11 12:05:28,873 INFO    StreamThr :105471 [internal.py:wandb_internal():86] W&B internal server running at pid: 105471, started at: 2023-07-11 12:05:28.873620
+2023-07-11 12:05:28,879 DEBUG   HandlerThread:105471 [handler.py:handle_request():144] handle_request: status
+2023-07-11 12:05:28,882 INFO    WriterThread:105471 [datastore.py:open_for_write():85] open: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230711_120528-lj5ky9l9/run-lj5ky9l9.wandb
+2023-07-11 12:05:28,883 DEBUG   SenderThread:105471 [sender.py:send():369] send: header
+2023-07-11 12:05:28,883 DEBUG   SenderThread:105471 [sender.py:send():369] send: run
+2023-07-11 12:05:29,765 INFO    SenderThread:105471 [dir_watcher.py:__init__():211] watching files in: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230711_120528-lj5ky9l9/files
+2023-07-11 12:05:29,766 INFO    SenderThread:105471 [sender.py:_start_run_threads():1100] run started: lj5ky9l9 with start time 1689048328.874832
+2023-07-11 12:05:29,766 DEBUG   SenderThread:105471 [sender.py:send_request():396] send_request: summary_record
+2023-07-11 12:05:29,767 INFO    SenderThread:105471 [sender.py:_save_file():1354] saving file wandb-summary.json with policy end
+2023-07-11 12:05:29,776 DEBUG   HandlerThread:105471 [handler.py:handle_request():144] handle_request: check_version
+2023-07-11 12:05:29,777 DEBUG   SenderThread:105471 [sender.py:send_request():396] send_request: check_version
+2023-07-11 12:05:29,969 DEBUG   HandlerThread:105471 [handler.py:handle_request():144] handle_request: run_start
+2023-07-11 12:05:29,974 DEBUG   HandlerThread:105471 [system_info.py:__init__():31] System info init
+2023-07-11 12:05:29,974 DEBUG   HandlerThread:105471 [system_info.py:__init__():46] System info init done
+2023-07-11 12:05:29,974 INFO    HandlerThread:105471 [system_monitor.py:start():181] Starting system monitor
+2023-07-11 12:05:29,975 INFO    HandlerThread:105471 [system_monitor.py:probe():201] Collecting system info
+2023-07-11 12:05:29,975 INFO    SystemMonitor:105471 [system_monitor.py:_start():145] Starting system asset monitoring threads
+2023-07-11 12:05:29,977 INFO    SystemMonitor:105471 [interfaces.py:start():190] Started cpu monitoring
+2023-07-11 12:05:29,978 INFO    SystemMonitor:105471 [interfaces.py:start():190] Started disk monitoring
+2023-07-11 12:05:29,979 INFO    SystemMonitor:105471 [interfaces.py:start():190] Started gpu monitoring
+2023-07-11 12:05:29,980 INFO    SystemMonitor:105471 [interfaces.py:start():190] Started memory monitoring
+2023-07-11 12:05:29,980 INFO    SystemMonitor:105471 [interfaces.py:start():190] Started network monitoring
+2023-07-11 12:05:29,990 DEBUG   HandlerThread:105471 [system_info.py:probe():195] Probing system
+2023-07-11 12:05:29,994 DEBUG   HandlerThread:105471 [gitlib.py:_init_repo():53] git repository is invalid
+2023-07-11 12:05:29,994 DEBUG   HandlerThread:105471 [system_info.py:probe():240] Probing system done
+2023-07-11 12:05:29,995 DEBUG   HandlerThread:105471 [system_monitor.py:probe():210] {'os': 'Linux-5.19.0-46-generic-x86_64-with-glibc2.35', 'python': '3.9.16', 'heartbeatAt': '2023-07-11T04:05:29.990762', 'startedAt': '2023-07-11T04:05:28.862593', 'docker': None, 'cuda': None, 'args': (), 'state': 'running', 'program': '/home/zhuhe/HPE-with-Diffusion/main.py', 'codePath': 'main.py', 'host': '415-2', 'username': 'zhuhe', 'executable': '/home/zhuhe/.conda/envs/diffhpe/bin/python', 'cpu_count': 16, 'cpu_count_logical': 24, 'cpu_freq': {'current': 4018.092958333333, 'min': 800.0, 'max': 4783.333333333333}, 'cpu_freq_per_core': [{'current': 5100.36, 'min': 800.0, 'max': 5100.0}, {'current': 5100.0, 'min': 800.0, 'max': 5100.0}, {'current': 2100.0, 'min': 800.0, 'max': 5100.0}, {'current': 5100.092, 'min': 800.0, 'max': 5100.0}, {'current': 5100.0, 'min': 800.0, 'max': 5100.0}, {'current': 5100.0, 'min': 800.0, 'max': 5100.0}, {'current': 4654.756, 'min': 800.0, 'max': 5100.0}, {'current': 5099.885, 'min': 800.0, 'max': 5100.0}, {'current': 5099.914, 'min': 800.0, 'max': 5200.0}, {'current': 5100.0, 'min': 800.0, 'max': 5200.0}, {'current': 5100.0, 'min': 800.0, 'max': 5200.0}, {'current': 5099.861, 'min': 800.0, 'max': 5200.0}, {'current': 5100.0, 'min': 800.0, 'max': 5100.0}, {'current': 5100.133, 'min': 800.0, 'max': 5100.0}, {'current': 5100.0, 'min': 800.0, 'max': 5100.0}, {'current': 5100.0, 'min': 800.0, 'max': 5100.0}, {'current': 3711.458, 'min': 800.0, 'max': 4100.0}, {'current': 2100.0, 'min': 800.0, 'max': 4100.0}, {'current': 3904.629, 'min': 800.0, 'max': 4100.0}, {'current': 2100.0, 'min': 800.0, 'max': 4100.0}, {'current': 3699.651, 'min': 800.0, 'max': 4100.0}, {'current': 2100.0, 'min': 800.0, 'max': 4100.0}, {'current': 2100.0, 'min': 800.0, 'max': 4100.0}, {'current': 2100.0, 'min': 800.0, 'max': 4100.0}], 'disk': {'total': 93.31179428100586, 'used': 0.019725799560546875}, 'gpu': 'NVIDIA GeForce RTX 3090', 'gpu_count': 2, 'gpu_devices': [{'name': 'NVIDIA GeForce RTX 3090', 'memory_total': 25769803776}, {'name': 'NVIDIA GeForce RTX 3090', 'memory_total': 25769803776}], 'memory': {'total': 31.185558319091797}}
+2023-07-11 12:05:29,995 INFO    HandlerThread:105471 [system_monitor.py:probe():211] Finished collecting system info
+2023-07-11 12:05:29,995 INFO    HandlerThread:105471 [system_monitor.py:probe():214] Publishing system info
+2023-07-11 12:05:29,995 DEBUG   HandlerThread:105471 [system_info.py:_save_pip():51] Saving list of pip packages installed into the current environment
+2023-07-11 12:05:29,995 DEBUG   HandlerThread:105471 [system_info.py:_save_pip():67] Saving pip packages done
+2023-07-11 12:05:29,995 DEBUG   HandlerThread:105471 [system_info.py:_save_conda():74] Saving list of conda packages installed into the current environment
+2023-07-11 12:05:30,772 INFO    Thread-17 :105471 [dir_watcher.py:_on_file_created():272] file/dir created: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230711_120528-lj5ky9l9/files/conda-environment.yaml
+2023-07-11 12:05:30,773 INFO    Thread-17 :105471 [dir_watcher.py:_on_file_created():272] file/dir created: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230711_120528-lj5ky9l9/files/wandb-summary.json
+2023-07-11 12:05:30,773 INFO    Thread-17 :105471 [dir_watcher.py:_on_file_created():272] file/dir created: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230711_120528-lj5ky9l9/files/requirements.txt
+2023-07-11 12:05:30,900 DEBUG   HandlerThread:105471 [system_info.py:_save_conda():86] Saving conda packages done
+2023-07-11 12:05:30,901 INFO    HandlerThread:105471 [system_monitor.py:probe():216] Finished publishing system info
+2023-07-11 12:05:30,904 DEBUG   SenderThread:105471 [sender.py:send():369] send: files
+2023-07-11 12:05:30,904 INFO    SenderThread:105471 [sender.py:_save_file():1354] saving file wandb-metadata.json with policy now
+2023-07-11 12:05:30,910 DEBUG   HandlerThread:105471 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-11 12:05:30,911 DEBUG   SenderThread:105471 [sender.py:send_request():396] send_request: stop_status
+2023-07-11 12:05:31,466 DEBUG   SenderThread:105471 [sender.py:send():369] send: telemetry
+2023-07-11 12:05:31,538 ERROR   wandb-upload_0:105471 [internal_api.py:upload_file():2192] upload_file exception https://storage.googleapis.com/wandb-production.appspot.com/ada4321/DiffHPE/lj5ky9l9/wandb-metadata.json?Expires=1689134731&GoogleAccessId=gorilla-files-url-signer-man%40wandb-production.iam.gserviceaccount.com&Signature=QJBGqk41SHP%2BvyH2JK5X4RPjMHPy660zdCJjfO0f9TYSZZmmY8SnfjvHTZ3loL8mxOGCAtf1%2FagxXWNin0SzmTkVSDogdh8r1IQ%2Fx3PST%2BalyGxN%2BBGyQBld%2FC%2FV%2FNiA7SfSyCQD4PHgeeAolUhdy1vATO2hncjp1Lu4sjru%2ByeEwKmQB60jeVG0rFwGf9Rbm2ZBJoRDitTQzIeauCYwkPmVBy1jplh4Zb%2BP3ur8POOhc7NGjl4kQW6F5Fdktj5fUudgY2DrRZcHpQwprSi3NRBK3nFUpf8V0Nnh25RecYI9rpz%2FlQdjjZxtVuXe%2Fw%2BhJ6EdjyMHCNFcWa4UebVAsg%3D%3D: 404 Client Error: Not Found for url: https://storage.googleapis.com/wandb-production.appspot.com/ada4321/DiffHPE/lj5ky9l9/wandb-metadata.json?Expires=1689134731&GoogleAccessId=gorilla-files-url-signer-man%40wandb-production.iam.gserviceaccount.com&Signature=QJBGqk41SHP%2BvyH2JK5X4RPjMHPy660zdCJjfO0f9TYSZZmmY8SnfjvHTZ3loL8mxOGCAtf1%2FagxXWNin0SzmTkVSDogdh8r1IQ%2Fx3PST%2BalyGxN%2BBGyQBld%2FC%2FV%2FNiA7SfSyCQD4PHgeeAolUhdy1vATO2hncjp1Lu4sjru%2ByeEwKmQB60jeVG0rFwGf9Rbm2ZBJoRDitTQzIeauCYwkPmVBy1jplh4Zb%2BP3ur8POOhc7NGjl4kQW6F5Fdktj5fUudgY2DrRZcHpQwprSi3NRBK3nFUpf8V0Nnh25RecYI9rpz%2FlQdjjZxtVuXe%2Fw%2BhJ6EdjyMHCNFcWa4UebVAsg%3D%3D
+2023-07-11 12:05:31,538 ERROR   wandb-upload_0:105471 [internal_api.py:upload_file():2194] upload_file request headers: {'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '3624'}
+2023-07-11 12:05:31,538 ERROR   wandb-upload_0:105471 [internal_api.py:upload_file():2196] upload_file response body: b'<!DOCTYPE html>\n<html lang=en>\n  <meta charset=utf-8>\n  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">\n  <title>Error 404 (Not Found)!!1</title>\n  <style>\n    *{margin:0;padding:0}html,code{font:15px/22px arial,sans-serif}html{background:#fff;color:#222;padding:15px}body{margin:7% auto 0;max-width:390px;min-height:180px;padding:30px 0 15px}* > body{background:url(//www.google.com/images/errors/robot.png) 100% 5px no-repeat;padding-right:205px}p{margin:11px 0 22px;overflow:hidden}ins{color:#777;text-decoration:none}a img{border:0}@media screen and (max-width:772px){body{background:none;margin-top:0;max-width:none;padding-right:0}}#logo{background:url(//www.google.com/images/branding/googlelogo/1x/googlelogo_color_150x54dp.png) no-repeat;margin-left:-5px}@media only screen and (min-resolution:192dpi){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat 0% 0%/100% 100%;-moz-border-image:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) 0}}@media only screen and (-webkit-min-device-pixel-ratio:2){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat;-webkit-background-size:100% 100%}}#logo{display:inline-block;height:54px;width:150px}\n  </style>\n  <a href=//www.google.com/><span id=logo aria-label=Google></span></a>\n  <p><b>404.</b> <ins>That\xe2\x80\x99s an error.</ins>\n  <p>The requested URL <code>/wandb-production.appspot.com/ada4321/DiffHPE/lj5ky9l9/wandb-metadata.json</code> was not found on this server.  <ins>That\xe2\x80\x99s all we know.</ins>\n'
+2023-07-11 12:05:31,770 INFO    Thread-17 :105471 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230711_120528-lj5ky9l9/files/conda-environment.yaml
+2023-07-11 12:05:31,770 INFO    Thread-17 :105471 [dir_watcher.py:_on_file_created():272] file/dir created: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230711_120528-lj5ky9l9/files/output.log
+2023-07-11 12:05:31,771 INFO    Thread-17 :105471 [dir_watcher.py:_on_file_created():272] file/dir created: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230711_120528-lj5ky9l9/files/wandb-metadata.json
+2023-07-11 12:05:32,147 ERROR   wandb-upload_0:105471 [upload_job.py:push():136] Failed to upload file: /tmp/tmpn0ts29j3wandb/f0g5znaq-wandb-metadata.json
+Traceback (most recent call last):
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/apis/normalize.py", line 41, in wrapper
+    return func(*args, **kwargs)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/lib/retry.py", line 212, in wrapped_fn
+    return retrier(*args, **kargs)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/lib/retry.py", line 131, in __call__
+    result = self._call_fn(*args, **kwargs)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/internal/internal_api.py", line 2218, in upload_file
+    wandb._sentry.reraise(e)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/analytics/sentry.py", line 146, in reraise
+    raise exc.with_traceback(sys.exc_info()[2])
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/internal/internal_api.py", line 2190, in upload_file
+    response.raise_for_status()
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/requests/models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://storage.googleapis.com/wandb-production.appspot.com/ada4321/DiffHPE/lj5ky9l9/wandb-metadata.json?Expires=1689134731&GoogleAccessId=gorilla-files-url-signer-man%40wandb-production.iam.gserviceaccount.com&Signature=QJBGqk41SHP%2BvyH2JK5X4RPjMHPy660zdCJjfO0f9TYSZZmmY8SnfjvHTZ3loL8mxOGCAtf1%2FagxXWNin0SzmTkVSDogdh8r1IQ%2Fx3PST%2BalyGxN%2BBGyQBld%2FC%2FV%2FNiA7SfSyCQD4PHgeeAolUhdy1vATO2hncjp1Lu4sjru%2ByeEwKmQB60jeVG0rFwGf9Rbm2ZBJoRDitTQzIeauCYwkPmVBy1jplh4Zb%2BP3ur8POOhc7NGjl4kQW6F5Fdktj5fUudgY2DrRZcHpQwprSi3NRBK3nFUpf8V0Nnh25RecYI9rpz%2FlQdjjZxtVuXe%2Fw%2BhJ6EdjyMHCNFcWa4UebVAsg%3D%3D
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/filesync/upload_job.py", line 127, in push
+    self._api.upload_file_retry(
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/apis/normalize.py", line 51, in wrapper
+    raise CommError(message, error)
+wandb.errors.CommError: <Response [404]>
+2023-07-11 12:05:32,376 ERROR   Thread-16 :105471 [step_upload.py:_handle_event():200] Failed to upload file: /tmp/tmpn0ts29j3wandb/f0g5znaq-wandb-metadata.json
+Traceback (most recent call last):
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/apis/normalize.py", line 41, in wrapper
+    return func(*args, **kwargs)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/lib/retry.py", line 212, in wrapped_fn
+    return retrier(*args, **kargs)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/lib/retry.py", line 131, in __call__
+    result = self._call_fn(*args, **kwargs)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/internal/internal_api.py", line 2218, in upload_file
+    wandb._sentry.reraise(e)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/analytics/sentry.py", line 146, in reraise
+    raise exc.with_traceback(sys.exc_info()[2])
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/internal/internal_api.py", line 2190, in upload_file
+    response.raise_for_status()
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/requests/models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://storage.googleapis.com/wandb-production.appspot.com/ada4321/DiffHPE/lj5ky9l9/wandb-metadata.json?Expires=1689134731&GoogleAccessId=gorilla-files-url-signer-man%40wandb-production.iam.gserviceaccount.com&Signature=QJBGqk41SHP%2BvyH2JK5X4RPjMHPy660zdCJjfO0f9TYSZZmmY8SnfjvHTZ3loL8mxOGCAtf1%2FagxXWNin0SzmTkVSDogdh8r1IQ%2Fx3PST%2BalyGxN%2BBGyQBld%2FC%2FV%2FNiA7SfSyCQD4PHgeeAolUhdy1vATO2hncjp1Lu4sjru%2ByeEwKmQB60jeVG0rFwGf9Rbm2ZBJoRDitTQzIeauCYwkPmVBy1jplh4Zb%2BP3ur8POOhc7NGjl4kQW6F5Fdktj5fUudgY2DrRZcHpQwprSi3NRBK3nFUpf8V0Nnh25RecYI9rpz%2FlQdjjZxtVuXe%2Fw%2BhJ6EdjyMHCNFcWa4UebVAsg%3D%3D
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/filesync/step_upload.py", line 288, in run_and_notify
+    self._do_upload_sync(event)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/filesync/step_upload.py", line 330, in _do_upload_sync
+    job.run()
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/filesync/upload_job.py", line 57, in run
+    self.push()
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/filesync/upload_job.py", line 127, in push
+    self._api.upload_file_retry(
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/apis/normalize.py", line 51, in wrapper
+    raise CommError(message, error)
+wandb.errors.CommError: <Response [404]>
+2023-07-11 12:05:33,768 INFO    Thread-17 :105471 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230711_120528-lj5ky9l9/files/output.log
+2023-07-11 12:05:34,471 DEBUG   HandlerThread:105471 [handler.py:handle_request():144] handle_request: status_report
+2023-07-11 12:05:35,768 INFO    Thread-17 :105471 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230711_120528-lj5ky9l9/files/output.log
+2023-07-11 12:05:39,741 DEBUG   HandlerThread:105471 [handler.py:handle_request():144] handle_request: status_report
+2023-07-11 12:05:42,380 DEBUG   SenderThread:105471 [sender.py:send():369] send: telemetry
+2023-07-11 12:05:43,771 INFO    Thread-17 :105471 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230711_120528-lj5ky9l9/files/output.log
+2023-07-11 12:05:45,510 DEBUG   HandlerThread:105471 [handler.py:handle_request():144] handle_request: status_report
+2023-07-11 12:05:45,909 DEBUG   HandlerThread:105471 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-11 12:05:45,910 DEBUG   SenderThread:105471 [sender.py:send_request():396] send_request: stop_status
+2023-07-11 12:05:49,773 INFO    Thread-17 :105471 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230711_120528-lj5ky9l9/files/output.log
+2023-07-11 12:05:50,710 DEBUG   HandlerThread:105471 [handler.py:handle_request():144] handle_request: status_report
+2023-07-11 12:05:51,773 INFO    Thread-17 :105471 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230711_120528-lj5ky9l9/files/output.log
+2023-07-11 12:05:55,711 DEBUG   HandlerThread:105471 [handler.py:handle_request():144] handle_request: status_report
+2023-07-11 12:06:00,717 DEBUG   HandlerThread:105471 [handler.py:handle_request():144] handle_request: status_report
+2023-07-11 12:06:00,910 DEBUG   HandlerThread:105471 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-11 12:06:00,973 DEBUG   SenderThread:105471 [sender.py:send_request():396] send_request: stop_status
+2023-07-11 12:06:01,776 INFO    Thread-17 :105471 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230711_120528-lj5ky9l9/files/config.yaml
+2023-07-11 12:06:06,190 DEBUG   HandlerThread:105471 [handler.py:handle_request():144] handle_request: status_report
+2023-07-11 12:06:11,190 DEBUG   HandlerThread:105471 [handler.py:handle_request():144] handle_request: status_report
+2023-07-11 12:06:15,910 DEBUG   HandlerThread:105471 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-11 12:06:15,910 DEBUG   SenderThread:105471 [sender.py:send_request():396] send_request: stop_status
+2023-07-11 12:06:17,137 DEBUG   HandlerThread:105471 [handler.py:handle_request():144] handle_request: status_report
+2023-07-11 12:06:22,138 DEBUG   HandlerThread:105471 [handler.py:handle_request():144] handle_request: status_report
+2023-07-11 12:06:27,138 DEBUG   HandlerThread:105471 [handler.py:handle_request():144] handle_request: status_report
+2023-07-11 12:06:29,980 DEBUG   SystemMonitor:105471 [system_monitor.py:_start():159] Starting system metrics aggregation loop
+2023-07-11 12:06:29,982 DEBUG   SenderThread:105471 [sender.py:send():369] send: stats
+2023-07-11 12:06:30,910 DEBUG   HandlerThread:105471 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-11 12:06:30,910 DEBUG   SenderThread:105471 [sender.py:send_request():396] send_request: stop_status
+2023-07-11 12:06:33,139 DEBUG   HandlerThread:105471 [handler.py:handle_request():144] handle_request: status_report
+2023-07-11 12:06:38,140 DEBUG   HandlerThread:105471 [handler.py:handle_request():144] handle_request: status_report
+2023-07-11 12:06:43,140 DEBUG   HandlerThread:105471 [handler.py:handle_request():144] handle_request: status_report
+2023-07-11 12:06:45,910 DEBUG   HandlerThread:105471 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-11 12:06:45,910 DEBUG   SenderThread:105471 [sender.py:send_request():396] send_request: stop_status
+2023-07-11 12:06:49,131 DEBUG   HandlerThread:105471 [handler.py:handle_request():144] handle_request: status_report
+2023-07-11 12:06:54,131 DEBUG   HandlerThread:105471 [handler.py:handle_request():144] handle_request: status_report

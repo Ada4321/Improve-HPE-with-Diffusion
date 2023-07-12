@@ -1,0 +1,120 @@
+{
+    "name": "res_diff_plus",
+    "phase": "train", // train or val
+    "gpu_ids": [
+        0
+    ],
+    "path": { //set the path
+        "log": "logs",
+        "checkpoint": "checkpoint",
+        "resume_state": null,
+        "json_dt": "/home/zhuhe/HPE-with-Diffusion/config/dt_val_results/res_diff_plus",
+        "json_gt": "/home/zhuhe/HPE-with-Diffusion/config/gt_val_results/res_diff_plus"
+        // "resume_state": "experiments/sr_ffhq_210806_204158/checkpoint/I640000_E37" //pretrain model or training state
+    },
+    "datasets": {
+        "train": {
+            "type": "mscoco",
+            "root": "/home/zhuhe/HPE-with-Diffusion/data/coco/",
+            "img_prefix": "images/train2017",
+            "ann": "annotations/person_keypoints_train2017.json",
+            "aug":{
+                "flip": true,
+                "rot_factor": 45,
+                "scale_factor": 0.25,
+                "num_joints_half_body": 3,
+                "prob_half_body": 0.3
+            }
+        },
+        "val": {
+            "type": "mscoco",
+            "root": "/home/zhuhe/HPE-with-Diffusion/data/coco/",
+            "img_prefix": "images/val2017",
+            "ann": "annotations/person_keypoints_val2017.json"
+        },
+        "test": {
+            "type": "mscoco_det",
+            "root": "/home/zhuhe/HPE-with-Diffusion/data/coco/",
+            "img_prefix": "images/val2017",
+            "det_file": "/home/zhuhe/HPE-with-Diffusion/config/test_det_rcnn.json",
+            "ann": "annotations/person_keypoints_val2017.json"
+        }
+    },
+    "data_preset": {
+        "type": "simple",
+        "sigma": 2,
+        "num_joints": 17,
+        "image_size": [256, 192],
+        "heatmap_size": [64, 48]
+    },
+    "model": {
+        "regressor": {
+            "num_layers": 50
+        },
+        "denoise_transformer": {
+            "dim": 2048,
+            "num_time_embeds": 1,
+            "num_image_embeds": 4,
+            "num_pose_embeds": 1,
+            "num_keypoints": 17,
+            "casual_transformer": {
+                "depth": 12,
+                "dim_head": 64,
+                "heads": 12,
+                "ff_mult": 4,
+                "norm_out": true,
+                "attn_dropout": 0.05,
+                "ff_dropout": 0.05,
+                "final_proj": true,
+                "normformer": true,
+                "rotary_emb": true
+            }
+        },
+        "diffusion": {
+            "condition_on_preds": true // condition on current preds from the regressor
+        },
+        "beta_schedule": { // use munual beta_schedule for acceleration
+            "train": {
+                "schedule": "linear",
+                "n_timestep": 2000,
+                "linear_start": 1e-6,
+                "linear_end": 1e-2
+            },
+            "val": {
+                "schedule": "linear",
+                "n_timestep": 2000,
+                "linear_start": 1e-6,
+                "linear_end": 1e-2
+            }
+        }
+    },
+    "loss": {
+        "type": "res_and_diff_plus",
+        "regress": "l1",
+        "diffusion": "l2"
+    },
+    "train": {
+        "batch_size": 32,
+        "end_epoch": 270,
+        "optimizer": "adam",
+        "lr": 0.001,
+        "lr_factor": 0.1,
+        "lr_step": [170, 200],
+        "val_freq": 1e6,    
+        "save_checkpoint_freq": 1e4,
+        "print_freq": 200,  
+        "ema_scheduler": {  // not used now
+            "step_start_ema": 5000,
+            "update_ema_every": 1,
+            "ema_decay": 0.9999
+        }
+    },
+    "test":{
+        "heatmap2coord": "coord",
+        "batch_size": 32
+    },
+    "wandb": {
+        "project_name": "DiffHPE",
+        "run_name": "res_diff_plus"
+    }
+}

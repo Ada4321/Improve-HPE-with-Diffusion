@@ -1,0 +1,163 @@
+{
+    "os": "Linux-5.19.0-46-generic-x86_64-with-glibc2.35",
+    "python": "3.9.16",
+    "heartbeatAt": "2023-07-10T07:13:35.588248",
+    "startedAt": "2023-07-10T07:13:34.213973",
+    "docker": null,
+    "cuda": null,
+    "args": [],
+    "state": "running",
+    "program": "/home/zhuhe/HPE-with-Diffusion/main.py",
+    "codePath": "main.py",
+    "host": "415-2",
+    "username": "zhuhe",
+    "executable": "/home/zhuhe/.conda/envs/diffhpe/bin/python",
+    "cpu_count": 16,
+    "cpu_count_logical": 24,
+    "cpu_freq": {
+        "current": 4097.904208333333,
+        "min": 800.0,
+        "max": 4783.333333333333
+    },
+    "cpu_freq_per_core": [
+        {
+            "current": 5100.0,
+            "min": 800.0,
+            "max": 5100.0
+        },
+        {
+            "current": 5103.881,
+            "min": 800.0,
+            "max": 5100.0
+        },
+        {
+            "current": 5099.861,
+            "min": 800.0,
+            "max": 5100.0
+        },
+        {
+            "current": 5100.0,
+            "min": 800.0,
+            "max": 5100.0
+        },
+        {
+            "current": 5100.0,
+            "min": 800.0,
+            "max": 5100.0
+        },
+        {
+            "current": 5103.381,
+            "min": 800.0,
+            "max": 5100.0
+        },
+        {
+            "current": 5100.0,
+            "min": 800.0,
+            "max": 5100.0
+        },
+        {
+            "current": 5100.0,
+            "min": 800.0,
+            "max": 5100.0
+        },
+        {
+            "current": 5031.383,
+            "min": 800.0,
+            "max": 5200.0
+        },
+        {
+            "current": 4902.557,
+            "min": 800.0,
+            "max": 5200.0
+        },
+        {
+            "current": 5043.722,
+            "min": 800.0,
+            "max": 5200.0
+        },
+        {
+            "current": 4992.089,
+            "min": 800.0,
+            "max": 5200.0
+        },
+        {
+            "current": 5100.0,
+            "min": 800.0,
+            "max": 5100.0
+        },
+        {
+            "current": 2100.0,
+            "min": 800.0,
+            "max": 5100.0
+        },
+        {
+            "current": 5100.0,
+            "min": 800.0,
+            "max": 5100.0
+        },
+        {
+            "current": 5101.182,
+            "min": 800.0,
+            "max": 5100.0
+        },
+        {
+            "current": 3700.427,
+            "min": 800.0,
+            "max": 4100.0
+        },
+        {
+            "current": 3871.218,
+            "min": 800.0,
+            "max": 4100.0
+        },
+        {
+            "current": 2100.0,
+            "min": 800.0,
+            "max": 4100.0
+        },
+        {
+            "current": 2100.0,
+            "min": 800.0,
+            "max": 4100.0
+        },
+        {
+            "current": 2100.0,
+            "min": 800.0,
+            "max": 4100.0
+        },
+        {
+            "current": 2100.0,
+            "min": 800.0,
+            "max": 4100.0
+        },
+        {
+            "current": 2100.0,
+            "min": 800.0,
+            "max": 4100.0
+        },
+        {
+            "current": 2100.0,
+            "min": 800.0,
+            "max": 4100.0
+        }
+    ],
+    "disk": {
+        "total": 93.31179428100586,
+        "used": 0.017917633056640625
+    },
+    "gpu": "NVIDIA GeForce RTX 3090",
+    "gpu_count": 2,
+    "gpu_devices": [
+        {
+            "name": "NVIDIA GeForce RTX 3090",
+            "memory_total": 25769803776
+        },
+        {
+            "name": "NVIDIA GeForce RTX 3090",
+            "memory_total": 25769803776
+        }
+    ],
+    "memory": {
+        "total": 31.185562133789062
+    }
+}

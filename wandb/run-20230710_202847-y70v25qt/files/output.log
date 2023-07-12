@@ -1,0 +1,129 @@
+23-07-10 20:28:49.938 - INFO:   name: sanitycheck
+  phase: train
+  gpu_ids: [1]
+  path:[
+    log: experiments/sanitycheck_230710_202846/logs
+    checkpoint: experiments/sanitycheck_230710_202846/checkpoint
+    resume_state: None
+    json_dt: /home/zhuhe/HPE-with-Diffusion/config/dt_val_results.json
+    json_gt: /home/zhuhe/HPE-with-Diffusion/config/gt_val_results.json
+    experiments_root: experiments/sanitycheck_230710_202846
+  ]
+  datasets:[
+    train:[
+      type: mscoco
+      root: /home/zhuhe/HPE-with-Diffusion/data/coco/
+      img_prefix: images/train2017
+      ann: annotations/person_keypoints_train2017.json
+      aug:[
+        flip: True
+        rot_factor: 45
+        scale_factor: 0.25
+        num_joints_half_body: 3
+        prob_half_body: 0.3
+      ]
+    ]
+    val:[
+      type: mscoco
+      root: /home/zhuhe/HPE-with-Diffusion/data/coco/
+      img_prefix: images/val2017
+      ann: annotations/person_keypoints_val2017.json
+      data_len: 3
+    ]
+    test:[
+      type: mscoco_det
+      root: /home/zhuhe/HPE-with-Diffusion/data/coco/
+      img_prefix: images/val2017
+      det_file: /home/zhuhe/HPE-with-Diffusion/config/test_det_rcnn.json
+      ann: annotations/person_keypoints_val2017.json
+    ]
+  ]
+  data_preset:[
+    type: simple
+    sigma: 2
+    num_joints: 17
+    image_size: [256, 192]
+    heatmap_size: [64, 48]
+  ]
+  model:[
+    regressor:[
+      num_layers: 50
+    ]
+    denoise_transformer:[
+      dim: 2048
+      num_time_embeds: 1
+      num_image_embeds: 4
+      num_pose_embeds: 1
+      num_keypoints: 17
+      casual_transformer:[
+        depth: 12
+        dim_head: 64
+        heads: 12
+        ff_mult: 4
+        norm_out: True
+        attn_dropout: 0.05
+        ff_dropout: 0.05
+        final_proj: True
+        normformer: True
+        rotary_emb: True
+      ]
+    ]
+    diffusion:[
+      condition_on_preds: True
+    ]
+    beta_schedule:[
+      train:[
+        schedule: linear
+        n_timestep: 2000
+        linear_start: 1e-06
+        linear_end: 0.01
+      ]
+      val:[
+        schedule: linear
+        n_timestep: 2000
+        linear_start: 1e-06
+        linear_end: 0.01
+      ]
+    ]
+  ]
+  loss:[
+    type: sanity_check
+    regress: l1
+  ]
+  train:[
+    batch_size: 32
+    end_epoch: 270
+    optimizer: adam
+    lr: 0.001
+    lr_factor: 0.1
+    lr_step: [170, 200]
+    val_freq: 1
+    save_checkpoint_freq: 5000
+    print_freq: 50
+    ema_scheduler:[
+      step_start_ema: 5000
+      update_ema_every: 1
+      ema_decay: 0.9999
+    ]
+  ]
+  test:[
+    heatmap2coord: coord
+    batch_size: 32
+  ]
+  wandb:[
+    project_name: DiffHPE
+    run_name: sanitycheck
+  ]
+  distributed: False
+loading annotations into memory...
+Done (t=3.24s)
+creating index...
+index created!
+loading annotations into memory...
+Done (t=0.08s)
+creating index...
+index created!
+23-07-10 20:29:00.408 - INFO: Initial Dataset Finished
+/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/torchvision/models/_utils.py:208: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=ResNet50_Weights.IMAGENET1K_V1`. You can also use `weights=ResNet50_Weights.DEFAULT` to get the most up-to-date weights.

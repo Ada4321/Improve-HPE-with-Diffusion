@@ -1,0 +1,1245 @@
+2023-07-10 21:12:39,325 INFO    StreamThr :42196 [internal.py:wandb_internal():86] W&B internal server running at pid: 42196, started at: 2023-07-10 21:12:39.325257
+2023-07-10 21:12:39,328 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status
+2023-07-10 21:12:39,330 INFO    WriterThread:42196 [datastore.py:open_for_write():85] open: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/run-3mrk6qb1.wandb
+2023-07-10 21:12:39,332 DEBUG   SenderThread:42196 [sender.py:send():369] send: header
+2023-07-10 21:12:39,332 DEBUG   SenderThread:42196 [sender.py:send():369] send: run
+2023-07-10 21:12:40,242 INFO    SenderThread:42196 [dir_watcher.py:__init__():211] watching files in: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files
+2023-07-10 21:12:40,242 INFO    SenderThread:42196 [sender.py:_start_run_threads():1100] run started: 3mrk6qb1 with start time 1688994759.3244
+2023-07-10 21:12:40,243 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: summary_record
+2023-07-10 21:12:40,243 INFO    SenderThread:42196 [sender.py:_save_file():1354] saving file wandb-summary.json with policy end
+2023-07-10 21:12:40,248 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: check_version
+2023-07-10 21:12:40,248 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: check_version
+2023-07-10 21:12:40,447 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: run_start
+2023-07-10 21:12:40,457 DEBUG   HandlerThread:42196 [system_info.py:__init__():31] System info init
+2023-07-10 21:12:40,457 DEBUG   HandlerThread:42196 [system_info.py:__init__():46] System info init done
+2023-07-10 21:12:40,457 INFO    HandlerThread:42196 [system_monitor.py:start():181] Starting system monitor
+2023-07-10 21:12:40,460 INFO    HandlerThread:42196 [system_monitor.py:probe():201] Collecting system info
+2023-07-10 21:12:40,461 INFO    SystemMonitor:42196 [system_monitor.py:_start():145] Starting system asset monitoring threads
+2023-07-10 21:12:40,466 INFO    SystemMonitor:42196 [interfaces.py:start():190] Started cpu monitoring
+2023-07-10 21:12:40,475 INFO    SystemMonitor:42196 [interfaces.py:start():190] Started disk monitoring
+2023-07-10 21:12:40,478 INFO    SystemMonitor:42196 [interfaces.py:start():190] Started gpu monitoring
+2023-07-10 21:12:40,480 INFO    SystemMonitor:42196 [interfaces.py:start():190] Started memory monitoring
+2023-07-10 21:12:40,483 INFO    SystemMonitor:42196 [interfaces.py:start():190] Started network monitoring
+2023-07-10 21:12:40,494 DEBUG   HandlerThread:42196 [system_info.py:probe():195] Probing system
+2023-07-10 21:12:40,498 DEBUG   HandlerThread:42196 [gitlib.py:_init_repo():53] git repository is invalid
+2023-07-10 21:12:40,498 DEBUG   HandlerThread:42196 [system_info.py:probe():240] Probing system done
+2023-07-10 21:12:40,498 DEBUG   HandlerThread:42196 [system_monitor.py:probe():210] {'os': 'Linux-5.19.0-46-generic-x86_64-with-glibc2.35', 'python': '3.9.16', 'heartbeatAt': '2023-07-10T13:12:40.494665', 'startedAt': '2023-07-10T13:12:39.316079', 'docker': None, 'cuda': None, 'args': (), 'state': 'running', 'program': '/home/zhuhe/HPE-with-Diffusion/main.py', 'codePath': 'main.py', 'host': '415-2', 'username': 'zhuhe', 'executable': '/home/zhuhe/.conda/envs/diffhpe/bin/python', 'cpu_count': 16, 'cpu_count_logical': 24, 'cpu_freq': {'current': 1539.3563333333332, 'min': 800.0, 'max': 4783.333333333333}, 'cpu_freq_per_core': [{'current': 1300.0, 'min': 800.0, 'max': 5100.0}, {'current': 2100.0, 'min': 800.0, 'max': 5100.0}, {'current': 1532.699, 'min': 800.0, 'max': 5100.0}, {'current': 1100.813, 'min': 800.0, 'max': 5100.0}, {'current': 1100.0, 'min': 800.0, 'max': 5100.0}, {'current': 2100.0, 'min': 800.0, 'max': 5100.0}, {'current': 1157.564, 'min': 800.0, 'max': 5100.0}, {'current': 2100.0, 'min': 800.0, 'max': 5100.0}, {'current': 1644.728, 'min': 800.0, 'max': 5200.0}, {'current': 2100.0, 'min': 800.0, 'max': 5200.0}, {'current': 1584.522, 'min': 800.0, 'max': 5200.0}, {'current': 2100.0, 'min': 800.0, 'max': 5200.0}, {'current': 1484.057, 'min': 800.0, 'max': 5100.0}, {'current': 2100.0, 'min': 800.0, 'max': 5100.0}, {'current': 1300.0, 'min': 800.0, 'max': 5100.0}, {'current': 1100.789, 'min': 800.0, 'max': 5100.0}, {'current': 1357.157, 'min': 800.0, 'max': 4100.0}, {'current': 1098.272, 'min': 800.0, 'max': 4100.0}, {'current': 869.446, 'min': 800.0, 'max': 4100.0}, {'current': 2100.0, 'min': 800.0, 'max': 4100.0}, {'current': 2100.0, 'min': 800.0, 'max': 4100.0}, {'current': 2100.0, 'min': 800.0, 'max': 4100.0}, {'current': 2100.0, 'min': 800.0, 'max': 4100.0}, {'current': 2100.0, 'min': 800.0, 'max': 4100.0}], 'disk': {'total': 93.31179428100586, 'used': 0.018665313720703125}, 'gpu': 'NVIDIA GeForce RTX 3090', 'gpu_count': 2, 'gpu_devices': [{'name': 'NVIDIA GeForce RTX 3090', 'memory_total': 25769803776}, {'name': 'NVIDIA GeForce RTX 3090', 'memory_total': 25769803776}], 'memory': {'total': 31.185558319091797}}
+2023-07-10 21:12:40,499 INFO    HandlerThread:42196 [system_monitor.py:probe():211] Finished collecting system info
+2023-07-10 21:12:40,499 INFO    HandlerThread:42196 [system_monitor.py:probe():214] Publishing system info
+2023-07-10 21:12:40,499 DEBUG   HandlerThread:42196 [system_info.py:_save_pip():51] Saving list of pip packages installed into the current environment
+2023-07-10 21:12:40,499 DEBUG   HandlerThread:42196 [system_info.py:_save_pip():67] Saving pip packages done
+2023-07-10 21:12:40,499 DEBUG   HandlerThread:42196 [system_info.py:_save_conda():74] Saving list of conda packages installed into the current environment
+2023-07-10 21:12:41,245 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_created():272] file/dir created: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/wandb-summary.json
+2023-07-10 21:12:41,245 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_created():272] file/dir created: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/requirements.txt
+2023-07-10 21:12:41,245 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_created():272] file/dir created: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/conda-environment.yaml
+2023-07-10 21:12:41,373 DEBUG   HandlerThread:42196 [system_info.py:_save_conda():86] Saving conda packages done
+2023-07-10 21:12:41,375 INFO    HandlerThread:42196 [system_monitor.py:probe():216] Finished publishing system info
+2023-07-10 21:12:41,377 DEBUG   SenderThread:42196 [sender.py:send():369] send: files
+2023-07-10 21:12:41,378 INFO    SenderThread:42196 [sender.py:_save_file():1354] saving file wandb-metadata.json with policy now
+2023-07-10 21:12:41,383 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:12:41,384 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:12:41,872 ERROR   wandb-upload_0:42196 [internal_api.py:upload_file():2192] upload_file exception https://storage.googleapis.com/wandb-production.appspot.com/ada4321/DiffHPE/3mrk6qb1/wandb-metadata.json?Expires=1689081161&GoogleAccessId=gorilla-files-url-signer-man%40wandb-production.iam.gserviceaccount.com&Signature=gvREcIVy8dYQLMe%2BKfyydKepeq%2FLYF2y11qOA1ETIdpG%2FOi22L91PeYUYiHx14kMEQf5MJAgCcX2Mmjhcn0BvYHBC9fwJtykblG0fFe4EKMuU49dCdlUKsIvS8OqE7e8oBd5k6WjnF%2Bpv8JMgsS5xFowoZbwgrFqZ58bRAshbZ7SJMeMCqh4VeQtu3wrUg0EMan4U8dxX0W7fvyyoP03e8W0N9iLOFDADrRtJLyC1pmnpkcsCOftkrSGEML6g7DqYSBce%2BUC1Eag%2BONN2VSZ0QyWBQEdVd0bwOuIsYnlAyXWAe8XCFKhn1i6Hbg%2B8dxbFgJPmTkdkd8cT5dhNKACgg%3D%3D: 404 Client Error: Not Found for url: https://storage.googleapis.com/wandb-production.appspot.com/ada4321/DiffHPE/3mrk6qb1/wandb-metadata.json?Expires=1689081161&GoogleAccessId=gorilla-files-url-signer-man%40wandb-production.iam.gserviceaccount.com&Signature=gvREcIVy8dYQLMe%2BKfyydKepeq%2FLYF2y11qOA1ETIdpG%2FOi22L91PeYUYiHx14kMEQf5MJAgCcX2Mmjhcn0BvYHBC9fwJtykblG0fFe4EKMuU49dCdlUKsIvS8OqE7e8oBd5k6WjnF%2Bpv8JMgsS5xFowoZbwgrFqZ58bRAshbZ7SJMeMCqh4VeQtu3wrUg0EMan4U8dxX0W7fvyyoP03e8W0N9iLOFDADrRtJLyC1pmnpkcsCOftkrSGEML6g7DqYSBce%2BUC1Eag%2BONN2VSZ0QyWBQEdVd0bwOuIsYnlAyXWAe8XCFKhn1i6Hbg%2B8dxbFgJPmTkdkd8cT5dhNKACgg%3D%3D
+2023-07-10 21:12:41,872 ERROR   wandb-upload_0:42196 [internal_api.py:upload_file():2194] upload_file request headers: {'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '3625'}
+2023-07-10 21:12:41,872 ERROR   wandb-upload_0:42196 [internal_api.py:upload_file():2196] upload_file response body: b'<!DOCTYPE html>\n<html lang=en>\n  <meta charset=utf-8>\n  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">\n  <title>Error 404 (Not Found)!!1</title>\n  <style>\n    *{margin:0;padding:0}html,code{font:15px/22px arial,sans-serif}html{background:#fff;color:#222;padding:15px}body{margin:7% auto 0;max-width:390px;min-height:180px;padding:30px 0 15px}* > body{background:url(//www.google.com/images/errors/robot.png) 100% 5px no-repeat;padding-right:205px}p{margin:11px 0 22px;overflow:hidden}ins{color:#777;text-decoration:none}a img{border:0}@media screen and (max-width:772px){body{background:none;margin-top:0;max-width:none;padding-right:0}}#logo{background:url(//www.google.com/images/branding/googlelogo/1x/googlelogo_color_150x54dp.png) no-repeat;margin-left:-5px}@media only screen and (min-resolution:192dpi){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat 0% 0%/100% 100%;-moz-border-image:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) 0}}@media only screen and (-webkit-min-device-pixel-ratio:2){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat;-webkit-background-size:100% 100%}}#logo{display:inline-block;height:54px;width:150px}\n  </style>\n  <a href=//www.google.com/><span id=logo aria-label=Google></span></a>\n  <p><b>404.</b> <ins>That\xe2\x80\x99s an error.</ins>\n  <p>The requested URL <code>/wandb-production.appspot.com/ada4321/DiffHPE/3mrk6qb1/wandb-metadata.json</code> was not found on this server.  <ins>That\xe2\x80\x99s all we know.</ins>\n'
+2023-07-10 21:12:41,924 DEBUG   SenderThread:42196 [sender.py:send():369] send: telemetry
+2023-07-10 21:12:42,245 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/conda-environment.yaml
+2023-07-10 21:12:42,245 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_created():272] file/dir created: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/wandb-metadata.json
+2023-07-10 21:12:42,246 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_created():272] file/dir created: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:12:43,878 ERROR   wandb-upload_0:42196 [upload_job.py:push():136] Failed to upload file: /tmp/tmp4fhc20agwandb/itxzpmzw-wandb-metadata.json
+Traceback (most recent call last):
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/apis/normalize.py", line 41, in wrapper
+    return func(*args, **kwargs)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/lib/retry.py", line 212, in wrapped_fn
+    return retrier(*args, **kargs)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/lib/retry.py", line 131, in __call__
+    result = self._call_fn(*args, **kwargs)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/internal/internal_api.py", line 2218, in upload_file
+    wandb._sentry.reraise(e)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/analytics/sentry.py", line 146, in reraise
+    raise exc.with_traceback(sys.exc_info()[2])
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/internal/internal_api.py", line 2190, in upload_file
+    response.raise_for_status()
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/requests/models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://storage.googleapis.com/wandb-production.appspot.com/ada4321/DiffHPE/3mrk6qb1/wandb-metadata.json?Expires=1689081161&GoogleAccessId=gorilla-files-url-signer-man%40wandb-production.iam.gserviceaccount.com&Signature=gvREcIVy8dYQLMe%2BKfyydKepeq%2FLYF2y11qOA1ETIdpG%2FOi22L91PeYUYiHx14kMEQf5MJAgCcX2Mmjhcn0BvYHBC9fwJtykblG0fFe4EKMuU49dCdlUKsIvS8OqE7e8oBd5k6WjnF%2Bpv8JMgsS5xFowoZbwgrFqZ58bRAshbZ7SJMeMCqh4VeQtu3wrUg0EMan4U8dxX0W7fvyyoP03e8W0N9iLOFDADrRtJLyC1pmnpkcsCOftkrSGEML6g7DqYSBce%2BUC1Eag%2BONN2VSZ0QyWBQEdVd0bwOuIsYnlAyXWAe8XCFKhn1i6Hbg%2B8dxbFgJPmTkdkd8cT5dhNKACgg%3D%3D
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/filesync/upload_job.py", line 127, in push
+    self._api.upload_file_retry(
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/apis/normalize.py", line 51, in wrapper
+    raise CommError(message, error)
+wandb.errors.CommError: <Response [404]>
+2023-07-10 21:12:44,246 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:12:44,579 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:12:45,885 ERROR   Thread-16 :42196 [step_upload.py:_handle_event():200] Failed to upload file: /tmp/tmp4fhc20agwandb/itxzpmzw-wandb-metadata.json
+Traceback (most recent call last):
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/apis/normalize.py", line 41, in wrapper
+    return func(*args, **kwargs)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/lib/retry.py", line 212, in wrapped_fn
+    return retrier(*args, **kargs)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/lib/retry.py", line 131, in __call__
+    result = self._call_fn(*args, **kwargs)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/internal/internal_api.py", line 2218, in upload_file
+    wandb._sentry.reraise(e)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/analytics/sentry.py", line 146, in reraise
+    raise exc.with_traceback(sys.exc_info()[2])
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/internal/internal_api.py", line 2190, in upload_file
+    response.raise_for_status()
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/requests/models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://storage.googleapis.com/wandb-production.appspot.com/ada4321/DiffHPE/3mrk6qb1/wandb-metadata.json?Expires=1689081161&GoogleAccessId=gorilla-files-url-signer-man%40wandb-production.iam.gserviceaccount.com&Signature=gvREcIVy8dYQLMe%2BKfyydKepeq%2FLYF2y11qOA1ETIdpG%2FOi22L91PeYUYiHx14kMEQf5MJAgCcX2Mmjhcn0BvYHBC9fwJtykblG0fFe4EKMuU49dCdlUKsIvS8OqE7e8oBd5k6WjnF%2Bpv8JMgsS5xFowoZbwgrFqZ58bRAshbZ7SJMeMCqh4VeQtu3wrUg0EMan4U8dxX0W7fvyyoP03e8W0N9iLOFDADrRtJLyC1pmnpkcsCOftkrSGEML6g7DqYSBce%2BUC1Eag%2BONN2VSZ0QyWBQEdVd0bwOuIsYnlAyXWAe8XCFKhn1i6Hbg%2B8dxbFgJPmTkdkd8cT5dhNKACgg%3D%3D
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/filesync/step_upload.py", line 288, in run_and_notify
+    self._do_upload_sync(event)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/filesync/step_upload.py", line 330, in _do_upload_sync
+    job.run()
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/filesync/upload_job.py", line 57, in run
+    self.push()
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/filesync/upload_job.py", line 127, in push
+    self._api.upload_file_retry(
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/apis/normalize.py", line 51, in wrapper
+    raise CommError(message, error)
+wandb.errors.CommError: <Response [404]>
+2023-07-10 21:12:46,247 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:12:49,781 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:12:51,860 DEBUG   SenderThread:42196 [sender.py:send():369] send: telemetry
+2023-07-10 21:12:52,248 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:12:54,249 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:12:54,927 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:12:56,383 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:12:56,384 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:12:58,157 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: partial_history
+2023-07-10 21:12:58,250 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:13:00,253 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:13:00,316 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:13:05,317 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:13:10,324 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:13:11,261 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/config.yaml
+2023-07-10 21:13:11,386 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:13:11,388 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:13:15,622 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:13:18,266 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:13:20,266 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:13:20,646 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:13:22,267 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:13:24,268 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:13:25,698 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:13:26,268 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:13:26,384 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:13:26,384 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:13:28,269 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:13:30,269 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:13:30,706 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:13:32,270 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:13:34,271 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:13:36,002 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:13:36,271 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:13:38,272 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:13:40,273 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:13:40,484 DEBUG   SystemMonitor:42196 [system_monitor.py:_start():159] Starting system metrics aggregation loop
+2023-07-10 21:13:40,485 DEBUG   SenderThread:42196 [sender.py:send():369] send: stats
+2023-07-10 21:13:41,145 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:13:41,384 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:13:41,384 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:13:42,273 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:13:44,274 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:13:46,158 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:13:46,274 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:13:48,275 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:13:50,276 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:13:51,183 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:13:52,277 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:13:54,277 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:13:56,278 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:13:56,384 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:13:56,384 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:13:56,610 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:13:58,278 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:14:00,279 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:14:01,631 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:14:02,280 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:14:04,280 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:14:06,281 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:14:06,945 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:14:08,281 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:14:10,282 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:14:10,486 DEBUG   SenderThread:42196 [sender.py:send():369] send: stats
+2023-07-10 21:14:11,384 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:14:11,384 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:14:12,121 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:14:12,283 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:14:14,283 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:14:16,284 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:14:17,379 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:14:18,284 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:14:20,285 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:14:22,286 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:14:22,443 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:14:24,286 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:14:26,287 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:14:26,384 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:14:26,385 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:14:27,449 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:14:28,287 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:14:30,288 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:14:32,289 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:14:32,741 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:14:34,289 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:14:36,292 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:14:38,011 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:14:39,292 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:14:40,487 DEBUG   SenderThread:42196 [sender.py:send():369] send: stats
+2023-07-10 21:14:41,293 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:14:41,384 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:14:41,384 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:14:43,084 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:14:43,294 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:14:45,294 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:14:47,295 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:14:48,364 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:14:49,295 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:14:51,296 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:14:53,297 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:14:53,392 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:14:55,297 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:14:56,384 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:14:56,385 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:14:57,298 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:14:58,566 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:14:59,299 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:15:01,299 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:15:03,300 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:15:03,593 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:15:05,300 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:15:07,301 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:15:08,606 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:15:09,302 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:15:10,487 DEBUG   SenderThread:42196 [sender.py:send():369] send: stats
+2023-07-10 21:15:11,302 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:15:11,385 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:15:11,385 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:15:13,303 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:15:13,917 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:15:15,303 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:15:17,304 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:15:18,922 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:15:19,305 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:15:21,305 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:15:23,306 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:15:23,926 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:15:25,306 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:15:26,385 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:15:26,385 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:15:27,307 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:15:29,014 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:15:29,308 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:15:31,308 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:15:33,309 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:15:34,252 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:15:35,309 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:15:37,310 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:15:39,269 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:15:39,311 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:15:40,488 DEBUG   SenderThread:42196 [sender.py:send():369] send: stats
+2023-07-10 21:15:41,312 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:15:41,385 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:15:41,385 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:15:43,313 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:15:44,302 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:15:45,313 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:15:47,314 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:15:49,314 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:15:49,369 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:15:51,315 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:15:53,316 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:15:54,490 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:15:55,316 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:15:56,385 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:15:56,385 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:15:57,317 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:15:59,317 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:15:59,805 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:16:01,318 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:16:03,319 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:16:04,842 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:16:05,319 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:16:07,320 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:16:09,320 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:16:10,146 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:16:10,490 DEBUG   SenderThread:42196 [sender.py:send():369] send: stats
+2023-07-10 21:16:11,321 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:16:11,385 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:16:11,385 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:16:13,322 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:16:15,322 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:16:15,421 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:16:17,323 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:16:19,323 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:16:20,493 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:16:21,324 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:16:23,325 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:16:25,325 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:16:25,712 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:16:26,385 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:16:26,386 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:16:27,326 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:16:29,327 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:16:30,815 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:16:31,327 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:16:33,328 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:16:35,328 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:16:35,857 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:16:37,329 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:16:39,330 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:16:40,490 DEBUG   SenderThread:42196 [sender.py:send():369] send: stats
+2023-07-10 21:16:40,925 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:16:41,331 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:16:41,385 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:16:41,385 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:16:43,331 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:16:45,332 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:16:46,085 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:16:47,332 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:16:49,333 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:16:51,097 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:16:51,334 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:16:53,334 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:16:55,335 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:16:56,266 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:16:56,385 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:16:56,386 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:16:57,336 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:16:59,336 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:17:01,337 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:17:01,389 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:17:03,337 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:17:05,338 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:17:06,519 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:17:07,339 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:17:09,339 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:17:10,491 DEBUG   SenderThread:42196 [sender.py:send():369] send: stats
+2023-07-10 21:17:11,340 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:17:11,385 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:17:11,386 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:17:11,617 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:17:13,341 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:17:15,342 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:17:16,932 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:17:17,342 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:17:19,343 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:17:21,344 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:17:21,970 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:17:23,345 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:17:25,345 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:17:26,386 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:17:26,386 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:17:27,235 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:17:27,346 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:17:29,346 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:17:31,347 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:17:32,254 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:17:33,348 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:17:35,348 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:17:37,349 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:17:37,573 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:17:39,349 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:17:40,492 DEBUG   SenderThread:42196 [sender.py:send():369] send: stats
+2023-07-10 21:17:41,350 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:17:41,386 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:17:41,386 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:17:42,578 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:17:43,351 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:17:45,351 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:17:47,352 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:17:47,634 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:17:49,353 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:17:51,353 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:17:52,657 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:17:53,354 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:17:55,355 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:17:56,386 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:17:56,386 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:17:57,355 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:17:57,962 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:17:59,356 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:18:01,356 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:18:03,132 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:18:03,357 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:18:05,358 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:18:07,358 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:18:08,324 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:18:09,359 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:18:10,493 DEBUG   SenderThread:42196 [sender.py:send():369] send: stats
+2023-07-10 21:18:11,359 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:18:11,386 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:18:11,387 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:18:13,358 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:18:13,360 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:18:15,361 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:18:17,361 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:18:18,426 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:18:19,362 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:18:21,362 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:18:23,363 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:18:23,720 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:18:25,364 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:18:26,386 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:18:26,386 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:18:27,364 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:18:28,840 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:18:29,365 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:18:31,366 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:18:33,366 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:18:34,105 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:18:35,367 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:18:37,367 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:18:39,201 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:18:39,368 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:18:40,494 DEBUG   SenderThread:42196 [sender.py:send():369] send: stats
+2023-07-10 21:18:41,369 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:18:41,386 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:18:41,386 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:18:43,369 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:18:44,278 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:18:45,370 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:18:47,370 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:18:49,371 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:18:49,630 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:18:51,372 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:18:53,372 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:18:54,653 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:18:55,373 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:18:56,386 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:18:56,386 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:18:57,373 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:18:59,374 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:18:59,857 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:19:01,374 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:19:03,375 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:19:05,122 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:19:05,376 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:19:07,377 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:19:09,377 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:19:10,180 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:19:10,495 DEBUG   SenderThread:42196 [sender.py:send():369] send: stats
+2023-07-10 21:19:11,378 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:19:11,386 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:19:11,387 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:19:13,378 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:19:15,379 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:19:15,457 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:19:17,380 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:19:19,380 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:19:20,781 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:19:21,381 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:19:23,381 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:19:25,382 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:19:25,818 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:19:26,386 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:19:26,387 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:19:27,382 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:19:29,383 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:19:30,839 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:19:31,384 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:19:33,384 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:19:35,385 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:19:36,016 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:19:37,386 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:19:39,386 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:19:40,496 DEBUG   SenderThread:42196 [sender.py:send():369] send: stats
+2023-07-10 21:19:41,174 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:19:41,387 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:19:41,387 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:19:41,388 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:19:43,387 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:19:45,388 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:19:46,179 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:19:47,389 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:19:49,389 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:19:51,342 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:19:51,390 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:19:53,390 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:19:55,391 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:19:56,387 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:19:56,387 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:19:56,618 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:19:57,392 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:19:59,392 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:20:01,393 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:20:01,753 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:20:03,393 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:20:05,394 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:20:06,762 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:20:07,395 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:20:09,395 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:20:10,497 DEBUG   SenderThread:42196 [sender.py:send():369] send: stats
+2023-07-10 21:20:11,387 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:20:11,387 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:20:11,396 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:20:11,962 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:20:13,396 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:20:15,397 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:20:17,066 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:20:17,398 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:20:19,398 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:20:21,399 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:20:22,201 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:20:23,400 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:20:25,400 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:20:26,387 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:20:26,387 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:20:27,401 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:20:27,459 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:20:29,401 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:20:31,402 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:20:32,785 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:20:33,403 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:20:35,403 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:20:37,404 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:20:38,100 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:20:39,404 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:20:40,498 DEBUG   SenderThread:42196 [sender.py:send():369] send: stats
+2023-07-10 21:20:41,387 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:20:41,387 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:20:41,405 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:20:43,301 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:20:43,405 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:20:45,406 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:20:47,407 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:20:48,323 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:20:49,407 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:20:51,408 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:20:53,377 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:20:53,408 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:20:55,410 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:20:56,387 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:20:56,388 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:20:57,410 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:20:58,685 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:20:59,411 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:21:01,411 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:21:03,412 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:21:03,813 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:21:05,413 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:21:07,414 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:21:08,859 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:21:09,414 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:21:10,499 DEBUG   SenderThread:42196 [sender.py:send():369] send: stats
+2023-07-10 21:21:11,387 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:21:11,388 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:21:11,415 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:21:13,416 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:21:13,879 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:21:15,417 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:21:17,417 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:21:18,944 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:21:19,418 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:21:21,419 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:21:23,419 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:21:24,130 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:21:25,420 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:21:26,388 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:21:26,388 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:21:27,422 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:21:29,422 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:21:29,425 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:21:31,423 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:21:33,424 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:21:34,467 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:21:35,424 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:21:37,425 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:21:39,426 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:21:39,657 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:21:40,500 DEBUG   SenderThread:42196 [sender.py:send():369] send: stats
+2023-07-10 21:21:41,388 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:21:41,388 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:21:41,427 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:21:43,428 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:21:44,717 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:21:45,429 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:21:47,429 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:21:49,430 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:21:49,725 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:21:51,431 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:21:53,431 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:21:54,756 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:21:55,432 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:21:56,388 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:21:56,388 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:21:57,433 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:21:59,434 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:21:59,800 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:22:01,434 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:22:03,435 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:22:04,993 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:22:05,436 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:22:07,436 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:22:09,437 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:22:10,048 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:22:10,500 DEBUG   SenderThread:42196 [sender.py:send():369] send: stats
+2023-07-10 21:22:11,388 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:22:11,389 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:22:11,438 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:22:13,439 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:22:15,144 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:22:15,439 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:22:17,440 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:22:19,443 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:22:20,330 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:22:22,444 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:22:24,445 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:22:25,512 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:22:26,388 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:22:26,389 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:22:26,446 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:22:28,447 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:22:30,447 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:22:30,610 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:22:32,448 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:22:34,449 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:22:35,754 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:22:36,450 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:22:38,450 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:22:40,451 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:22:40,501 DEBUG   SenderThread:42196 [sender.py:send():369] send: stats
+2023-07-10 21:22:40,845 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:22:41,388 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:22:41,389 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:22:42,452 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:22:44,452 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:22:46,106 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:22:46,453 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:22:48,454 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:22:50,454 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:22:51,139 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:22:52,455 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:22:54,456 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:22:56,304 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:22:56,388 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:22:56,389 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:22:56,456 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:22:58,457 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:23:00,458 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:23:01,497 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:23:02,459 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:23:04,460 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:23:06,460 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:23:06,501 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:23:08,461 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:23:10,462 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:23:10,502 DEBUG   SenderThread:42196 [sender.py:send():369] send: stats
+2023-07-10 21:23:11,389 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:23:11,389 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:23:11,605 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:23:12,462 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:23:14,463 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:23:16,464 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:23:16,761 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:23:18,464 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:23:20,465 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:23:21,776 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:23:22,466 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:23:24,467 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:23:26,389 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:23:26,389 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:23:26,467 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:23:26,824 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:23:28,468 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:23:30,469 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:23:31,995 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:23:32,469 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:23:34,470 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:23:36,471 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:23:37,005 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:23:38,471 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:23:40,472 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:23:40,503 DEBUG   SenderThread:42196 [sender.py:send():369] send: stats
+2023-07-10 21:23:41,389 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:23:41,389 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:23:42,376 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:23:42,473 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:23:44,473 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:23:46,474 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:23:47,603 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:23:48,475 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:23:50,476 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:23:52,477 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:23:52,820 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:23:54,478 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:23:56,389 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:23:56,389 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:23:56,479 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:23:58,129 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:23:58,479 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:24:00,480 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:24:02,481 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:24:03,191 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:24:04,481 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:24:06,482 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:24:08,406 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:24:08,483 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:24:10,483 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:24:10,504 DEBUG   SenderThread:42196 [sender.py:send():369] send: stats
+2023-07-10 21:24:11,389 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:24:11,389 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:24:12,484 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:24:13,774 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:24:14,485 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:24:16,485 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:24:18,486 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:24:18,777 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:24:20,487 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:24:22,487 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:24:24,118 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:24:24,488 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:24:26,389 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:24:26,389 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:24:26,489 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:24:28,490 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:24:29,318 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:24:30,491 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:24:32,492 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:24:34,437 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:24:34,493 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:24:36,493 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:24:38,494 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:24:39,448 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:24:40,494 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:24:40,505 DEBUG   SenderThread:42196 [sender.py:send():369] send: stats
+2023-07-10 21:24:41,389 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:24:41,389 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:24:42,495 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:24:44,496 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:24:44,677 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:24:46,496 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:24:48,497 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:24:49,969 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:24:50,498 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:24:52,499 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:24:54,499 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:24:55,068 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:24:56,389 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:24:56,390 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:24:56,500 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:24:58,500 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:25:00,129 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:25:00,501 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:25:02,502 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:25:04,502 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:25:05,189 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:25:06,503 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:25:08,504 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:25:10,225 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:25:10,504 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:25:10,506 DEBUG   SenderThread:42196 [sender.py:send():369] send: stats
+2023-07-10 21:25:11,389 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:25:11,390 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:25:12,505 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:25:14,506 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:25:15,417 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:25:16,506 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:25:18,507 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:25:20,435 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:25:20,507 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:25:22,509 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:25:24,510 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:25:25,659 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:25:26,390 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:25:26,390 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:25:26,510 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:25:28,511 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:25:30,511 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:25:30,818 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:25:32,512 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:25:34,513 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:25:36,091 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:25:36,514 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:25:38,514 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:25:40,507 DEBUG   SenderThread:42196 [sender.py:send():369] send: stats
+2023-07-10 21:25:40,515 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:25:41,117 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:25:41,390 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:25:41,390 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:25:42,516 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:25:44,516 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:25:46,138 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:25:46,517 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:25:48,517 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:25:50,518 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:25:51,325 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:25:52,519 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:25:54,519 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:25:56,367 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:25:56,390 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:25:56,390 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:25:56,520 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:25:58,520 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:26:00,521 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:26:01,374 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:26:02,522 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:26:04,522 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:26:06,508 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:26:06,523 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:26:08,523 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:26:10,508 DEBUG   SenderThread:42196 [sender.py:send():369] send: stats
+2023-07-10 21:26:10,524 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:26:11,390 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:26:11,390 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:26:11,613 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:26:12,525 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:26:14,525 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:26:16,526 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:26:16,693 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:26:18,527 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:26:20,527 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:26:21,830 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:26:22,528 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:26:24,528 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:26:26,390 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:26:26,390 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:26:26,529 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:26:26,847 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:26:28,530 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:26:30,530 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:26:31,860 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:26:32,531 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:26:34,531 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:26:36,532 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:26:36,881 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:26:38,532 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:26:40,509 DEBUG   SenderThread:42196 [sender.py:send():369] send: stats
+2023-07-10 21:26:40,533 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:26:41,390 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:26:41,391 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:26:41,911 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:26:42,534 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:26:44,534 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:26:46,535 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:26:47,053 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:26:48,536 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:26:50,536 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:26:52,088 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:26:52,537 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:26:54,538 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:26:56,390 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:26:56,391 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:26:56,538 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:26:57,280 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:26:58,539 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:27:00,540 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:27:02,540 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:27:02,596 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:27:04,541 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:27:06,541 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:27:07,842 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:27:08,542 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:27:10,509 DEBUG   SenderThread:42196 [sender.py:send():369] send: stats
+2023-07-10 21:27:10,543 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:27:11,391 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:27:11,391 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:27:12,543 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:27:13,063 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:27:14,544 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:27:16,545 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:27:18,085 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:27:18,545 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:27:20,546 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:27:22,547 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:27:23,311 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:27:24,547 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:27:26,391 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:27:26,391 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:27:26,548 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:27:28,548 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:27:28,605 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:27:30,549 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:27:32,550 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:27:33,839 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:27:34,551 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:27:36,552 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:27:38,552 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:27:39,068 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:27:40,511 DEBUG   SenderThread:42196 [sender.py:send():369] send: stats
+2023-07-10 21:27:40,553 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:27:41,391 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:27:41,391 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:27:42,553 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:27:44,249 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:27:44,554 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:27:46,555 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:27:48,555 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:27:49,559 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:27:50,556 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:27:52,557 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:27:54,557 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:27:54,897 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:27:56,391 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:27:56,391 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:27:56,558 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:27:58,559 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:27:59,937 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:28:00,559 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:28:02,560 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:28:04,561 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:28:04,956 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:28:06,561 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:28:08,562 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:28:10,010 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:28:10,511 DEBUG   SenderThread:42196 [sender.py:send():369] send: stats
+2023-07-10 21:28:10,563 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:28:11,391 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:28:11,392 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:28:12,563 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:28:14,564 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:28:15,038 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:28:16,565 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:28:18,565 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:28:20,064 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:28:20,566 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:28:22,566 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:28:24,567 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:28:25,299 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:28:26,391 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:28:26,392 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:28:26,568 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:28:28,568 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:28:30,485 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:28:30,569 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:28:32,570 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:28:34,570 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:28:35,696 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:28:36,571 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:28:38,571 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:28:40,513 DEBUG   SenderThread:42196 [sender.py:send():369] send: stats
+2023-07-10 21:28:40,572 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:28:40,918 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:28:41,391 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:28:41,392 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:28:42,573 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:28:44,574 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:28:45,987 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:28:46,575 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:28:48,575 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:28:50,576 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:28:51,229 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:28:52,576 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:28:54,577 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:28:56,391 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:28:56,392 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:28:56,578 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:28:56,608 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:28:58,578 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:29:00,579 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:29:01,800 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:29:02,579 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:29:04,580 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:29:06,581 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:29:06,807 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:29:08,581 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:29:10,515 DEBUG   SenderThread:42196 [sender.py:send():369] send: stats
+2023-07-10 21:29:10,582 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:29:11,391 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:29:11,392 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:29:11,832 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:29:12,583 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:29:14,583 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:29:16,584 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:29:16,926 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:29:18,584 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:29:20,585 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:29:22,177 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:29:22,586 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:29:24,586 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:29:26,392 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:29:26,392 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:29:26,587 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:29:27,236 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:29:28,587 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:29:30,588 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:29:32,517 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:29:32,589 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:29:34,589 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:29:36,590 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:29:37,552 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:29:38,591 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:29:40,516 DEBUG   SenderThread:42196 [sender.py:send():369] send: stats
+2023-07-10 21:29:40,591 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:29:41,392 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:29:41,392 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:29:42,592 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:29:42,797 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:29:44,593 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:29:46,594 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:29:48,093 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:29:49,595 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:29:51,595 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:29:53,165 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:29:53,596 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:29:55,596 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:29:56,392 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:29:56,392 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:29:57,597 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:29:58,214 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:29:59,597 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:30:01,598 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:30:03,515 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:30:03,599 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:30:05,599 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:30:07,600 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:30:08,585 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:30:09,600 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:30:10,517 DEBUG   SenderThread:42196 [sender.py:send():369] send: stats
+2023-07-10 21:30:11,392 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:30:11,392 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:30:11,601 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:30:13,602 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:30:13,834 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:30:15,602 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:30:17,603 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:30:18,838 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:30:19,604 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:30:21,604 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:30:23,605 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:30:23,845 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:30:25,606 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:30:26,392 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:30:26,392 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:30:27,606 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:30:28,854 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:30:29,607 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:30:31,607 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:30:33,608 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:30:33,922 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:30:35,609 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:30:37,609 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:30:38,987 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:30:39,610 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:30:40,519 DEBUG   SenderThread:42196 [sender.py:send():369] send: stats
+2023-07-10 21:30:41,392 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:30:41,392 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:30:41,610 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:30:43,611 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:30:44,312 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:30:45,612 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:30:47,612 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:30:49,366 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:30:49,613 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:30:51,613 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:30:53,614 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:30:54,626 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:30:55,615 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:30:56,392 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:30:56,393 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:30:57,616 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:30:59,616 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:30:59,794 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:31:01,617 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:31:03,618 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:31:04,912 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:31:05,618 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:31:07,619 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:31:09,619 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:31:10,012 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:31:10,520 DEBUG   SenderThread:42196 [sender.py:send():369] send: stats
+2023-07-10 21:31:11,392 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:31:11,393 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:31:11,620 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:31:13,621 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:31:15,082 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:31:15,621 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:31:17,622 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:31:19,622 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:31:20,103 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:31:21,623 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:31:23,624 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:31:25,210 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:31:25,624 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:31:26,392 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:31:26,393 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:31:27,625 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:31:29,625 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:31:30,440 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:31:31,626 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:31:33,627 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:31:35,503 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:31:35,627 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:31:37,628 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:31:39,628 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:31:40,522 DEBUG   SenderThread:42196 [sender.py:send():369] send: stats
+2023-07-10 21:31:40,524 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:31:41,392 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:31:41,393 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:31:41,629 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:31:43,629 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:31:45,592 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:31:45,630 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:31:47,631 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:31:49,631 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:31:50,845 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:31:51,632 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:31:53,633 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:31:55,633 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:31:55,859 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:31:56,393 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:31:56,393 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:31:57,634 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:31:59,634 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:32:01,080 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:32:01,635 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:32:03,635 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:32:05,636 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:32:06,398 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:32:07,637 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:32:09,637 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:32:10,525 DEBUG   SenderThread:42196 [sender.py:send():369] send: stats
+2023-07-10 21:32:11,393 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:32:11,393 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:32:11,638 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:32:11,661 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:32:13,639 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:32:15,639 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:32:16,765 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:32:17,640 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:32:19,641 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:32:21,641 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:32:21,964 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:32:23,642 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:32:25,643 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:32:26,393 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:32:26,393 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:32:26,977 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:32:27,643 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:32:29,644 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:32:31,644 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:32:31,986 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:32:33,645 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:32:35,646 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:32:37,238 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:32:37,648 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:32:39,651 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:32:40,529 DEBUG   SenderThread:42196 [sender.py:send():369] send: stats
+2023-07-10 21:32:41,395 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:32:41,396 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:32:42,635 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:32:47,636 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:32:52,638 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:32:56,395 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:32:56,396 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:32:57,644 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:33:02,646 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:33:07,647 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:33:10,533 DEBUG   SenderThread:42196 [sender.py:send():369] send: stats
+2023-07-10 21:33:11,395 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:33:11,396 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:33:13,629 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:33:18,631 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:33:23,632 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:33:26,395 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:33:26,397 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:33:28,644 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:33:33,645 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:33:38,647 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:33:40,536 DEBUG   SenderThread:42196 [sender.py:send():369] send: stats
+2023-07-10 21:33:41,396 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 21:33:41,397 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 21:33:44,632 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:33:47,048 DEBUG   SenderThread:42196 [sender.py:send():369] send: exit
+2023-07-10 21:33:47,049 INFO    SenderThread:42196 [sender.py:send_exit():574] handling exit code: 1
+2023-07-10 21:33:47,049 INFO    SenderThread:42196 [sender.py:send_exit():576] handling runtime: 1266
+2023-07-10 21:33:47,050 INFO    SenderThread:42196 [sender.py:_save_file():1354] saving file wandb-summary.json with policy end
+2023-07-10 21:33:47,051 INFO    SenderThread:42196 [sender.py:send_exit():582] send defer
+2023-07-10 21:33:47,051 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: defer
+2023-07-10 21:33:47,052 INFO    HandlerThread:42196 [handler.py:handle_request_defer():170] handle defer: 0
+2023-07-10 21:33:47,053 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: defer
+2023-07-10 21:33:47,054 INFO    SenderThread:42196 [sender.py:send_request_defer():598] handle sender defer: 0
+2023-07-10 21:33:47,054 INFO    SenderThread:42196 [sender.py:transition_state():602] send defer: 1
+2023-07-10 21:33:47,054 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: defer
+2023-07-10 21:33:47,055 INFO    HandlerThread:42196 [handler.py:handle_request_defer():170] handle defer: 1
+2023-07-10 21:33:47,056 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: defer
+2023-07-10 21:33:47,056 INFO    SenderThread:42196 [sender.py:send_request_defer():598] handle sender defer: 1
+2023-07-10 21:33:47,057 INFO    SenderThread:42196 [sender.py:transition_state():602] send defer: 2
+2023-07-10 21:33:47,057 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: defer
+2023-07-10 21:33:47,058 INFO    HandlerThread:42196 [handler.py:handle_request_defer():170] handle defer: 2
+2023-07-10 21:33:47,058 INFO    HandlerThread:42196 [system_monitor.py:finish():190] Stopping system monitor
+2023-07-10 21:33:47,059 DEBUG   SystemMonitor:42196 [system_monitor.py:_start():166] Finished system metrics aggregation loop
+2023-07-10 21:33:47,059 DEBUG   SystemMonitor:42196 [system_monitor.py:_start():170] Publishing last batch of metrics
+2023-07-10 21:33:47,065 INFO    HandlerThread:42196 [interfaces.py:finish():202] Joined cpu monitor
+2023-07-10 21:33:47,066 INFO    HandlerThread:42196 [interfaces.py:finish():202] Joined disk monitor
+2023-07-10 21:33:47,133 INFO    HandlerThread:42196 [interfaces.py:finish():202] Joined gpu monitor
+2023-07-10 21:33:47,133 INFO    HandlerThread:42196 [interfaces.py:finish():202] Joined memory monitor
+2023-07-10 21:33:47,133 INFO    HandlerThread:42196 [interfaces.py:finish():202] Joined network monitor
+2023-07-10 21:33:47,134 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: defer
+2023-07-10 21:33:47,134 INFO    SenderThread:42196 [sender.py:send_request_defer():598] handle sender defer: 2
+2023-07-10 21:33:47,134 INFO    SenderThread:42196 [sender.py:transition_state():602] send defer: 3
+2023-07-10 21:33:47,134 DEBUG   SenderThread:42196 [sender.py:send():369] send: stats
+2023-07-10 21:33:47,135 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: defer
+2023-07-10 21:33:47,135 INFO    HandlerThread:42196 [handler.py:handle_request_defer():170] handle defer: 3
+2023-07-10 21:33:47,135 DEBUG   SenderThread:42196 [sender.py:send():369] send: history
+2023-07-10 21:33:47,136 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: summary_record
+2023-07-10 21:33:47,136 INFO    SenderThread:42196 [sender.py:_save_file():1354] saving file wandb-summary.json with policy end
+2023-07-10 21:33:47,136 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: defer
+2023-07-10 21:33:47,136 INFO    SenderThread:42196 [sender.py:send_request_defer():598] handle sender defer: 3
+2023-07-10 21:33:47,136 INFO    SenderThread:42196 [sender.py:transition_state():602] send defer: 4
+2023-07-10 21:33:47,136 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: defer
+2023-07-10 21:33:47,136 INFO    HandlerThread:42196 [handler.py:handle_request_defer():170] handle defer: 4
+2023-07-10 21:33:47,137 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: defer
+2023-07-10 21:33:47,137 INFO    SenderThread:42196 [sender.py:send_request_defer():598] handle sender defer: 4
+2023-07-10 21:33:47,137 INFO    SenderThread:42196 [sender.py:transition_state():602] send defer: 5
+2023-07-10 21:33:47,137 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: defer
+2023-07-10 21:33:47,137 INFO    HandlerThread:42196 [handler.py:handle_request_defer():170] handle defer: 5
+2023-07-10 21:33:47,137 DEBUG   SenderThread:42196 [sender.py:send():369] send: summary
+2023-07-10 21:33:47,138 INFO    SenderThread:42196 [sender.py:_save_file():1354] saving file wandb-summary.json with policy end
+2023-07-10 21:33:47,138 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: defer
+2023-07-10 21:33:47,138 INFO    SenderThread:42196 [sender.py:send_request_defer():598] handle sender defer: 5
+2023-07-10 21:33:47,138 INFO    SenderThread:42196 [sender.py:transition_state():602] send defer: 6
+2023-07-10 21:33:47,138 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: defer
+2023-07-10 21:33:47,138 INFO    HandlerThread:42196 [handler.py:handle_request_defer():170] handle defer: 6
+2023-07-10 21:33:47,138 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: defer
+2023-07-10 21:33:47,139 INFO    SenderThread:42196 [sender.py:send_request_defer():598] handle sender defer: 6
+2023-07-10 21:33:47,139 INFO    SenderThread:42196 [sender.py:transition_state():602] send defer: 7
+2023-07-10 21:33:47,139 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 21:33:47,139 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: defer
+2023-07-10 21:33:47,139 INFO    HandlerThread:42196 [handler.py:handle_request_defer():170] handle defer: 7
+2023-07-10 21:33:47,139 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: defer
+2023-07-10 21:33:47,139 INFO    SenderThread:42196 [sender.py:send_request_defer():598] handle sender defer: 7
+2023-07-10 21:33:47,727 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/wandb-summary.json
+2023-07-10 21:33:47,728 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:33:48,048 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: poll_exit
+2023-07-10 21:33:49,225 INFO    SenderThread:42196 [sender.py:transition_state():602] send defer: 8
+2023-07-10 21:33:49,226 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: poll_exit
+2023-07-10 21:33:49,227 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: defer
+2023-07-10 21:33:49,227 INFO    HandlerThread:42196 [handler.py:handle_request_defer():170] handle defer: 8
+2023-07-10 21:33:49,228 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: defer
+2023-07-10 21:33:49,229 INFO    SenderThread:42196 [sender.py:send_request_defer():598] handle sender defer: 8
+2023-07-10 21:33:49,229 INFO    SenderThread:42196 [job_builder.py:build():232] Attempting to build job artifact
+2023-07-10 21:33:49,230 INFO    SenderThread:42196 [job_builder.py:build():266] no source found
+2023-07-10 21:33:49,230 INFO    SenderThread:42196 [sender.py:transition_state():602] send defer: 9
+2023-07-10 21:33:49,231 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: defer
+2023-07-10 21:33:49,231 INFO    HandlerThread:42196 [handler.py:handle_request_defer():170] handle defer: 9
+2023-07-10 21:33:49,232 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: defer
+2023-07-10 21:33:49,232 INFO    SenderThread:42196 [sender.py:send_request_defer():598] handle sender defer: 9
+2023-07-10 21:33:49,233 INFO    SenderThread:42196 [dir_watcher.py:finish():359] shutting down directory watcher
+2023-07-10 21:33:49,728 INFO    Thread-17 :42196 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log
+2023-07-10 21:33:49,731 INFO    SenderThread:42196 [dir_watcher.py:finish():389] scan: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files
+2023-07-10 21:33:49,732 INFO    SenderThread:42196 [dir_watcher.py:finish():403] scan save: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/wandb-metadata.json wandb-metadata.json
+2023-07-10 21:33:49,732 INFO    SenderThread:42196 [dir_watcher.py:finish():403] scan save: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/config.yaml config.yaml
+2023-07-10 21:33:49,733 INFO    SenderThread:42196 [dir_watcher.py:finish():403] scan save: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/requirements.txt requirements.txt
+2023-07-10 21:33:49,733 INFO    SenderThread:42196 [dir_watcher.py:finish():403] scan save: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/wandb-summary.json wandb-summary.json
+2023-07-10 21:33:49,734 INFO    SenderThread:42196 [dir_watcher.py:finish():403] scan save: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/conda-environment.yaml conda-environment.yaml
+2023-07-10 21:33:49,734 INFO    SenderThread:42196 [dir_watcher.py:finish():403] scan save: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_211239-3mrk6qb1/files/output.log output.log
+2023-07-10 21:33:49,734 INFO    SenderThread:42196 [sender.py:transition_state():602] send defer: 10
+2023-07-10 21:33:49,735 DEBUG   HandlerThread:42196 [handler.py:handle_request():144] handle_request: defer
+2023-07-10 21:33:49,735 INFO    HandlerThread:42196 [handler.py:handle_request_defer():170] handle defer: 10
+2023-07-10 21:33:49,772 DEBUG   SenderThread:42196 [sender.py:send_request():396] send_request: defer
+2023-07-10 21:33:49,773 INFO    SenderThread:42196 [sender.py:send_request_defer():598] handle sender defer: 10
+2023-07-10 21:33:49,773 INFO    SenderThread:42196 [file_pusher.py:finish():159] shutting down file pusher
+2023-07-10 21:33:50,222 ERROR   wandb-upload_0:42196 [internal_api.py:upload_file():2192] upload_file exception https://storage.googleapis.com/wandb-production.appspot.com/ada4321/DiffHPE/3mrk6qb1/config.yaml?Expires=1689082429&GoogleAccessId=gorilla-files-url-signer-man%40wandb-production.iam.gserviceaccount.com&Signature=ZU9UanePXVGFeFQlfI9D4bwojafbSxjgEmb3PMSJCtKTef5myVv65OQJO5qUhdWGQllTMH4VG9oEE8bQEaw2cSXOXOtL4cWm7BUMl8C8q9fj0BQJ3aDuYcL3z3aG2S651spoXGODljIWExHnBuhMkz66iG19Okvgeah41N0VJ%2BhDRRzLj4WEx7PC5BsCg27ku1OUKbtTAWk4xLq96hWQRZoRLR28eOG6lSQLEzpWdA6SQtX3PXmTbV38jlU7vmD9%2B2BNYfB8jq2f8rN4Pv0FpBjQ2a3ZVIOnkzr7QTwZEprpZbJsXQIKcBuvCuv1QBEhmaLXAQx66eXT71Ki%2FpySkA%3D%3D: 404 Client Error: Not Found for url: https://storage.googleapis.com/wandb-production.appspot.com/ada4321/DiffHPE/3mrk6qb1/config.yaml?Expires=1689082429&GoogleAccessId=gorilla-files-url-signer-man%40wandb-production.iam.gserviceaccount.com&Signature=ZU9UanePXVGFeFQlfI9D4bwojafbSxjgEmb3PMSJCtKTef5myVv65OQJO5qUhdWGQllTMH4VG9oEE8bQEaw2cSXOXOtL4cWm7BUMl8C8q9fj0BQJ3aDuYcL3z3aG2S651spoXGODljIWExHnBuhMkz66iG19Okvgeah41N0VJ%2BhDRRzLj4WEx7PC5BsCg27ku1OUKbtTAWk4xLq96hWQRZoRLR28eOG6lSQLEzpWdA6SQtX3PXmTbV38jlU7vmD9%2B2BNYfB8jq2f8rN4Pv0FpBjQ2a3ZVIOnkzr7QTwZEprpZbJsXQIKcBuvCuv1QBEhmaLXAQx66eXT71Ki%2FpySkA%3D%3D
+2023-07-10 21:33:50,223 ERROR   wandb-upload_0:42196 [internal_api.py:upload_file():2194] upload_file request headers: {'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '524'}
+2023-07-10 21:33:50,223 ERROR   wandb-upload_0:42196 [internal_api.py:upload_file():2196] upload_file response body: b'<!DOCTYPE html>\n<html lang=en>\n  <meta charset=utf-8>\n  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">\n  <title>Error 404 (Not Found)!!1</title>\n  <style>\n    *{margin:0;padding:0}html,code{font:15px/22px arial,sans-serif}html{background:#fff;color:#222;padding:15px}body{margin:7% auto 0;max-width:390px;min-height:180px;padding:30px 0 15px}* > body{background:url(//www.google.com/images/errors/robot.png) 100% 5px no-repeat;padding-right:205px}p{margin:11px 0 22px;overflow:hidden}ins{color:#777;text-decoration:none}a img{border:0}@media screen and (max-width:772px){body{background:none;margin-top:0;max-width:none;padding-right:0}}#logo{background:url(//www.google.com/images/branding/googlelogo/1x/googlelogo_color_150x54dp.png) no-repeat;margin-left:-5px}@media only screen and (min-resolution:192dpi){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat 0% 0%/100% 100%;-moz-border-image:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) 0}}@media only screen and (-webkit-min-device-pixel-ratio:2){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat;-webkit-background-size:100% 100%}}#logo{display:inline-block;height:54px;width:150px}\n  </style>\n  <a href=//www.google.com/><span id=logo aria-label=Google></span></a>\n  <p><b>404.</b> <ins>That\xe2\x80\x99s an error.</ins>\n  <p>The requested URL <code>/wandb-production.appspot.com/ada4321/DiffHPE/3mrk6qb1/config.yaml</code> was not found on this server.  <ins>That\xe2\x80\x99s all we know.</ins>\n'

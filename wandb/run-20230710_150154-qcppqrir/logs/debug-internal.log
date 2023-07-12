@@ -1,0 +1,511 @@
+2023-07-10 15:01:54,800 INFO    StreamThr :34294 [internal.py:wandb_internal():86] W&B internal server running at pid: 34294, started at: 2023-07-10 15:01:54.800464
+2023-07-10 15:01:54,805 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status
+2023-07-10 15:01:54,806 INFO    WriterThread:34294 [datastore.py:open_for_write():85] open: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_150154-qcppqrir/run-qcppqrir.wandb
+2023-07-10 15:01:54,806 DEBUG   SenderThread:34294 [sender.py:send():369] send: header
+2023-07-10 15:01:54,806 DEBUG   SenderThread:34294 [sender.py:send():369] send: run
+2023-07-10 15:01:55,698 INFO    SenderThread:34294 [dir_watcher.py:__init__():211] watching files in: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_150154-qcppqrir/files
+2023-07-10 15:01:55,699 INFO    SenderThread:34294 [sender.py:_start_run_threads():1100] run started: qcppqrir with start time 1688972514.799089
+2023-07-10 15:01:55,700 DEBUG   SenderThread:34294 [sender.py:send_request():396] send_request: summary_record
+2023-07-10 15:01:55,701 INFO    SenderThread:34294 [sender.py:_save_file():1354] saving file wandb-summary.json with policy end
+2023-07-10 15:01:55,708 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: check_version
+2023-07-10 15:01:55,708 DEBUG   SenderThread:34294 [sender.py:send_request():396] send_request: check_version
+2023-07-10 15:01:55,904 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: run_start
+2023-07-10 15:01:55,908 DEBUG   HandlerThread:34294 [system_info.py:__init__():31] System info init
+2023-07-10 15:01:55,908 DEBUG   HandlerThread:34294 [system_info.py:__init__():46] System info init done
+2023-07-10 15:01:55,908 INFO    HandlerThread:34294 [system_monitor.py:start():181] Starting system monitor
+2023-07-10 15:01:55,909 INFO    HandlerThread:34294 [system_monitor.py:probe():201] Collecting system info
+2023-07-10 15:01:55,909 INFO    SystemMonitor:34294 [system_monitor.py:_start():145] Starting system asset monitoring threads
+2023-07-10 15:01:55,910 INFO    SystemMonitor:34294 [interfaces.py:start():190] Started cpu monitoring
+2023-07-10 15:01:55,911 INFO    SystemMonitor:34294 [interfaces.py:start():190] Started disk monitoring
+2023-07-10 15:01:55,912 INFO    SystemMonitor:34294 [interfaces.py:start():190] Started gpu monitoring
+2023-07-10 15:01:55,913 INFO    SystemMonitor:34294 [interfaces.py:start():190] Started memory monitoring
+2023-07-10 15:01:55,913 INFO    SystemMonitor:34294 [interfaces.py:start():190] Started network monitoring
+2023-07-10 15:01:55,926 DEBUG   HandlerThread:34294 [system_info.py:probe():195] Probing system
+2023-07-10 15:01:55,929 DEBUG   HandlerThread:34294 [gitlib.py:_init_repo():53] git repository is invalid
+2023-07-10 15:01:55,929 DEBUG   HandlerThread:34294 [system_info.py:probe():240] Probing system done
+2023-07-10 15:01:55,929 DEBUG   HandlerThread:34294 [system_monitor.py:probe():210] {'os': 'Linux-5.19.0-46-generic-x86_64-with-glibc2.35', 'python': '3.9.16', 'heartbeatAt': '2023-07-10T07:01:55.926180', 'startedAt': '2023-07-10T07:01:54.791250', 'docker': None, 'cuda': None, 'args': (), 'state': 'running', 'program': '/home/zhuhe/HPE-with-Diffusion/main.py', 'codePath': 'main.py', 'host': '415-2', 'username': 'zhuhe', 'executable': '/home/zhuhe/.conda/envs/diffhpe/bin/python', 'cpu_count': 16, 'cpu_count_logical': 24, 'cpu_freq': {'current': 3794.157458333333, 'min': 800.0, 'max': 4783.333333333333}, 'cpu_freq_per_core': [{'current': 5100.0, 'min': 800.0, 'max': 5100.0}, {'current': 5098.815, 'min': 800.0, 'max': 5100.0}, {'current': 5101.302, 'min': 800.0, 'max': 5100.0}, {'current': 2100.0, 'min': 800.0, 'max': 5100.0}, {'current': 5088.221, 'min': 800.0, 'max': 5100.0}, {'current': 2100.0, 'min': 800.0, 'max': 5100.0}, {'current': 5099.404, 'min': 800.0, 'max': 5100.0}, {'current': 5099.728, 'min': 800.0, 'max': 5100.0}, {'current': 5099.987, 'min': 800.0, 'max': 5200.0}, {'current': 2100.0, 'min': 800.0, 'max': 5200.0}, {'current': 5102.084, 'min': 800.0, 'max': 5200.0}, {'current': 5100.0, 'min': 800.0, 'max': 5200.0}, {'current': 5100.0, 'min': 800.0, 'max': 5100.0}, {'current': 4815.972, 'min': 800.0, 'max': 5100.0}, {'current': 5100.0, 'min': 800.0, 'max': 5100.0}, {'current': 2100.0, 'min': 800.0, 'max': 5100.0}, {'current': 3706.967, 'min': 800.0, 'max': 4100.0}, {'current': 3758.211, 'min': 800.0, 'max': 4100.0}, {'current': 2100.0, 'min': 800.0, 'max': 4100.0}, {'current': 2100.0, 'min': 800.0, 'max': 4100.0}, {'current': 2100.0, 'min': 800.0, 'max': 4100.0}, {'current': 3856.85, 'min': 800.0, 'max': 4100.0}, {'current': 2100.0, 'min': 800.0, 'max': 4100.0}, {'current': 2100.0, 'min': 800.0, 'max': 4100.0}], 'disk': {'total': 93.31179428100586, 'used': 0.017879486083984375}, 'gpu': 'NVIDIA GeForce RTX 3090', 'gpu_count': 2, 'gpu_devices': [{'name': 'NVIDIA GeForce RTX 3090', 'memory_total': 25769803776}, {'name': 'NVIDIA GeForce RTX 3090', 'memory_total': 25769803776}], 'memory': {'total': 31.185562133789062}}
+2023-07-10 15:01:55,929 INFO    HandlerThread:34294 [system_monitor.py:probe():211] Finished collecting system info
+2023-07-10 15:01:55,929 INFO    HandlerThread:34294 [system_monitor.py:probe():214] Publishing system info
+2023-07-10 15:01:55,930 DEBUG   HandlerThread:34294 [system_info.py:_save_pip():51] Saving list of pip packages installed into the current environment
+2023-07-10 15:01:55,930 DEBUG   HandlerThread:34294 [system_info.py:_save_pip():67] Saving pip packages done
+2023-07-10 15:01:55,930 DEBUG   HandlerThread:34294 [system_info.py:_save_conda():74] Saving list of conda packages installed into the current environment
+2023-07-10 15:01:56,697 DEBUG   HandlerThread:34294 [system_info.py:_save_conda():86] Saving conda packages done
+2023-07-10 15:01:56,699 INFO    HandlerThread:34294 [system_monitor.py:probe():216] Finished publishing system info
+2023-07-10 15:01:56,704 INFO    Thread-17 :34294 [dir_watcher.py:_on_file_created():272] file/dir created: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_150154-qcppqrir/files/wandb-summary.json
+2023-07-10 15:01:56,704 INFO    Thread-17 :34294 [dir_watcher.py:_on_file_created():272] file/dir created: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_150154-qcppqrir/files/conda-environment.yaml
+2023-07-10 15:01:56,704 INFO    Thread-17 :34294 [dir_watcher.py:_on_file_created():272] file/dir created: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_150154-qcppqrir/files/requirements.txt
+2023-07-10 15:01:56,704 INFO    Thread-17 :34294 [dir_watcher.py:_on_file_created():272] file/dir created: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_150154-qcppqrir/files/wandb-metadata.json
+2023-07-10 15:01:56,705 DEBUG   SenderThread:34294 [sender.py:send():369] send: files
+2023-07-10 15:01:56,705 INFO    SenderThread:34294 [sender.py:_save_file():1354] saving file wandb-metadata.json with policy now
+2023-07-10 15:01:56,712 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 15:01:56,713 DEBUG   SenderThread:34294 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 15:01:57,242 ERROR   wandb-upload_0:34294 [internal_api.py:upload_file():2192] upload_file exception https://storage.googleapis.com/wandb-production.appspot.com/ada4321/DiffHPE/qcppqrir/wandb-metadata.json?Expires=1689058916&GoogleAccessId=gorilla-files-url-signer-man%40wandb-production.iam.gserviceaccount.com&Signature=ngItNt%2Fg9eH2c2DkMvmBSMBYhc1UrF%2F50w6%2FJUnMagMDXkmzuRbkuEITukIJHMPmbaLBf9%2FYrFzUe6t0WY3tbHaYaPTBGaR0YceWgCiXaaujBoWhT55ESnB8oo%2BH7xaUGAqRF9tL8DX0mTwfPfuxgUsuVkEh108gRSRfElpDhNqqxfwhr9ogH%2BJv%2FjcKJduH7cNHUOIwoQzDJbY%2BT6LuqoyGjKNL9xKNkDwdJ3vefx2rNDj7WemefTcRVbUy1Y8HQ%2B9ZSKQiPkBCM1bAy4d5W%2FuASSGO2XPgF3mtrJi7pgG7TPOvqbtwsdHWwjPx%2B6XrYKNFgorIE1UijeunRW%2F7Ug%3D%3D: 404 Client Error: Not Found for url: https://storage.googleapis.com/wandb-production.appspot.com/ada4321/DiffHPE/qcppqrir/wandb-metadata.json?Expires=1689058916&GoogleAccessId=gorilla-files-url-signer-man%40wandb-production.iam.gserviceaccount.com&Signature=ngItNt%2Fg9eH2c2DkMvmBSMBYhc1UrF%2F50w6%2FJUnMagMDXkmzuRbkuEITukIJHMPmbaLBf9%2FYrFzUe6t0WY3tbHaYaPTBGaR0YceWgCiXaaujBoWhT55ESnB8oo%2BH7xaUGAqRF9tL8DX0mTwfPfuxgUsuVkEh108gRSRfElpDhNqqxfwhr9ogH%2BJv%2FjcKJduH7cNHUOIwoQzDJbY%2BT6LuqoyGjKNL9xKNkDwdJ3vefx2rNDj7WemefTcRVbUy1Y8HQ%2B9ZSKQiPkBCM1bAy4d5W%2FuASSGO2XPgF3mtrJi7pgG7TPOvqbtwsdHWwjPx%2B6XrYKNFgorIE1UijeunRW%2F7Ug%3D%3D
+2023-07-10 15:01:57,242 ERROR   wandb-upload_0:34294 [internal_api.py:upload_file():2194] upload_file request headers: {'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '3626'}
+2023-07-10 15:01:57,242 ERROR   wandb-upload_0:34294 [internal_api.py:upload_file():2196] upload_file response body: b'<!DOCTYPE html>\n<html lang=en>\n  <meta charset=utf-8>\n  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">\n  <title>Error 404 (Not Found)!!1</title>\n  <style>\n    *{margin:0;padding:0}html,code{font:15px/22px arial,sans-serif}html{background:#fff;color:#222;padding:15px}body{margin:7% auto 0;max-width:390px;min-height:180px;padding:30px 0 15px}* > body{background:url(//www.google.com/images/errors/robot.png) 100% 5px no-repeat;padding-right:205px}p{margin:11px 0 22px;overflow:hidden}ins{color:#777;text-decoration:none}a img{border:0}@media screen and (max-width:772px){body{background:none;margin-top:0;max-width:none;padding-right:0}}#logo{background:url(//www.google.com/images/branding/googlelogo/1x/googlelogo_color_150x54dp.png) no-repeat;margin-left:-5px}@media only screen and (min-resolution:192dpi){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat 0% 0%/100% 100%;-moz-border-image:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) 0}}@media only screen and (-webkit-min-device-pixel-ratio:2){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat;-webkit-background-size:100% 100%}}#logo{display:inline-block;height:54px;width:150px}\n  </style>\n  <a href=//www.google.com/><span id=logo aria-label=Google></span></a>\n  <p><b>404.</b> <ins>That\xe2\x80\x99s an error.</ins>\n  <p>The requested URL <code>/wandb-production.appspot.com/ada4321/DiffHPE/qcppqrir/wandb-metadata.json</code> was not found on this server.  <ins>That\xe2\x80\x99s all we know.</ins>\n'
+2023-07-10 15:01:57,247 DEBUG   SenderThread:34294 [sender.py:send():369] send: telemetry
+2023-07-10 15:01:57,703 INFO    Thread-17 :34294 [dir_watcher.py:_on_file_created():272] file/dir created: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_150154-qcppqrir/files/output.log
+2023-07-10 15:01:57,786 ERROR   wandb-upload_0:34294 [upload_job.py:push():136] Failed to upload file: /tmp/tmp_nf59u1awandb/c3fnvdlh-wandb-metadata.json
+Traceback (most recent call last):
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/apis/normalize.py", line 41, in wrapper
+    return func(*args, **kwargs)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/lib/retry.py", line 212, in wrapped_fn
+    return retrier(*args, **kargs)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/lib/retry.py", line 131, in __call__
+    result = self._call_fn(*args, **kwargs)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/internal/internal_api.py", line 2218, in upload_file
+    wandb._sentry.reraise(e)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/analytics/sentry.py", line 146, in reraise
+    raise exc.with_traceback(sys.exc_info()[2])
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/internal/internal_api.py", line 2190, in upload_file
+    response.raise_for_status()
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/requests/models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://storage.googleapis.com/wandb-production.appspot.com/ada4321/DiffHPE/qcppqrir/wandb-metadata.json?Expires=1689058916&GoogleAccessId=gorilla-files-url-signer-man%40wandb-production.iam.gserviceaccount.com&Signature=ngItNt%2Fg9eH2c2DkMvmBSMBYhc1UrF%2F50w6%2FJUnMagMDXkmzuRbkuEITukIJHMPmbaLBf9%2FYrFzUe6t0WY3tbHaYaPTBGaR0YceWgCiXaaujBoWhT55ESnB8oo%2BH7xaUGAqRF9tL8DX0mTwfPfuxgUsuVkEh108gRSRfElpDhNqqxfwhr9ogH%2BJv%2FjcKJduH7cNHUOIwoQzDJbY%2BT6LuqoyGjKNL9xKNkDwdJ3vefx2rNDj7WemefTcRVbUy1Y8HQ%2B9ZSKQiPkBCM1bAy4d5W%2FuASSGO2XPgF3mtrJi7pgG7TPOvqbtwsdHWwjPx%2B6XrYKNFgorIE1UijeunRW%2F7Ug%3D%3D
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/filesync/upload_job.py", line 127, in push
+    self._api.upload_file_retry(
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/apis/normalize.py", line 51, in wrapper
+    raise CommError(message, error)
+wandb.errors.CommError: <Response [404]>
+2023-07-10 15:01:58,001 ERROR   Thread-16 :34294 [step_upload.py:_handle_event():200] Failed to upload file: /tmp/tmp_nf59u1awandb/c3fnvdlh-wandb-metadata.json
+Traceback (most recent call last):
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/apis/normalize.py", line 41, in wrapper
+    return func(*args, **kwargs)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/lib/retry.py", line 212, in wrapped_fn
+    return retrier(*args, **kargs)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/lib/retry.py", line 131, in __call__
+    result = self._call_fn(*args, **kwargs)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/internal/internal_api.py", line 2218, in upload_file
+    wandb._sentry.reraise(e)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/analytics/sentry.py", line 146, in reraise
+    raise exc.with_traceback(sys.exc_info()[2])
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/internal/internal_api.py", line 2190, in upload_file
+    response.raise_for_status()
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/requests/models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://storage.googleapis.com/wandb-production.appspot.com/ada4321/DiffHPE/qcppqrir/wandb-metadata.json?Expires=1689058916&GoogleAccessId=gorilla-files-url-signer-man%40wandb-production.iam.gserviceaccount.com&Signature=ngItNt%2Fg9eH2c2DkMvmBSMBYhc1UrF%2F50w6%2FJUnMagMDXkmzuRbkuEITukIJHMPmbaLBf9%2FYrFzUe6t0WY3tbHaYaPTBGaR0YceWgCiXaaujBoWhT55ESnB8oo%2BH7xaUGAqRF9tL8DX0mTwfPfuxgUsuVkEh108gRSRfElpDhNqqxfwhr9ogH%2BJv%2FjcKJduH7cNHUOIwoQzDJbY%2BT6LuqoyGjKNL9xKNkDwdJ3vefx2rNDj7WemefTcRVbUy1Y8HQ%2B9ZSKQiPkBCM1bAy4d5W%2FuASSGO2XPgF3mtrJi7pgG7TPOvqbtwsdHWwjPx%2B6XrYKNFgorIE1UijeunRW%2F7Ug%3D%3D
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/filesync/step_upload.py", line 288, in run_and_notify
+    self._do_upload_sync(event)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/filesync/step_upload.py", line 330, in _do_upload_sync
+    job.run()
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/filesync/upload_job.py", line 57, in run
+    self.push()
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/filesync/upload_job.py", line 127, in push
+    self._api.upload_file_retry(
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/apis/normalize.py", line 51, in wrapper
+    raise CommError(message, error)
+wandb.errors.CommError: <Response [404]>
+2023-07-10 15:01:59,704 INFO    Thread-17 :34294 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_150154-qcppqrir/files/output.log
+2023-07-10 15:02:00,259 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:02:05,259 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:02:10,260 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:02:11,710 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 15:02:11,710 DEBUG   SenderThread:34294 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 15:02:15,935 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:02:20,936 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:02:25,942 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:02:26,710 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 15:02:26,711 DEBUG   SenderThread:34294 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 15:02:26,713 INFO    Thread-17 :34294 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_150154-qcppqrir/files/config.yaml
+2023-07-10 15:02:31,949 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:02:36,949 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:02:41,710 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 15:02:41,711 DEBUG   SenderThread:34294 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 15:02:42,922 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:02:47,923 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:02:52,924 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:02:55,913 DEBUG   SystemMonitor:34294 [system_monitor.py:_start():159] Starting system metrics aggregation loop
+2023-07-10 15:02:55,915 DEBUG   SenderThread:34294 [sender.py:send():369] send: stats
+2023-07-10 15:02:56,710 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 15:02:56,711 DEBUG   SenderThread:34294 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 15:02:57,935 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:03:02,936 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:03:07,937 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:03:11,710 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 15:03:11,711 DEBUG   SenderThread:34294 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 15:03:13,932 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:03:18,933 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:03:23,934 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:03:25,916 DEBUG   SenderThread:34294 [sender.py:send():369] send: stats
+2023-07-10 15:03:26,711 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 15:03:26,711 DEBUG   SenderThread:34294 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 15:03:28,943 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:03:33,943 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:03:38,944 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:03:41,711 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 15:03:41,711 DEBUG   SenderThread:34294 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 15:03:43,960 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:03:48,961 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:03:53,962 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:03:55,916 DEBUG   SenderThread:34294 [sender.py:send():369] send: stats
+2023-07-10 15:03:56,711 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 15:03:56,711 DEBUG   SenderThread:34294 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 15:03:59,929 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:04:04,930 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:04:09,931 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:04:11,711 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 15:04:11,712 DEBUG   SenderThread:34294 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 15:04:14,939 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:04:19,940 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:04:24,940 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:04:25,917 DEBUG   SenderThread:34294 [sender.py:send():369] send: stats
+2023-07-10 15:04:26,711 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 15:04:26,712 DEBUG   SenderThread:34294 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 15:04:30,936 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:04:35,937 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:04:40,937 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:04:41,711 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 15:04:41,712 DEBUG   SenderThread:34294 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 15:04:46,924 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:04:51,924 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:04:55,918 DEBUG   SenderThread:34294 [sender.py:send():369] send: stats
+2023-07-10 15:04:56,711 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 15:04:56,712 DEBUG   SenderThread:34294 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 15:04:56,926 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:05:01,926 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:05:06,927 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:05:11,712 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 15:05:11,712 DEBUG   SenderThread:34294 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 15:05:11,948 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:05:16,949 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:05:21,949 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:05:25,919 DEBUG   SenderThread:34294 [sender.py:send():369] send: stats
+2023-07-10 15:05:26,712 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 15:05:26,712 DEBUG   SenderThread:34294 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 15:05:26,955 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:05:31,956 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:05:36,957 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:05:41,712 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 15:05:41,712 DEBUG   SenderThread:34294 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 15:05:42,950 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:05:47,951 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:05:52,952 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:05:55,920 DEBUG   SenderThread:34294 [sender.py:send():369] send: stats
+2023-07-10 15:05:56,712 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 15:05:56,712 DEBUG   SenderThread:34294 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 15:05:58,930 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:06:03,931 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:06:08,932 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:06:11,712 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 15:06:11,713 DEBUG   SenderThread:34294 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 15:06:13,937 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:06:18,938 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:06:23,939 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:06:25,921 DEBUG   SenderThread:34294 [sender.py:send():369] send: stats
+2023-07-10 15:06:26,712 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 15:06:26,713 DEBUG   SenderThread:34294 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 15:06:28,945 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:06:33,946 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:06:38,946 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:06:41,712 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 15:06:41,713 DEBUG   SenderThread:34294 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 15:06:44,938 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:06:49,940 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:06:54,940 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:06:55,922 DEBUG   SenderThread:34294 [sender.py:send():369] send: stats
+2023-07-10 15:06:56,713 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 15:06:56,713 DEBUG   SenderThread:34294 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 15:07:00,937 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:07:05,938 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:07:10,939 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:07:11,713 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 15:07:11,714 DEBUG   SenderThread:34294 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 15:07:16,937 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:07:21,938 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:07:25,922 DEBUG   SenderThread:34294 [sender.py:send():369] send: stats
+2023-07-10 15:07:26,713 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 15:07:26,713 DEBUG   SenderThread:34294 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 15:07:27,936 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:07:32,937 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:07:37,938 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:07:41,713 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 15:07:41,714 DEBUG   SenderThread:34294 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 15:07:43,930 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:07:48,931 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:07:53,931 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:07:55,923 DEBUG   SenderThread:34294 [sender.py:send():369] send: stats
+2023-07-10 15:07:56,713 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 15:07:56,714 DEBUG   SenderThread:34294 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 15:07:58,944 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:08:03,945 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:08:08,945 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:08:11,713 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 15:08:11,714 DEBUG   SenderThread:34294 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 15:08:14,928 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:08:19,929 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:08:24,930 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:08:25,924 DEBUG   SenderThread:34294 [sender.py:send():369] send: stats
+2023-07-10 15:08:26,714 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 15:08:26,714 DEBUG   SenderThread:34294 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 15:08:29,937 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:08:34,938 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:08:39,938 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:08:41,714 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 15:08:41,715 DEBUG   SenderThread:34294 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 15:08:44,940 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:08:49,941 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:08:54,942 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:08:55,925 DEBUG   SenderThread:34294 [sender.py:send():369] send: stats
+2023-07-10 15:08:56,714 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 15:08:56,714 DEBUG   SenderThread:34294 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 15:08:59,949 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:09:04,950 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:09:09,950 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:09:11,714 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 15:09:11,714 DEBUG   SenderThread:34294 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 15:09:15,938 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:09:20,939 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:09:25,926 DEBUG   SenderThread:34294 [sender.py:send():369] send: stats
+2023-07-10 15:09:26,714 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 15:09:26,715 DEBUG   SenderThread:34294 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 15:09:26,931 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:09:31,932 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:09:36,933 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:09:41,714 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 15:09:41,715 DEBUG   SenderThread:34294 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 15:09:42,930 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:09:47,930 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:09:52,931 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:09:55,926 DEBUG   SenderThread:34294 [sender.py:send():369] send: stats
+2023-07-10 15:09:56,714 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 15:09:56,715 DEBUG   SenderThread:34294 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 15:09:57,945 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:10:02,945 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:10:07,946 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:10:11,715 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 15:10:11,716 DEBUG   SenderThread:34294 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 15:10:13,939 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:10:18,940 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:10:23,941 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:10:25,927 DEBUG   SenderThread:34294 [sender.py:send():369] send: stats
+2023-07-10 15:10:26,715 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 15:10:26,716 DEBUG   SenderThread:34294 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 15:10:28,950 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:10:33,950 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:10:38,951 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:10:41,715 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 15:10:41,716 DEBUG   SenderThread:34294 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 15:10:44,945 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:10:49,946 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:10:54,947 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:10:55,928 DEBUG   SenderThread:34294 [sender.py:send():369] send: stats
+2023-07-10 15:10:56,715 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 15:10:56,716 DEBUG   SenderThread:34294 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 15:11:00,941 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:11:05,942 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:11:10,943 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:11:11,715 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 15:11:11,716 DEBUG   SenderThread:34294 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 15:11:16,934 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:11:21,935 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:11:25,929 DEBUG   SenderThread:34294 [sender.py:send():369] send: stats
+2023-07-10 15:11:26,715 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 15:11:26,716 DEBUG   SenderThread:34294 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 15:11:26,946 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:11:31,947 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:11:36,948 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:11:41,716 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 15:11:41,716 DEBUG   SenderThread:34294 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 15:11:42,930 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:11:47,931 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:11:52,932 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:11:55,930 DEBUG   SenderThread:34294 [sender.py:send():369] send: stats
+2023-07-10 15:11:56,716 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 15:11:56,717 DEBUG   SenderThread:34294 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 15:11:57,944 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:12:02,945 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:12:07,945 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:12:11,716 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 15:12:11,717 DEBUG   SenderThread:34294 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 15:12:13,940 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:12:18,941 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:12:23,942 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:12:25,931 DEBUG   SenderThread:34294 [sender.py:send():369] send: stats
+2023-07-10 15:12:26,716 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 15:12:26,717 DEBUG   SenderThread:34294 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 15:12:29,940 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:12:34,941 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:12:39,942 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:12:41,717 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 15:12:41,717 DEBUG   SenderThread:34294 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 15:12:45,937 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:12:50,937 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:12:55,931 DEBUG   SenderThread:34294 [sender.py:send():369] send: stats
+2023-07-10 15:12:56,717 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 15:12:56,718 DEBUG   SenderThread:34294 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 15:12:56,942 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:13:01,943 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:13:06,944 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:13:11,717 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 15:13:11,718 DEBUG   SenderThread:34294 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 15:13:12,931 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:13:14,999 DEBUG   SenderThread:34294 [sender.py:send():369] send: exit
+2023-07-10 15:13:14,999 INFO    SenderThread:34294 [sender.py:send_exit():574] handling exit code: 1
+2023-07-10 15:13:14,999 INFO    SenderThread:34294 [sender.py:send_exit():576] handling runtime: 679
+2023-07-10 15:13:15,000 INFO    SenderThread:34294 [sender.py:_save_file():1354] saving file wandb-summary.json with policy end
+2023-07-10 15:13:15,000 INFO    SenderThread:34294 [sender.py:send_exit():582] send defer
+2023-07-10 15:13:15,000 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: defer
+2023-07-10 15:13:15,001 INFO    HandlerThread:34294 [handler.py:handle_request_defer():170] handle defer: 0
+2023-07-10 15:13:15,001 DEBUG   SenderThread:34294 [sender.py:send_request():396] send_request: defer
+2023-07-10 15:13:15,001 INFO    SenderThread:34294 [sender.py:send_request_defer():598] handle sender defer: 0
+2023-07-10 15:13:15,001 INFO    SenderThread:34294 [sender.py:transition_state():602] send defer: 1
+2023-07-10 15:13:15,001 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: defer
+2023-07-10 15:13:15,001 INFO    HandlerThread:34294 [handler.py:handle_request_defer():170] handle defer: 1
+2023-07-10 15:13:15,002 DEBUG   SenderThread:34294 [sender.py:send_request():396] send_request: defer
+2023-07-10 15:13:15,002 INFO    SenderThread:34294 [sender.py:send_request_defer():598] handle sender defer: 1
+2023-07-10 15:13:15,002 INFO    SenderThread:34294 [sender.py:transition_state():602] send defer: 2
+2023-07-10 15:13:15,002 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: defer
+2023-07-10 15:13:15,002 INFO    HandlerThread:34294 [handler.py:handle_request_defer():170] handle defer: 2
+2023-07-10 15:13:15,002 INFO    HandlerThread:34294 [system_monitor.py:finish():190] Stopping system monitor
+2023-07-10 15:13:15,002 DEBUG   SystemMonitor:34294 [system_monitor.py:_start():166] Finished system metrics aggregation loop
+2023-07-10 15:13:15,003 DEBUG   SystemMonitor:34294 [system_monitor.py:_start():170] Publishing last batch of metrics
+2023-07-10 15:13:15,004 INFO    HandlerThread:34294 [interfaces.py:finish():202] Joined cpu monitor
+2023-07-10 15:13:15,005 INFO    HandlerThread:34294 [interfaces.py:finish():202] Joined disk monitor
+2023-07-10 15:13:15,078 INFO    HandlerThread:34294 [interfaces.py:finish():202] Joined gpu monitor
+2023-07-10 15:13:15,078 INFO    HandlerThread:34294 [interfaces.py:finish():202] Joined memory monitor
+2023-07-10 15:13:15,079 INFO    HandlerThread:34294 [interfaces.py:finish():202] Joined network monitor
+2023-07-10 15:13:15,079 DEBUG   SenderThread:34294 [sender.py:send_request():396] send_request: defer
+2023-07-10 15:13:15,079 INFO    SenderThread:34294 [sender.py:send_request_defer():598] handle sender defer: 2
+2023-07-10 15:13:15,079 INFO    SenderThread:34294 [sender.py:transition_state():602] send defer: 3
+2023-07-10 15:13:15,079 DEBUG   SenderThread:34294 [sender.py:send():369] send: stats
+2023-07-10 15:13:15,080 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: defer
+2023-07-10 15:13:15,080 INFO    HandlerThread:34294 [handler.py:handle_request_defer():170] handle defer: 3
+2023-07-10 15:13:15,080 DEBUG   SenderThread:34294 [sender.py:send_request():396] send_request: defer
+2023-07-10 15:13:15,080 INFO    SenderThread:34294 [sender.py:send_request_defer():598] handle sender defer: 3
+2023-07-10 15:13:15,081 INFO    SenderThread:34294 [sender.py:transition_state():602] send defer: 4
+2023-07-10 15:13:15,081 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: defer
+2023-07-10 15:13:15,081 INFO    HandlerThread:34294 [handler.py:handle_request_defer():170] handle defer: 4
+2023-07-10 15:13:15,081 DEBUG   SenderThread:34294 [sender.py:send_request():396] send_request: defer
+2023-07-10 15:13:15,081 INFO    SenderThread:34294 [sender.py:send_request_defer():598] handle sender defer: 4
+2023-07-10 15:13:15,081 INFO    SenderThread:34294 [sender.py:transition_state():602] send defer: 5
+2023-07-10 15:13:15,082 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: defer
+2023-07-10 15:13:15,082 INFO    HandlerThread:34294 [handler.py:handle_request_defer():170] handle defer: 5
+2023-07-10 15:13:15,082 DEBUG   SenderThread:34294 [sender.py:send():369] send: summary
+2023-07-10 15:13:15,082 INFO    SenderThread:34294 [sender.py:_save_file():1354] saving file wandb-summary.json with policy end
+2023-07-10 15:13:15,083 DEBUG   SenderThread:34294 [sender.py:send_request():396] send_request: defer
+2023-07-10 15:13:15,083 INFO    SenderThread:34294 [sender.py:send_request_defer():598] handle sender defer: 5
+2023-07-10 15:13:15,083 INFO    SenderThread:34294 [sender.py:transition_state():602] send defer: 6
+2023-07-10 15:13:15,083 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: defer
+2023-07-10 15:13:15,083 INFO    HandlerThread:34294 [handler.py:handle_request_defer():170] handle defer: 6
+2023-07-10 15:13:15,084 DEBUG   SenderThread:34294 [sender.py:send_request():396] send_request: defer
+2023-07-10 15:13:15,084 INFO    SenderThread:34294 [sender.py:send_request_defer():598] handle sender defer: 6
+2023-07-10 15:13:15,084 INFO    SenderThread:34294 [sender.py:transition_state():602] send defer: 7
+2023-07-10 15:13:15,084 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 15:13:15,084 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: defer
+2023-07-10 15:13:15,084 INFO    HandlerThread:34294 [handler.py:handle_request_defer():170] handle defer: 7
+2023-07-10 15:13:15,084 DEBUG   SenderThread:34294 [sender.py:send_request():396] send_request: defer
+2023-07-10 15:13:15,084 INFO    SenderThread:34294 [sender.py:send_request_defer():598] handle sender defer: 7
+2023-07-10 15:13:15,923 INFO    Thread-17 :34294 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_150154-qcppqrir/files/wandb-summary.json
+2023-07-10 15:13:15,999 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: poll_exit
+2023-07-10 15:13:16,020 INFO    SenderThread:34294 [sender.py:transition_state():602] send defer: 8
+2023-07-10 15:13:16,021 DEBUG   SenderThread:34294 [sender.py:send_request():396] send_request: poll_exit
+2023-07-10 15:13:16,021 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: defer
+2023-07-10 15:13:16,021 INFO    HandlerThread:34294 [handler.py:handle_request_defer():170] handle defer: 8
+2023-07-10 15:13:16,021 DEBUG   SenderThread:34294 [sender.py:send_request():396] send_request: defer
+2023-07-10 15:13:16,022 INFO    SenderThread:34294 [sender.py:send_request_defer():598] handle sender defer: 8
+2023-07-10 15:13:16,022 INFO    SenderThread:34294 [job_builder.py:build():232] Attempting to build job artifact
+2023-07-10 15:13:16,022 INFO    SenderThread:34294 [job_builder.py:build():266] no source found
+2023-07-10 15:13:16,022 INFO    SenderThread:34294 [sender.py:transition_state():602] send defer: 9
+2023-07-10 15:13:16,022 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: defer
+2023-07-10 15:13:16,022 INFO    HandlerThread:34294 [handler.py:handle_request_defer():170] handle defer: 9
+2023-07-10 15:13:16,022 DEBUG   SenderThread:34294 [sender.py:send_request():396] send_request: defer
+2023-07-10 15:13:16,022 INFO    SenderThread:34294 [sender.py:send_request_defer():598] handle sender defer: 9
+2023-07-10 15:13:16,022 INFO    SenderThread:34294 [dir_watcher.py:finish():359] shutting down directory watcher
+2023-07-10 15:13:16,923 INFO    Thread-17 :34294 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_150154-qcppqrir/files/output.log
+2023-07-10 15:13:16,924 INFO    SenderThread:34294 [dir_watcher.py:finish():389] scan: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_150154-qcppqrir/files
+2023-07-10 15:13:16,924 INFO    SenderThread:34294 [dir_watcher.py:finish():403] scan save: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_150154-qcppqrir/files/wandb-metadata.json wandb-metadata.json
+2023-07-10 15:13:16,924 INFO    SenderThread:34294 [dir_watcher.py:finish():403] scan save: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_150154-qcppqrir/files/config.yaml config.yaml
+2023-07-10 15:13:16,925 INFO    SenderThread:34294 [dir_watcher.py:finish():403] scan save: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_150154-qcppqrir/files/requirements.txt requirements.txt
+2023-07-10 15:13:16,925 INFO    SenderThread:34294 [dir_watcher.py:finish():403] scan save: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_150154-qcppqrir/files/wandb-summary.json wandb-summary.json
+2023-07-10 15:13:16,925 INFO    SenderThread:34294 [dir_watcher.py:finish():403] scan save: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_150154-qcppqrir/files/conda-environment.yaml conda-environment.yaml
+2023-07-10 15:13:16,925 INFO    SenderThread:34294 [dir_watcher.py:finish():403] scan save: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_150154-qcppqrir/files/output.log output.log
+2023-07-10 15:13:16,925 INFO    SenderThread:34294 [sender.py:transition_state():602] send defer: 10
+2023-07-10 15:13:16,925 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: defer
+2023-07-10 15:13:16,925 INFO    HandlerThread:34294 [handler.py:handle_request_defer():170] handle defer: 10
+2023-07-10 15:13:16,929 DEBUG   SenderThread:34294 [sender.py:send_request():396] send_request: defer
+2023-07-10 15:13:16,930 INFO    SenderThread:34294 [sender.py:send_request_defer():598] handle sender defer: 10
+2023-07-10 15:13:16,930 INFO    SenderThread:34294 [file_pusher.py:finish():159] shutting down file pusher
+2023-07-10 15:13:16,999 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: poll_exit
+2023-07-10 15:13:17,000 DEBUG   SenderThread:34294 [sender.py:send_request():396] send_request: poll_exit
+2023-07-10 15:13:17,396 ERROR   wandb-upload_0:34294 [internal_api.py:upload_file():2192] upload_file exception https://storage.googleapis.com/wandb-production.appspot.com/ada4321/DiffHPE/qcppqrir/config.yaml?Expires=1689059597&GoogleAccessId=gorilla-files-url-signer-man%40wandb-production.iam.gserviceaccount.com&Signature=IR6BBYYN4biRqDPgPSC%2FUg0ywIZl9kgWsbn5POj6icK1gtqJm57CjTgRFRFk3axDLEAErBS2x09qQ%2BQXOJJWLnkyMFgtgcp0l8nqUG9Lxlp0xpWEV6CkvYc5eTYimiU7QR68SyyYb2iY6NOkpuxJrBzufGbDH7Z3jcWI45fyCs6ds7XIHM0jnel7%2FiDsQRATwp6SUjpuuZVjhbt2yea8jafiFZ5wMaaPzPtu8%2FW6D8Yw7jHd2cxL%2B4zMBQaEPwII5promNwNe7h23PR2Sg5Xqdr3Wnbq3oyAORzUkwLQngFcZdYD6Kzl2dfWGioifyNxYKJhJo0Ekj1zrnMf1LJmRQ%3D%3D: 404 Client Error: Not Found for url: https://storage.googleapis.com/wandb-production.appspot.com/ada4321/DiffHPE/qcppqrir/config.yaml?Expires=1689059597&GoogleAccessId=gorilla-files-url-signer-man%40wandb-production.iam.gserviceaccount.com&Signature=IR6BBYYN4biRqDPgPSC%2FUg0ywIZl9kgWsbn5POj6icK1gtqJm57CjTgRFRFk3axDLEAErBS2x09qQ%2BQXOJJWLnkyMFgtgcp0l8nqUG9Lxlp0xpWEV6CkvYc5eTYimiU7QR68SyyYb2iY6NOkpuxJrBzufGbDH7Z3jcWI45fyCs6ds7XIHM0jnel7%2FiDsQRATwp6SUjpuuZVjhbt2yea8jafiFZ5wMaaPzPtu8%2FW6D8Yw7jHd2cxL%2B4zMBQaEPwII5promNwNe7h23PR2Sg5Xqdr3Wnbq3oyAORzUkwLQngFcZdYD6Kzl2dfWGioifyNxYKJhJo0Ekj1zrnMf1LJmRQ%3D%3D
+2023-07-10 15:13:17,396 ERROR   wandb-upload_0:34294 [internal_api.py:upload_file():2194] upload_file request headers: {'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '515'}
+2023-07-10 15:13:17,396 ERROR   wandb-upload_0:34294 [internal_api.py:upload_file():2196] upload_file response body: b'<!DOCTYPE html>\n<html lang=en>\n  <meta charset=utf-8>\n  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">\n  <title>Error 404 (Not Found)!!1</title>\n  <style>\n    *{margin:0;padding:0}html,code{font:15px/22px arial,sans-serif}html{background:#fff;color:#222;padding:15px}body{margin:7% auto 0;max-width:390px;min-height:180px;padding:30px 0 15px}* > body{background:url(//www.google.com/images/errors/robot.png) 100% 5px no-repeat;padding-right:205px}p{margin:11px 0 22px;overflow:hidden}ins{color:#777;text-decoration:none}a img{border:0}@media screen and (max-width:772px){body{background:none;margin-top:0;max-width:none;padding-right:0}}#logo{background:url(//www.google.com/images/branding/googlelogo/1x/googlelogo_color_150x54dp.png) no-repeat;margin-left:-5px}@media only screen and (min-resolution:192dpi){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat 0% 0%/100% 100%;-moz-border-image:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) 0}}@media only screen and (-webkit-min-device-pixel-ratio:2){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat;-webkit-background-size:100% 100%}}#logo{display:inline-block;height:54px;width:150px}\n  </style>\n  <a href=//www.google.com/><span id=logo aria-label=Google></span></a>\n  <p><b>404.</b> <ins>That\xe2\x80\x99s an error.</ins>\n  <p>The requested URL <code>/wandb-production.appspot.com/ada4321/DiffHPE/qcppqrir/config.yaml</code> was not found on this server.  <ins>That\xe2\x80\x99s all we know.</ins>\n'
+2023-07-10 15:13:18,001 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: poll_exit
+2023-07-10 15:13:18,002 DEBUG   SenderThread:34294 [sender.py:send_request():396] send_request: poll_exit
+2023-07-10 15:13:19,000 ERROR   wandb-upload_0:34294 [upload_job.py:push():136] Failed to upload file: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_150154-qcppqrir/files/config.yaml
+Traceback (most recent call last):
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/apis/normalize.py", line 41, in wrapper
+    return func(*args, **kwargs)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/lib/retry.py", line 212, in wrapped_fn
+    return retrier(*args, **kargs)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/lib/retry.py", line 131, in __call__
+    result = self._call_fn(*args, **kwargs)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/internal/internal_api.py", line 2218, in upload_file
+    wandb._sentry.reraise(e)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/analytics/sentry.py", line 146, in reraise
+    raise exc.with_traceback(sys.exc_info()[2])
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/internal/internal_api.py", line 2190, in upload_file
+    response.raise_for_status()
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/requests/models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://storage.googleapis.com/wandb-production.appspot.com/ada4321/DiffHPE/qcppqrir/config.yaml?Expires=1689059597&GoogleAccessId=gorilla-files-url-signer-man%40wandb-production.iam.gserviceaccount.com&Signature=IR6BBYYN4biRqDPgPSC%2FUg0ywIZl9kgWsbn5POj6icK1gtqJm57CjTgRFRFk3axDLEAErBS2x09qQ%2BQXOJJWLnkyMFgtgcp0l8nqUG9Lxlp0xpWEV6CkvYc5eTYimiU7QR68SyyYb2iY6NOkpuxJrBzufGbDH7Z3jcWI45fyCs6ds7XIHM0jnel7%2FiDsQRATwp6SUjpuuZVjhbt2yea8jafiFZ5wMaaPzPtu8%2FW6D8Yw7jHd2cxL%2B4zMBQaEPwII5promNwNe7h23PR2Sg5Xqdr3Wnbq3oyAORzUkwLQngFcZdYD6Kzl2dfWGioifyNxYKJhJo0Ekj1zrnMf1LJmRQ%3D%3D
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/filesync/upload_job.py", line 127, in push
+    self._api.upload_file_retry(
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/apis/normalize.py", line 51, in wrapper
+    raise CommError(message, error)
+wandb.errors.CommError: <Response [404]>
+2023-07-10 15:13:19,006 DEBUG   HandlerThread:34294 [handler.py:handle_request():144] handle_request: poll_exit
+2023-07-10 15:13:19,006 DEBUG   SenderThread:34294 [sender.py:send_request():396] send_request: poll_exit
+2023-07-10 15:13:19,214 ERROR   Thread-16 :34294 [step_upload.py:_handle_event():200] Failed to upload file: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_150154-qcppqrir/files/config.yaml
+Traceback (most recent call last):
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/apis/normalize.py", line 41, in wrapper
+    return func(*args, **kwargs)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/lib/retry.py", line 212, in wrapped_fn
+    return retrier(*args, **kargs)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/lib/retry.py", line 131, in __call__
+    result = self._call_fn(*args, **kwargs)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/internal/internal_api.py", line 2218, in upload_file
+    wandb._sentry.reraise(e)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/analytics/sentry.py", line 146, in reraise
+    raise exc.with_traceback(sys.exc_info()[2])
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/internal/internal_api.py", line 2190, in upload_file
+    response.raise_for_status()
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/requests/models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://storage.googleapis.com/wandb-production.appspot.com/ada4321/DiffHPE/qcppqrir/config.yaml?Expires=1689059597&GoogleAccessId=gorilla-files-url-signer-man%40wandb-production.iam.gserviceaccount.com&Signature=IR6BBYYN4biRqDPgPSC%2FUg0ywIZl9kgWsbn5POj6icK1gtqJm57CjTgRFRFk3axDLEAErBS2x09qQ%2BQXOJJWLnkyMFgtgcp0l8nqUG9Lxlp0xpWEV6CkvYc5eTYimiU7QR68SyyYb2iY6NOkpuxJrBzufGbDH7Z3jcWI45fyCs6ds7XIHM0jnel7%2FiDsQRATwp6SUjpuuZVjhbt2yea8jafiFZ5wMaaPzPtu8%2FW6D8Yw7jHd2cxL%2B4zMBQaEPwII5promNwNe7h23PR2Sg5Xqdr3Wnbq3oyAORzUkwLQngFcZdYD6Kzl2dfWGioifyNxYKJhJo0Ekj1zrnMf1LJmRQ%3D%3D
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/filesync/step_upload.py", line 288, in run_and_notify
+    self._do_upload_sync(event)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/filesync/step_upload.py", line 330, in _do_upload_sync
+    job.run()
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/filesync/upload_job.py", line 57, in run
+    self.push()
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/filesync/upload_job.py", line 127, in push
+    self._api.upload_file_retry(
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/apis/normalize.py", line 51, in wrapper
+    raise CommError(message, error)
+wandb.errors.CommError: <Response [404]>
+2023-07-10 15:13:19,263 ERROR   wandb-upload_2:34294 [internal_api.py:upload_file():2192] upload_file exception https://storage.googleapis.com/wandb-production.appspot.com/ada4321/DiffHPE/qcppqrir/wandb-summary.json?Expires=1689059598&GoogleAccessId=gorilla-files-url-signer-man%40wandb-production.iam.gserviceaccount.com&Signature=gtymdsYApU0lfEwnE7BiesQkqfnoLmMwUmpcYadA83AgcwzC14ttyXjlREiD%2BG5w6Yfv3qCX85SinTifCTFRW%2FLIT6zqchUB8tWYsUjdM5UYgozdKemISGbiLwAI%2FgHHN9EcU2OyEI0LQw1sWM7t5z7UQOo6NFscocL%2BXCliNx5NxyQqMNGDdg8T5eRGUuVxDoZaRo8iK2cA8%2BdyIhxoDCwj14zf%2BNBWwqXmt242JWXEtPEVA5W%2Fjkd2cw6t7hStam9%2FqsgKdl2JeMP%2BycHy7slDh0Ecuj%2B4JSDtQwUnorNS38j7GI74QMEr0ylCBqmLd3QdmoSjfPug2sKd4GF0Vw%3D%3D: 404 Client Error: Not Found for url: https://storage.googleapis.com/wandb-production.appspot.com/ada4321/DiffHPE/qcppqrir/wandb-summary.json?Expires=1689059598&GoogleAccessId=gorilla-files-url-signer-man%40wandb-production.iam.gserviceaccount.com&Signature=gtymdsYApU0lfEwnE7BiesQkqfnoLmMwUmpcYadA83AgcwzC14ttyXjlREiD%2BG5w6Yfv3qCX85SinTifCTFRW%2FLIT6zqchUB8tWYsUjdM5UYgozdKemISGbiLwAI%2FgHHN9EcU2OyEI0LQw1sWM7t5z7UQOo6NFscocL%2BXCliNx5NxyQqMNGDdg8T5eRGUuVxDoZaRo8iK2cA8%2BdyIhxoDCwj14zf%2BNBWwqXmt242JWXEtPEVA5W%2Fjkd2cw6t7hStam9%2FqsgKdl2JeMP%2BycHy7slDh0Ecuj%2B4JSDtQwUnorNS38j7GI74QMEr0ylCBqmLd3QdmoSjfPug2sKd4GF0Vw%3D%3D
+2023-07-10 15:13:19,263 ERROR   wandb-upload_2:34294 [internal_api.py:upload_file():2194] upload_file request headers: {'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '28'}
+2023-07-10 15:13:19,263 ERROR   wandb-upload_2:34294 [internal_api.py:upload_file():2196] upload_file response body: b'<!DOCTYPE html>\n<html lang=en>\n  <meta charset=utf-8>\n  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">\n  <title>Error 404 (Not Found)!!1</title>\n  <style>\n    *{margin:0;padding:0}html,code{font:15px/22px arial,sans-serif}html{background:#fff;color:#222;padding:15px}body{margin:7% auto 0;max-width:390px;min-height:180px;padding:30px 0 15px}* > body{background:url(//www.google.com/images/errors/robot.png) 100% 5px no-repeat;padding-right:205px}p{margin:11px 0 22px;overflow:hidden}ins{color:#777;text-decoration:none}a img{border:0}@media screen and (max-width:772px){body{background:none;margin-top:0;max-width:none;padding-right:0}}#logo{background:url(//www.google.com/images/branding/googlelogo/1x/googlelogo_color_150x54dp.png) no-repeat;margin-left:-5px}@media only screen and (min-resolution:192dpi){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat 0% 0%/100% 100%;-moz-border-image:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) 0}}@media only screen and (-webkit-min-device-pixel-ratio:2){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat;-webkit-background-size:100% 100%}}#logo{display:inline-block;height:54px;width:150px}\n  </style>\n  <a href=//www.google.com/><span id=logo aria-label=Google></span></a>\n  <p><b>404.</b> <ins>That\xe2\x80\x99s an error.</ins>\n  <p>The requested URL <code>/wandb-production.appspot.com/ada4321/DiffHPE/qcppqrir/wandb-summary.json</code> was not found on this server.  <ins>That\xe2\x80\x99s all we know.</ins>\n'
+2023-07-10 15:13:19,470 ERROR   wandb-upload_4:34294 [internal_api.py:upload_file():2192] upload_file exception https://storage.googleapis.com/wandb-production.appspot.com/ada4321/DiffHPE/qcppqrir/output.log?Expires=1689059599&GoogleAccessId=gorilla-files-url-signer-man%40wandb-production.iam.gserviceaccount.com&Signature=cTMgP%2FbvR%2Fbum1AKL9yJ9VgIpFTyXJRAayyRUB6%2FA3uLMUMhyz1yUsBPE6rKGctIJhZCxZye%2FBzudulQvAq3Ynasog7x0yepGs6BjwDbgrRw8ffq46%2F0EQcTJtn3szbJ1FbZVvM0Q52RPwP0EWFYQI1esLQ1piUiNpKqhecl59jzlHkWTnMQhXTATE%2F7lNJzklKn4xs2uyRcb5RL2tFy5Stgg57nFoP5IprEFH3zBvJiSTj2mh1HjrLS16nldqb6xOfmC9lK9z5dhFWDA7CdnWzdVh2ODachaauSaKkYVGOafz8FAWL%2ByxgR%2BLMqEEOn1wbwokU3GnvF99kfQ24ZuA%3D%3D: 404 Client Error: Not Found for url: https://storage.googleapis.com/wandb-production.appspot.com/ada4321/DiffHPE/qcppqrir/output.log?Expires=1689059599&GoogleAccessId=gorilla-files-url-signer-man%40wandb-production.iam.gserviceaccount.com&Signature=cTMgP%2FbvR%2Fbum1AKL9yJ9VgIpFTyXJRAayyRUB6%2FA3uLMUMhyz1yUsBPE6rKGctIJhZCxZye%2FBzudulQvAq3Ynasog7x0yepGs6BjwDbgrRw8ffq46%2F0EQcTJtn3szbJ1FbZVvM0Q52RPwP0EWFYQI1esLQ1piUiNpKqhecl59jzlHkWTnMQhXTATE%2F7lNJzklKn4xs2uyRcb5RL2tFy5Stgg57nFoP5IprEFH3zBvJiSTj2mh1HjrLS16nldqb6xOfmC9lK9z5dhFWDA7CdnWzdVh2ODachaauSaKkYVGOafz8FAWL%2ByxgR%2BLMqEEOn1wbwokU3GnvF99kfQ24ZuA%3D%3D
+2023-07-10 15:13:19,470 ERROR   wandb-upload_4:34294 [internal_api.py:upload_file():2194] upload_file request headers: {'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '4348'}
+2023-07-10 15:13:19,470 ERROR   wandb-upload_4:34294 [internal_api.py:upload_file():2196] upload_file response body: b'<!DOCTYPE html>\n<html lang=en>\n  <meta charset=utf-8>\n  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">\n  <title>Error 404 (Not Found)!!1</title>\n  <style>\n    *{margin:0;padding:0}html,code{font:15px/22px arial,sans-serif}html{background:#fff;color:#222;padding:15px}body{margin:7% auto 0;max-width:390px;min-height:180px;padding:30px 0 15px}* > body{background:url(//www.google.com/images/errors/robot.png) 100% 5px no-repeat;padding-right:205px}p{margin:11px 0 22px;overflow:hidden}ins{color:#777;text-decoration:none}a img{border:0}@media screen and (max-width:772px){body{background:none;margin-top:0;max-width:none;padding-right:0}}#logo{background:url(//www.google.com/images/branding/googlelogo/1x/googlelogo_color_150x54dp.png) no-repeat;margin-left:-5px}@media only screen and (min-resolution:192dpi){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat 0% 0%/100% 100%;-moz-border-image:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) 0}}@media only screen and (-webkit-min-device-pixel-ratio:2){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat;-webkit-background-size:100% 100%}}#logo{display:inline-block;height:54px;width:150px}\n  </style>\n  <a href=//www.google.com/><span id=logo aria-label=Google></span></a>\n  <p><b>404.</b> <ins>That\xe2\x80\x99s an error.</ins>\n  <p>The requested URL <code>/wandb-production.appspot.com/ada4321/DiffHPE/qcppqrir/output.log</code> was not found on this server.  <ins>That\xe2\x80\x99s all we know.</ins>\n'

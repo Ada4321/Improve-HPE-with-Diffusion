@@ -1,0 +1,38 @@
+wandb_version: 1
+
+config:
+  desc: null
+  value: config/sanitycheck.json
+phase:
+  desc: null
+  value: train
+gpu_ids:
+  desc: null
+  value: '1'
+_wandb:
+  desc: null
+  value:
+    python_version: 3.9.16
+    cli_version: 0.15.4
+    framework: torch
+    is_jupyter_run: false
+    is_kaggle_kernel: false
+    start_time: 1688985836.818627
+    t:
+      1:
+      - 1
+      - 51
+      - 55
+      2:
+      - 1
+      - 41
+      - 51
+      - 55
+      3:
+      - 13
+      - 16
+      - 23
+      4: 3.9.16
+      5: 0.15.4
+      8:
+      - 5

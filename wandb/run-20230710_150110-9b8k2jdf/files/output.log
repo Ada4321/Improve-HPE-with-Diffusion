@@ -1,0 +1,114 @@
+23-07-10 15:01:12.134 - INFO:   name: sanitycheck
+  phase: train
+  gpu_ids: [1]
+  path:[
+    log: experiments/sanitycheck_230710_150108/logs
+    checkpoint: experiments/sanitycheck_230710_150108/checkpoint
+    resume_state: None
+    json_dt: experiments/sanitycheck_230710_150108/./config/dt_val_results.json
+    json_gt: experiments/sanitycheck_230710_150108/./config/gt_val_results.json
+    experiments_root: experiments/sanitycheck_230710_150108
+  ]
+  datasets:[
+    train:[
+      type: mscoco
+      root: ./data/coco/
+      img_prefix: train2017
+      ann: annotations/person_keypoints_train2017.json
+      aug:[
+        flip: True
+        rot_factor: 45
+        scale_factor: 0.25
+        num_joints_half_body: 3
+        prob_half_body: 0.3
+      ]
+    ]
+    val:[
+      type: mscoco
+      root: ./data/coco/
+      img_prefix: val2017
+      ann: annotations/person_keypoints_val2017.json
+      data_len: 3
+    ]
+    test:[
+      type: mscoco_det
+      root: ./data/coco/
+      img_prefix: val2017
+      det_file: ./config/test_det_rcnn.json
+      ann: annotations/person_keypoints_val2017.json
+    ]
+  ]
+  data_preset:[
+    type: simple
+    sigma: 2
+    num_joints: 17
+    image_size: [256, 192]
+    heatmap_size: [64, 48]
+  ]
+  model:[
+    regressor:[
+      num_layers: 50
+    ]
+    denoise_transformer:[
+      dim: 2048
+      num_time_embeds: 1
+      num_image_embeds: 4
+      num_pose_embeds: 1
+      num_keypoints: 17
+    ]
+    diffusion:[
+      condition_on_preds: True
+    ]
+    beta_schedule:[
+      train:[
+        schedule: linear
+        n_timestep: 2000
+        linear_start: 1e-06
+        linear_end: 0.01
+      ]
+      val:[
+        schedule: linear
+        n_timestep: 2000
+        linear_start: 1e-06
+        linear_end: 0.01
+      ]
+    ]
+  ]
+  loss:[
+    type: sanity_check
+    regress: l1
+  ]
+  train:[
+    batch_size: 32
+    end_epoch: 270
+    optimizer: adam
+    lr: 0.001
+    lr_factor: 0.1
+    lr_step: [170, 200]
+    val_freq: 1000
+    save_checkpoint_freq: 5000
+    print_freq: 200
+    ema_scheduler:[
+      step_start_ema: 5000
+      update_ema_every: 1
+      ema_decay: 0.9999
+    ]
+  ]
+  test:[
+    heatmap2coord: coord
+    batch_size: 32
+  ]
+  wandb:[
+    project_name: DiffHPE
+    run_name: sanitycheck
+  ]
+  distributed: False
+Traceback (most recent call last):
+  File "/home/zhuhe/HPE-with-Diffusion/main.py", line 58, in <module>
+    train_dataset, val_dataset, test_dataset = build_datasets(opt['datasets'], opt['data_preset'])
+  File "/home/zhuhe/HPE-with-Diffusion/datasets/__init__.py", line 25, in build_datasets
+    train_dataset = datasets[train_name](
+  File "/home/zhuhe/HPE-with-Diffusion/datasets/custom.py", line 36, in __init__
+    self._preset_cfg = cfg['preset']
+KeyError: 'preset'
+dict_keys(['heatmap2coord', 'cfg'])

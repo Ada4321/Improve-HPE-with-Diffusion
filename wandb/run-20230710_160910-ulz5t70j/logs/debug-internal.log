@@ -1,0 +1,556 @@
+2023-07-10 16:09:10,503 INFO    StreamThr :53642 [internal.py:wandb_internal():86] W&B internal server running at pid: 53642, started at: 2023-07-10 16:09:10.503450
+2023-07-10 16:09:10,505 DEBUG   HandlerThread:53642 [handler.py:handle_request():144] handle_request: status
+2023-07-10 16:09:10,505 INFO    WriterThread:53642 [datastore.py:open_for_write():85] open: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_160910-ulz5t70j/run-ulz5t70j.wandb
+2023-07-10 16:09:10,506 DEBUG   SenderThread:53642 [sender.py:send():369] send: header
+2023-07-10 16:09:10,506 DEBUG   SenderThread:53642 [sender.py:send():369] send: run
+2023-07-10 16:09:11,469 INFO    SenderThread:53642 [dir_watcher.py:__init__():211] watching files in: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_160910-ulz5t70j/files
+2023-07-10 16:09:11,469 INFO    SenderThread:53642 [sender.py:_start_run_threads():1100] run started: ulz5t70j with start time 1688976550.503276
+2023-07-10 16:09:11,469 DEBUG   SenderThread:53642 [sender.py:send_request():396] send_request: summary_record
+2023-07-10 16:09:11,469 INFO    SenderThread:53642 [sender.py:_save_file():1354] saving file wandb-summary.json with policy end
+2023-07-10 16:09:11,472 DEBUG   HandlerThread:53642 [handler.py:handle_request():144] handle_request: check_version
+2023-07-10 16:09:11,472 DEBUG   SenderThread:53642 [sender.py:send_request():396] send_request: check_version
+2023-07-10 16:09:11,657 DEBUG   HandlerThread:53642 [handler.py:handle_request():144] handle_request: run_start
+2023-07-10 16:09:11,665 DEBUG   HandlerThread:53642 [system_info.py:__init__():31] System info init
+2023-07-10 16:09:11,666 DEBUG   HandlerThread:53642 [system_info.py:__init__():46] System info init done
+2023-07-10 16:09:11,666 INFO    HandlerThread:53642 [system_monitor.py:start():181] Starting system monitor
+2023-07-10 16:09:11,666 INFO    SystemMonitor:53642 [system_monitor.py:_start():145] Starting system asset monitoring threads
+2023-07-10 16:09:11,666 INFO    HandlerThread:53642 [system_monitor.py:probe():201] Collecting system info
+2023-07-10 16:09:11,667 INFO    SystemMonitor:53642 [interfaces.py:start():190] Started cpu monitoring
+2023-07-10 16:09:11,668 INFO    SystemMonitor:53642 [interfaces.py:start():190] Started disk monitoring
+2023-07-10 16:09:11,668 INFO    SystemMonitor:53642 [interfaces.py:start():190] Started gpu monitoring
+2023-07-10 16:09:11,669 INFO    SystemMonitor:53642 [interfaces.py:start():190] Started memory monitoring
+2023-07-10 16:09:11,669 INFO    SystemMonitor:53642 [interfaces.py:start():190] Started network monitoring
+2023-07-10 16:09:11,684 DEBUG   HandlerThread:53642 [system_info.py:probe():195] Probing system
+2023-07-10 16:09:11,688 DEBUG   HandlerThread:53642 [gitlib.py:_init_repo():53] git repository is invalid
+2023-07-10 16:09:11,688 DEBUG   HandlerThread:53642 [system_info.py:probe():240] Probing system done
+2023-07-10 16:09:11,689 DEBUG   HandlerThread:53642 [system_monitor.py:probe():210] {'os': 'Linux-5.19.0-46-generic-x86_64-with-glibc2.35', 'python': '3.9.16', 'heartbeatAt': '2023-07-10T08:09:11.684922', 'startedAt': '2023-07-10T08:09:10.500135', 'docker': None, 'cuda': None, 'args': ('--phase', 'train', '--gpu_ids', '1'), 'state': 'running', 'program': '/home/zhuhe/HPE-with-Diffusion/main.py', 'codePath': 'main.py', 'host': '415-2', 'username': 'zhuhe', 'executable': '/home/zhuhe/.conda/envs/diffhpe/bin/python', 'cpu_count': 16, 'cpu_count_logical': 24, 'cpu_freq': {'current': 2443.6445, 'min': 800.0, 'max': 4783.333333333333}, 'cpu_freq_per_core': [{'current': 1608.748, 'min': 800.0, 'max': 5100.0}, {'current': 2100.0, 'min': 800.0, 'max': 5100.0}, {'current': 3514.697, 'min': 800.0, 'max': 5100.0}, {'current': 2100.0, 'min': 800.0, 'max': 5100.0}, {'current': 2100.0, 'min': 800.0, 'max': 5100.0}, {'current': 3060.347, 'min': 800.0, 'max': 5100.0}, {'current': 3232.456, 'min': 800.0, 'max': 5100.0}, {'current': 2100.0, 'min': 800.0, 'max': 5100.0}, {'current': 3540.969, 'min': 800.0, 'max': 5200.0}, {'current': 2100.0, 'min': 800.0, 'max': 5200.0}, {'current': 2100.0, 'min': 800.0, 'max': 5200.0}, {'current': 3494.954, 'min': 800.0, 'max': 5200.0}, {'current': 2100.0, 'min': 800.0, 'max': 5100.0}, {'current': 3365.328, 'min': 800.0, 'max': 5100.0}, {'current': 2100.0, 'min': 800.0, 'max': 5100.0}, {'current': 3229.969, 'min': 800.0, 'max': 5100.0}, {'current': 2100.0, 'min': 800.0, 'max': 4100.0}, {'current': 2100.0, 'min': 800.0, 'max': 4100.0}, {'current': 2100.0, 'min': 800.0, 'max': 4100.0}, {'current': 2100.0, 'min': 800.0, 'max': 4100.0}, {'current': 2100.0, 'min': 800.0, 'max': 4100.0}, {'current': 2100.0, 'min': 800.0, 'max': 4100.0}, {'current': 2100.0, 'min': 800.0, 'max': 4100.0}, {'current': 2100.0, 'min': 800.0, 'max': 4100.0}], 'disk': {'total': 93.31179428100586, 'used': 0.018451690673828125}, 'gpu': 'NVIDIA GeForce RTX 3090', 'gpu_count': 2, 'gpu_devices': [{'name': 'NVIDIA GeForce RTX 3090', 'memory_total': 25769803776}, {'name': 'NVIDIA GeForce RTX 3090', 'memory_total': 25769803776}], 'memory': {'total': 31.185562133789062}}
+2023-07-10 16:09:11,689 INFO    HandlerThread:53642 [system_monitor.py:probe():211] Finished collecting system info
+2023-07-10 16:09:11,689 INFO    HandlerThread:53642 [system_monitor.py:probe():214] Publishing system info
+2023-07-10 16:09:11,689 DEBUG   HandlerThread:53642 [system_info.py:_save_pip():51] Saving list of pip packages installed into the current environment
+2023-07-10 16:09:11,689 DEBUG   HandlerThread:53642 [system_info.py:_save_pip():67] Saving pip packages done
+2023-07-10 16:09:11,689 DEBUG   HandlerThread:53642 [system_info.py:_save_conda():74] Saving list of conda packages installed into the current environment
+2023-07-10 16:09:12,470 INFO    Thread-12 :53642 [dir_watcher.py:_on_file_created():272] file/dir created: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_160910-ulz5t70j/files/conda-environment.yaml
+2023-07-10 16:09:12,470 INFO    Thread-12 :53642 [dir_watcher.py:_on_file_created():272] file/dir created: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_160910-ulz5t70j/files/requirements.txt
+2023-07-10 16:09:12,470 INFO    Thread-12 :53642 [dir_watcher.py:_on_file_created():272] file/dir created: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_160910-ulz5t70j/files/wandb-summary.json
+2023-07-10 16:09:12,585 DEBUG   HandlerThread:53642 [system_info.py:_save_conda():86] Saving conda packages done
+2023-07-10 16:09:12,586 INFO    HandlerThread:53642 [system_monitor.py:probe():216] Finished publishing system info
+2023-07-10 16:09:12,587 DEBUG   SenderThread:53642 [sender.py:send():369] send: files
+2023-07-10 16:09:12,587 INFO    SenderThread:53642 [sender.py:_save_file():1354] saving file wandb-metadata.json with policy now
+2023-07-10 16:09:12,590 DEBUG   HandlerThread:53642 [handler.py:handle_request():144] handle_request: stop_status
+2023-07-10 16:09:12,591 DEBUG   SenderThread:53642 [sender.py:send_request():396] send_request: stop_status
+2023-07-10 16:09:13,049 ERROR   wandb-upload_0:53642 [internal_api.py:upload_file():2192] upload_file exception https://storage.googleapis.com/wandb-production.appspot.com/ada4321/DiffHPE/ulz5t70j/wandb-metadata.json?Expires=1689062952&GoogleAccessId=gorilla-files-url-signer-man%40wandb-production.iam.gserviceaccount.com&Signature=YeEKfhnZ%2FYmBcIOB2IlGpghTdwDSfEqpt6sVWBpkJL2rmtkRzY0XTOFTL5lZUs5OsCijnWGelc9mkRCxyigJsY%2BD0TM3YlikT6Qy6CkWCwpOiKUVZzfjqRcGA0C5VMDt944APsh13fGraFXkcZUeteS4AYvbWNrGIbuIdhvVbJnrIGoglNjbyo8t79Rft1tFQlvFe3fHDHIVAme7MUga9WxZsctpYX86YDUBbdikia47YypyNn39CYm9rZtRtWu6i7pm6EdVE8a8elfrEIFx3nunWoL8peqqa27Z6rNdhj0vK0Qao2W1eDZXqWCyxjb2GtbgAqeDLnm7xfySSrVyhQ%3D%3D: 404 Client Error: Not Found for url: https://storage.googleapis.com/wandb-production.appspot.com/ada4321/DiffHPE/ulz5t70j/wandb-metadata.json?Expires=1689062952&GoogleAccessId=gorilla-files-url-signer-man%40wandb-production.iam.gserviceaccount.com&Signature=YeEKfhnZ%2FYmBcIOB2IlGpghTdwDSfEqpt6sVWBpkJL2rmtkRzY0XTOFTL5lZUs5OsCijnWGelc9mkRCxyigJsY%2BD0TM3YlikT6Qy6CkWCwpOiKUVZzfjqRcGA0C5VMDt944APsh13fGraFXkcZUeteS4AYvbWNrGIbuIdhvVbJnrIGoglNjbyo8t79Rft1tFQlvFe3fHDHIVAme7MUga9WxZsctpYX86YDUBbdikia47YypyNn39CYm9rZtRtWu6i7pm6EdVE8a8elfrEIFx3nunWoL8peqqa27Z6rNdhj0vK0Qao2W1eDZXqWCyxjb2GtbgAqeDLnm7xfySSrVyhQ%3D%3D
+2023-07-10 16:09:13,049 ERROR   wandb-upload_0:53642 [internal_api.py:upload_file():2194] upload_file request headers: {'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '3687'}
+2023-07-10 16:09:13,049 ERROR   wandb-upload_0:53642 [internal_api.py:upload_file():2196] upload_file response body: b'<!DOCTYPE html>\n<html lang=en>\n  <meta charset=utf-8>\n  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">\n  <title>Error 404 (Not Found)!!1</title>\n  <style>\n    *{margin:0;padding:0}html,code{font:15px/22px arial,sans-serif}html{background:#fff;color:#222;padding:15px}body{margin:7% auto 0;max-width:390px;min-height:180px;padding:30px 0 15px}* > body{background:url(//www.google.com/images/errors/robot.png) 100% 5px no-repeat;padding-right:205px}p{margin:11px 0 22px;overflow:hidden}ins{color:#777;text-decoration:none}a img{border:0}@media screen and (max-width:772px){body{background:none;margin-top:0;max-width:none;padding-right:0}}#logo{background:url(//www.google.com/images/branding/googlelogo/1x/googlelogo_color_150x54dp.png) no-repeat;margin-left:-5px}@media only screen and (min-resolution:192dpi){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat 0% 0%/100% 100%;-moz-border-image:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) 0}}@media only screen and (-webkit-min-device-pixel-ratio:2){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat;-webkit-background-size:100% 100%}}#logo{display:inline-block;height:54px;width:150px}\n  </style>\n  <a href=//www.google.com/><span id=logo aria-label=Google></span></a>\n  <p><b>404.</b> <ins>That\xe2\x80\x99s an error.</ins>\n  <p>The requested URL <code>/wandb-production.appspot.com/ada4321/DiffHPE/ulz5t70j/wandb-metadata.json</code> was not found on this server.  <ins>That\xe2\x80\x99s all we know.</ins>\n'
+2023-07-10 16:09:13,152 DEBUG   SenderThread:53642 [sender.py:send():369] send: telemetry
+2023-07-10 16:09:13,470 INFO    Thread-12 :53642 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_160910-ulz5t70j/files/conda-environment.yaml
+2023-07-10 16:09:13,470 INFO    Thread-12 :53642 [dir_watcher.py:_on_file_created():272] file/dir created: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_160910-ulz5t70j/files/wandb-metadata.json
+2023-07-10 16:09:13,470 INFO    Thread-12 :53642 [dir_watcher.py:_on_file_created():272] file/dir created: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_160910-ulz5t70j/files/output.log
+2023-07-10 16:09:15,052 ERROR   wandb-upload_0:53642 [upload_job.py:push():136] Failed to upload file: /tmp/tmpb74gvenxwandb/0a5nk3a4-wandb-metadata.json
+Traceback (most recent call last):
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/apis/normalize.py", line 41, in wrapper
+    return func(*args, **kwargs)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/lib/retry.py", line 212, in wrapped_fn
+    return retrier(*args, **kargs)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/lib/retry.py", line 131, in __call__
+    result = self._call_fn(*args, **kwargs)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/internal/internal_api.py", line 2218, in upload_file
+    wandb._sentry.reraise(e)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/analytics/sentry.py", line 146, in reraise
+    raise exc.with_traceback(sys.exc_info()[2])
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/internal/internal_api.py", line 2190, in upload_file
+    response.raise_for_status()
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/requests/models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://storage.googleapis.com/wandb-production.appspot.com/ada4321/DiffHPE/ulz5t70j/wandb-metadata.json?Expires=1689062952&GoogleAccessId=gorilla-files-url-signer-man%40wandb-production.iam.gserviceaccount.com&Signature=YeEKfhnZ%2FYmBcIOB2IlGpghTdwDSfEqpt6sVWBpkJL2rmtkRzY0XTOFTL5lZUs5OsCijnWGelc9mkRCxyigJsY%2BD0TM3YlikT6Qy6CkWCwpOiKUVZzfjqRcGA0C5VMDt944APsh13fGraFXkcZUeteS4AYvbWNrGIbuIdhvVbJnrIGoglNjbyo8t79Rft1tFQlvFe3fHDHIVAme7MUga9WxZsctpYX86YDUBbdikia47YypyNn39CYm9rZtRtWu6i7pm6EdVE8a8elfrEIFx3nunWoL8peqqa27Z6rNdhj0vK0Qao2W1eDZXqWCyxjb2GtbgAqeDLnm7xfySSrVyhQ%3D%3D
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/filesync/upload_job.py", line 127, in push
+    self._api.upload_file_retry(
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/apis/normalize.py", line 51, in wrapper
+    raise CommError(message, error)
+wandb.errors.CommError: <Response [404]>
+2023-07-10 16:09:15,471 INFO    Thread-12 :53642 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_160910-ulz5t70j/files/output.log
+2023-07-10 16:09:15,698 ERROR   Thread-11 :53642 [step_upload.py:_handle_event():200] Failed to upload file: /tmp/tmpb74gvenxwandb/0a5nk3a4-wandb-metadata.json
+Traceback (most recent call last):
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/apis/normalize.py", line 41, in wrapper
+    return func(*args, **kwargs)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/lib/retry.py", line 212, in wrapped_fn
+    return retrier(*args, **kargs)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/lib/retry.py", line 131, in __call__
+    result = self._call_fn(*args, **kwargs)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/internal/internal_api.py", line 2218, in upload_file
+    wandb._sentry.reraise(e)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/analytics/sentry.py", line 146, in reraise
+    raise exc.with_traceback(sys.exc_info()[2])
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/internal/internal_api.py", line 2190, in upload_file
+    response.raise_for_status()
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/requests/models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://storage.googleapis.com/wandb-production.appspot.com/ada4321/DiffHPE/ulz5t70j/wandb-metadata.json?Expires=1689062952&GoogleAccessId=gorilla-files-url-signer-man%40wandb-production.iam.gserviceaccount.com&Signature=YeEKfhnZ%2FYmBcIOB2IlGpghTdwDSfEqpt6sVWBpkJL2rmtkRzY0XTOFTL5lZUs5OsCijnWGelc9mkRCxyigJsY%2BD0TM3YlikT6Qy6CkWCwpOiKUVZzfjqRcGA0C5VMDt944APsh13fGraFXkcZUeteS4AYvbWNrGIbuIdhvVbJnrIGoglNjbyo8t79Rft1tFQlvFe3fHDHIVAme7MUga9WxZsctpYX86YDUBbdikia47YypyNn39CYm9rZtRtWu6i7pm6EdVE8a8elfrEIFx3nunWoL8peqqa27Z6rNdhj0vK0Qao2W1eDZXqWCyxjb2GtbgAqeDLnm7xfySSrVyhQ%3D%3D
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/filesync/step_upload.py", line 288, in run_and_notify
+    self._do_upload_sync(event)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/filesync/step_upload.py", line 330, in _do_upload_sync
+    job.run()
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/filesync/upload_job.py", line 57, in run
+    self.push()
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/filesync/upload_job.py", line 127, in push
+    self._api.upload_file_retry(
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/apis/normalize.py", line 51, in wrapper
+    raise CommError(message, error)
+wandb.errors.CommError: <Response [404]>
+2023-07-10 16:09:15,896 DEBUG   HandlerThread:53642 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 16:09:17,471 INFO    Thread-12 :53642 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_160910-ulz5t70j/files/output.log
+2023-07-10 16:09:20,530 DEBUG   SenderThread:53642 [sender.py:send():369] send: telemetry
+2023-07-10 16:09:21,472 INFO    Thread-12 :53642 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_160910-ulz5t70j/files/output.log
+2023-07-10 16:09:21,590 DEBUG   HandlerThread:53642 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 16:09:24,522 DEBUG   SenderThread:53642 [sender.py:send():369] send: exit
+2023-07-10 16:09:24,522 INFO    SenderThread:53642 [sender.py:send_exit():574] handling exit code: 1
+2023-07-10 16:09:24,522 INFO    SenderThread:53642 [sender.py:send_exit():576] handling runtime: 12
+2023-07-10 16:09:24,522 INFO    SenderThread:53642 [sender.py:_save_file():1354] saving file wandb-summary.json with policy end
+2023-07-10 16:09:24,522 INFO    SenderThread:53642 [sender.py:send_exit():582] send defer
+2023-07-10 16:09:24,522 DEBUG   HandlerThread:53642 [handler.py:handle_request():144] handle_request: defer
+2023-07-10 16:09:24,522 INFO    HandlerThread:53642 [handler.py:handle_request_defer():170] handle defer: 0
+2023-07-10 16:09:24,523 DEBUG   SenderThread:53642 [sender.py:send_request():396] send_request: defer
+2023-07-10 16:09:24,523 INFO    SenderThread:53642 [sender.py:send_request_defer():598] handle sender defer: 0
+2023-07-10 16:09:24,523 INFO    SenderThread:53642 [sender.py:transition_state():602] send defer: 1
+2023-07-10 16:09:24,523 DEBUG   HandlerThread:53642 [handler.py:handle_request():144] handle_request: defer
+2023-07-10 16:09:24,523 INFO    HandlerThread:53642 [handler.py:handle_request_defer():170] handle defer: 1
+2023-07-10 16:09:24,523 DEBUG   SenderThread:53642 [sender.py:send_request():396] send_request: defer
+2023-07-10 16:09:24,523 INFO    SenderThread:53642 [sender.py:send_request_defer():598] handle sender defer: 1
+2023-07-10 16:09:24,523 INFO    SenderThread:53642 [sender.py:transition_state():602] send defer: 2
+2023-07-10 16:09:24,523 DEBUG   HandlerThread:53642 [handler.py:handle_request():144] handle_request: defer
+2023-07-10 16:09:24,523 INFO    HandlerThread:53642 [handler.py:handle_request_defer():170] handle defer: 2
+2023-07-10 16:09:24,523 INFO    HandlerThread:53642 [system_monitor.py:finish():190] Stopping system monitor
+2023-07-10 16:09:24,523 DEBUG   SystemMonitor:53642 [system_monitor.py:_start():159] Starting system metrics aggregation loop
+2023-07-10 16:09:24,524 DEBUG   SystemMonitor:53642 [system_monitor.py:_start():166] Finished system metrics aggregation loop
+2023-07-10 16:09:24,524 DEBUG   SystemMonitor:53642 [system_monitor.py:_start():170] Publishing last batch of metrics
+2023-07-10 16:09:24,524 INFO    HandlerThread:53642 [interfaces.py:finish():202] Joined cpu monitor
+2023-07-10 16:09:24,524 INFO    HandlerThread:53642 [interfaces.py:finish():202] Joined disk monitor
+2023-07-10 16:09:24,578 INFO    HandlerThread:53642 [interfaces.py:finish():202] Joined gpu monitor
+2023-07-10 16:09:24,578 INFO    HandlerThread:53642 [interfaces.py:finish():202] Joined memory monitor
+2023-07-10 16:09:24,578 INFO    HandlerThread:53642 [interfaces.py:finish():202] Joined network monitor
+2023-07-10 16:09:24,579 DEBUG   SenderThread:53642 [sender.py:send_request():396] send_request: defer
+2023-07-10 16:09:24,579 INFO    SenderThread:53642 [sender.py:send_request_defer():598] handle sender defer: 2
+2023-07-10 16:09:24,579 INFO    SenderThread:53642 [sender.py:transition_state():602] send defer: 3
+2023-07-10 16:09:24,579 DEBUG   SenderThread:53642 [sender.py:send():369] send: stats
+2023-07-10 16:09:24,579 DEBUG   HandlerThread:53642 [handler.py:handle_request():144] handle_request: defer
+2023-07-10 16:09:24,579 INFO    HandlerThread:53642 [handler.py:handle_request_defer():170] handle defer: 3
+2023-07-10 16:09:24,579 DEBUG   SenderThread:53642 [sender.py:send_request():396] send_request: defer
+2023-07-10 16:09:24,579 INFO    SenderThread:53642 [sender.py:send_request_defer():598] handle sender defer: 3
+2023-07-10 16:09:24,580 INFO    SenderThread:53642 [sender.py:transition_state():602] send defer: 4
+2023-07-10 16:09:24,580 DEBUG   HandlerThread:53642 [handler.py:handle_request():144] handle_request: defer
+2023-07-10 16:09:24,580 INFO    HandlerThread:53642 [handler.py:handle_request_defer():170] handle defer: 4
+2023-07-10 16:09:24,580 DEBUG   SenderThread:53642 [sender.py:send_request():396] send_request: defer
+2023-07-10 16:09:24,580 INFO    SenderThread:53642 [sender.py:send_request_defer():598] handle sender defer: 4
+2023-07-10 16:09:24,580 INFO    SenderThread:53642 [sender.py:transition_state():602] send defer: 5
+2023-07-10 16:09:24,580 DEBUG   HandlerThread:53642 [handler.py:handle_request():144] handle_request: defer
+2023-07-10 16:09:24,580 INFO    HandlerThread:53642 [handler.py:handle_request_defer():170] handle defer: 5
+2023-07-10 16:09:24,580 DEBUG   SenderThread:53642 [sender.py:send():369] send: summary
+2023-07-10 16:09:24,580 INFO    SenderThread:53642 [sender.py:_save_file():1354] saving file wandb-summary.json with policy end
+2023-07-10 16:09:24,581 DEBUG   SenderThread:53642 [sender.py:send_request():396] send_request: defer
+2023-07-10 16:09:24,581 INFO    SenderThread:53642 [sender.py:send_request_defer():598] handle sender defer: 5
+2023-07-10 16:09:24,581 INFO    SenderThread:53642 [sender.py:transition_state():602] send defer: 6
+2023-07-10 16:09:24,581 DEBUG   HandlerThread:53642 [handler.py:handle_request():144] handle_request: defer
+2023-07-10 16:09:24,581 INFO    HandlerThread:53642 [handler.py:handle_request_defer():170] handle defer: 6
+2023-07-10 16:09:24,581 DEBUG   SenderThread:53642 [sender.py:send_request():396] send_request: defer
+2023-07-10 16:09:24,581 INFO    SenderThread:53642 [sender.py:send_request_defer():598] handle sender defer: 6
+2023-07-10 16:09:24,583 DEBUG   HandlerThread:53642 [handler.py:handle_request():144] handle_request: status_report
+2023-07-10 16:09:24,913 INFO    SenderThread:53642 [sender.py:transition_state():602] send defer: 7
+2023-07-10 16:09:24,914 DEBUG   HandlerThread:53642 [handler.py:handle_request():144] handle_request: defer
+2023-07-10 16:09:24,914 INFO    HandlerThread:53642 [handler.py:handle_request_defer():170] handle defer: 7
+2023-07-10 16:09:24,915 DEBUG   SenderThread:53642 [sender.py:send_request():396] send_request: defer
+2023-07-10 16:09:24,915 INFO    SenderThread:53642 [sender.py:send_request_defer():598] handle sender defer: 7
+2023-07-10 16:09:25,474 INFO    Thread-12 :53642 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_160910-ulz5t70j/files/config.yaml
+2023-07-10 16:09:25,475 INFO    Thread-12 :53642 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_160910-ulz5t70j/files/wandb-summary.json
+2023-07-10 16:09:25,475 INFO    Thread-12 :53642 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_160910-ulz5t70j/files/output.log
+2023-07-10 16:09:25,522 DEBUG   HandlerThread:53642 [handler.py:handle_request():144] handle_request: poll_exit
+2023-07-10 16:09:27,172 INFO    SenderThread:53642 [sender.py:transition_state():602] send defer: 8
+2023-07-10 16:09:27,173 DEBUG   SenderThread:53642 [sender.py:send_request():396] send_request: poll_exit
+2023-07-10 16:09:27,173 DEBUG   HandlerThread:53642 [handler.py:handle_request():144] handle_request: defer
+2023-07-10 16:09:27,173 INFO    HandlerThread:53642 [handler.py:handle_request_defer():170] handle defer: 8
+2023-07-10 16:09:27,174 DEBUG   SenderThread:53642 [sender.py:send_request():396] send_request: defer
+2023-07-10 16:09:27,174 INFO    SenderThread:53642 [sender.py:send_request_defer():598] handle sender defer: 8
+2023-07-10 16:09:27,174 INFO    SenderThread:53642 [job_builder.py:build():232] Attempting to build job artifact
+2023-07-10 16:09:27,175 INFO    SenderThread:53642 [job_builder.py:build():266] no source found
+2023-07-10 16:09:27,175 INFO    SenderThread:53642 [sender.py:transition_state():602] send defer: 9
+2023-07-10 16:09:27,175 DEBUG   HandlerThread:53642 [handler.py:handle_request():144] handle_request: defer
+2023-07-10 16:09:27,175 INFO    HandlerThread:53642 [handler.py:handle_request_defer():170] handle defer: 9
+2023-07-10 16:09:27,176 DEBUG   SenderThread:53642 [sender.py:send_request():396] send_request: defer
+2023-07-10 16:09:27,176 INFO    SenderThread:53642 [sender.py:send_request_defer():598] handle sender defer: 9
+2023-07-10 16:09:27,176 INFO    SenderThread:53642 [dir_watcher.py:finish():359] shutting down directory watcher
+2023-07-10 16:09:27,475 INFO    Thread-12 :53642 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_160910-ulz5t70j/files/output.log
+2023-07-10 16:09:27,476 INFO    SenderThread:53642 [dir_watcher.py:finish():389] scan: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_160910-ulz5t70j/files
+2023-07-10 16:09:27,477 INFO    SenderThread:53642 [dir_watcher.py:finish():403] scan save: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_160910-ulz5t70j/files/wandb-metadata.json wandb-metadata.json
+2023-07-10 16:09:27,477 INFO    SenderThread:53642 [dir_watcher.py:finish():403] scan save: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_160910-ulz5t70j/files/config.yaml config.yaml
+2023-07-10 16:09:27,477 INFO    SenderThread:53642 [dir_watcher.py:finish():403] scan save: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_160910-ulz5t70j/files/requirements.txt requirements.txt
+2023-07-10 16:09:27,477 INFO    SenderThread:53642 [dir_watcher.py:finish():403] scan save: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_160910-ulz5t70j/files/wandb-summary.json wandb-summary.json
+2023-07-10 16:09:27,477 INFO    SenderThread:53642 [dir_watcher.py:finish():403] scan save: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_160910-ulz5t70j/files/conda-environment.yaml conda-environment.yaml
+2023-07-10 16:09:27,478 INFO    SenderThread:53642 [dir_watcher.py:finish():403] scan save: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_160910-ulz5t70j/files/output.log output.log
+2023-07-10 16:09:27,478 INFO    SenderThread:53642 [sender.py:transition_state():602] send defer: 10
+2023-07-10 16:09:27,478 DEBUG   HandlerThread:53642 [handler.py:handle_request():144] handle_request: defer
+2023-07-10 16:09:27,479 INFO    HandlerThread:53642 [handler.py:handle_request_defer():170] handle defer: 10
+2023-07-10 16:09:27,493 DEBUG   SenderThread:53642 [sender.py:send_request():396] send_request: defer
+2023-07-10 16:09:27,493 INFO    SenderThread:53642 [sender.py:send_request_defer():598] handle sender defer: 10
+2023-07-10 16:09:27,494 INFO    SenderThread:53642 [file_pusher.py:finish():159] shutting down file pusher
+2023-07-10 16:09:28,015 ERROR   wandb-upload_1:53642 [internal_api.py:upload_file():2192] upload_file exception https://storage.googleapis.com/wandb-production.appspot.com/ada4321/DiffHPE/ulz5t70j/config.yaml?Expires=1689062967&GoogleAccessId=gorilla-files-url-signer-man%40wandb-production.iam.gserviceaccount.com&Signature=K2ku%2FMe64XRB69SKcvCvNYten3dvfotfW2j8qcgDorbocBLA%2Bsksrt%2B7WzMQn9bmLIIGcjLkIu%2Fzu9TGPnIxNAnXx40WrfO1n5xm9AY08iW9yeQGsEqfyRhW4cz6o3lbDW9Oq77wbTyKNKEalhDNDv3SHkaP4eAaRnNvfKXUKM6k8%2FfuBxR%2BtYLLKocPJjAAerdyp4lwF%2BIm0lo4J8c54mfoLaa5wybDwlcaew2QoBC0kykATPTl4UyzYOGa8MmnwQuZ7cHEfukS5UM3UFCQapI0f2X39k2MG2QQvnf6KYhm8neVoSR0uo%2F%2FjxKxPiNRrKAYyVjGTXsBs5bC%2FsldHA%3D%3D: 404 Client Error: Not Found for url: https://storage.googleapis.com/wandb-production.appspot.com/ada4321/DiffHPE/ulz5t70j/config.yaml?Expires=1689062967&GoogleAccessId=gorilla-files-url-signer-man%40wandb-production.iam.gserviceaccount.com&Signature=K2ku%2FMe64XRB69SKcvCvNYten3dvfotfW2j8qcgDorbocBLA%2Bsksrt%2B7WzMQn9bmLIIGcjLkIu%2Fzu9TGPnIxNAnXx40WrfO1n5xm9AY08iW9yeQGsEqfyRhW4cz6o3lbDW9Oq77wbTyKNKEalhDNDv3SHkaP4eAaRnNvfKXUKM6k8%2FfuBxR%2BtYLLKocPJjAAerdyp4lwF%2BIm0lo4J8c54mfoLaa5wybDwlcaew2QoBC0kykATPTl4UyzYOGa8MmnwQuZ7cHEfukS5UM3UFCQapI0f2X39k2MG2QQvnf6KYhm8neVoSR0uo%2F%2FjxKxPiNRrKAYyVjGTXsBs5bC%2FsldHA%3D%3D
+2023-07-10 16:09:28,016 ERROR   wandb-upload_1:53642 [internal_api.py:upload_file():2194] upload_file request headers: {'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '525'}
+2023-07-10 16:09:28,016 ERROR   wandb-upload_1:53642 [internal_api.py:upload_file():2196] upload_file response body: b'<!DOCTYPE html>\n<html lang=en>\n  <meta charset=utf-8>\n  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">\n  <title>Error 404 (Not Found)!!1</title>\n  <style>\n    *{margin:0;padding:0}html,code{font:15px/22px arial,sans-serif}html{background:#fff;color:#222;padding:15px}body{margin:7% auto 0;max-width:390px;min-height:180px;padding:30px 0 15px}* > body{background:url(//www.google.com/images/errors/robot.png) 100% 5px no-repeat;padding-right:205px}p{margin:11px 0 22px;overflow:hidden}ins{color:#777;text-decoration:none}a img{border:0}@media screen and (max-width:772px){body{background:none;margin-top:0;max-width:none;padding-right:0}}#logo{background:url(//www.google.com/images/branding/googlelogo/1x/googlelogo_color_150x54dp.png) no-repeat;margin-left:-5px}@media only screen and (min-resolution:192dpi){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat 0% 0%/100% 100%;-moz-border-image:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) 0}}@media only screen and (-webkit-min-device-pixel-ratio:2){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat;-webkit-background-size:100% 100%}}#logo{display:inline-block;height:54px;width:150px}\n  </style>\n  <a href=//www.google.com/><span id=logo aria-label=Google></span></a>\n  <p><b>404.</b> <ins>That\xe2\x80\x99s an error.</ins>\n  <p>The requested URL <code>/wandb-production.appspot.com/ada4321/DiffHPE/ulz5t70j/config.yaml</code> was not found on this server.  <ins>That\xe2\x80\x99s all we know.</ins>\n'
+2023-07-10 16:09:28,026 ERROR   wandb-upload_2:53642 [internal_api.py:upload_file():2192] upload_file exception https://storage.googleapis.com/wandb-production.appspot.com/ada4321/DiffHPE/ulz5t70j/requirements.txt?Expires=1689062967&GoogleAccessId=gorilla-files-url-signer-man%40wandb-production.iam.gserviceaccount.com&Signature=CrrO42ozbRbEsDIfQrHeI0H6%2B1KZADQ%2B9Kbe2LDiY80r4orngNIGImUZd4eVXTY64yUlAXBkZO8dKvru9rC3q%2FICfCRXZ4sZLu4pAi97tRyejSq6tDvduD3CqPOx%2Bv1uTEAhvkmCtdoIXgsZgTqdwfft5uD3F2et7xRO9uJZkVKpGZxrNVeVORGWOtKynN46A1JuCI%2Fta%2BWxn5VGgtjbj4mViRMsULpTEqtq7Bg5EKgudFsh7Pmbyz%2B9wFejyWVGM6xT3iB6bsoudUq6SkRFEPa72tURa5%2BVOAxXWBD2suMhG3sNmZKcd5u8KRd686q9yw%2BDpksgDuDD10JS1bax8g%3D%3D: 404 Client Error: Not Found for url: https://storage.googleapis.com/wandb-production.appspot.com/ada4321/DiffHPE/ulz5t70j/requirements.txt?Expires=1689062967&GoogleAccessId=gorilla-files-url-signer-man%40wandb-production.iam.gserviceaccount.com&Signature=CrrO42ozbRbEsDIfQrHeI0H6%2B1KZADQ%2B9Kbe2LDiY80r4orngNIGImUZd4eVXTY64yUlAXBkZO8dKvru9rC3q%2FICfCRXZ4sZLu4pAi97tRyejSq6tDvduD3CqPOx%2Bv1uTEAhvkmCtdoIXgsZgTqdwfft5uD3F2et7xRO9uJZkVKpGZxrNVeVORGWOtKynN46A1JuCI%2Fta%2BWxn5VGgtjbj4mViRMsULpTEqtq7Bg5EKgudFsh7Pmbyz%2B9wFejyWVGM6xT3iB6bsoudUq6SkRFEPa72tURa5%2BVOAxXWBD2suMhG3sNmZKcd5u8KRd686q9yw%2BDpksgDuDD10JS1bax8g%3D%3D
+2023-07-10 16:09:28,026 ERROR   wandb-upload_2:53642 [internal_api.py:upload_file():2194] upload_file request headers: {'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '910'}
+2023-07-10 16:09:28,026 ERROR   wandb-upload_2:53642 [internal_api.py:upload_file():2196] upload_file response body: b'<!DOCTYPE html>\n<html lang=en>\n  <meta charset=utf-8>\n  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">\n  <title>Error 404 (Not Found)!!1</title>\n  <style>\n    *{margin:0;padding:0}html,code{font:15px/22px arial,sans-serif}html{background:#fff;color:#222;padding:15px}body{margin:7% auto 0;max-width:390px;min-height:180px;padding:30px 0 15px}* > body{background:url(//www.google.com/images/errors/robot.png) 100% 5px no-repeat;padding-right:205px}p{margin:11px 0 22px;overflow:hidden}ins{color:#777;text-decoration:none}a img{border:0}@media screen and (max-width:772px){body{background:none;margin-top:0;max-width:none;padding-right:0}}#logo{background:url(//www.google.com/images/branding/googlelogo/1x/googlelogo_color_150x54dp.png) no-repeat;margin-left:-5px}@media only screen and (min-resolution:192dpi){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat 0% 0%/100% 100%;-moz-border-image:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) 0}}@media only screen and (-webkit-min-device-pixel-ratio:2){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat;-webkit-background-size:100% 100%}}#logo{display:inline-block;height:54px;width:150px}\n  </style>\n  <a href=//www.google.com/><span id=logo aria-label=Google></span></a>\n  <p><b>404.</b> <ins>That\xe2\x80\x99s an error.</ins>\n  <p>The requested URL <code>/wandb-production.appspot.com/ada4321/DiffHPE/ulz5t70j/requirements.txt</code> was not found on this server.  <ins>That\xe2\x80\x99s all we know.</ins>\n'
+2023-07-10 16:09:28,365 ERROR   wandb-upload_0:53642 [internal_api.py:upload_file():2192] upload_file exception https://storage.googleapis.com/wandb-production.appspot.com/ada4321/DiffHPE/ulz5t70j/wandb-summary.json?Expires=1689062968&GoogleAccessId=gorilla-files-url-signer-man%40wandb-production.iam.gserviceaccount.com&Signature=Pd%2Bo2Nw%2Bbr1lnng3utQrAlr9g4tKirxJf%2BnwHxpWfEj%2F6pHu40a4xnvOTex7hDRx8eaY7CrZDxLsIIXctG9imsZs5DkxGulroEB%2FrZbJPjjHF8rMeYiSmx1TrOwMkFqI%2FY5QbGGieUVYXKBVvnUiRwhRE%2B7FgZxRUr6gcmzrqf4wF9e%2FqhO2YfiwHOt0%2FSuYtz78y2%2Fzgx2rCTZybbLCBofn1dEN%2BNEEhFILmv%2BrpKz6NaKCjH9qP2YidPyBMU8xEoW%2Fn15ZdxAVsiCnmBWOIgbra8pXwTiuKbWrI5P9EuxJjBrKEWJOrkusQfp1K5QTa8sVNNltBw5IghmsGiXWjw%3D%3D: 404 Client Error: Not Found for url: https://storage.googleapis.com/wandb-production.appspot.com/ada4321/DiffHPE/ulz5t70j/wandb-summary.json?Expires=1689062968&GoogleAccessId=gorilla-files-url-signer-man%40wandb-production.iam.gserviceaccount.com&Signature=Pd%2Bo2Nw%2Bbr1lnng3utQrAlr9g4tKirxJf%2BnwHxpWfEj%2F6pHu40a4xnvOTex7hDRx8eaY7CrZDxLsIIXctG9imsZs5DkxGulroEB%2FrZbJPjjHF8rMeYiSmx1TrOwMkFqI%2FY5QbGGieUVYXKBVvnUiRwhRE%2B7FgZxRUr6gcmzrqf4wF9e%2FqhO2YfiwHOt0%2FSuYtz78y2%2Fzgx2rCTZybbLCBofn1dEN%2BNEEhFILmv%2BrpKz6NaKCjH9qP2YidPyBMU8xEoW%2Fn15ZdxAVsiCnmBWOIgbra8pXwTiuKbWrI5P9EuxJjBrKEWJOrkusQfp1K5QTa8sVNNltBw5IghmsGiXWjw%3D%3D
+2023-07-10 16:09:28,366 ERROR   wandb-upload_0:53642 [internal_api.py:upload_file():2194] upload_file request headers: {'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '27'}
+2023-07-10 16:09:28,366 ERROR   wandb-upload_0:53642 [internal_api.py:upload_file():2196] upload_file response body: b'<!DOCTYPE html>\n<html lang=en>\n  <meta charset=utf-8>\n  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">\n  <title>Error 404 (Not Found)!!1</title>\n  <style>\n    *{margin:0;padding:0}html,code{font:15px/22px arial,sans-serif}html{background:#fff;color:#222;padding:15px}body{margin:7% auto 0;max-width:390px;min-height:180px;padding:30px 0 15px}* > body{background:url(//www.google.com/images/errors/robot.png) 100% 5px no-repeat;padding-right:205px}p{margin:11px 0 22px;overflow:hidden}ins{color:#777;text-decoration:none}a img{border:0}@media screen and (max-width:772px){body{background:none;margin-top:0;max-width:none;padding-right:0}}#logo{background:url(//www.google.com/images/branding/googlelogo/1x/googlelogo_color_150x54dp.png) no-repeat;margin-left:-5px}@media only screen and (min-resolution:192dpi){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat 0% 0%/100% 100%;-moz-border-image:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) 0}}@media only screen and (-webkit-min-device-pixel-ratio:2){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat;-webkit-background-size:100% 100%}}#logo{display:inline-block;height:54px;width:150px}\n  </style>\n  <a href=//www.google.com/><span id=logo aria-label=Google></span></a>\n  <p><b>404.</b> <ins>That\xe2\x80\x99s an error.</ins>\n  <p>The requested URL <code>/wandb-production.appspot.com/ada4321/DiffHPE/ulz5t70j/wandb-summary.json</code> was not found on this server.  <ins>That\xe2\x80\x99s all we know.</ins>\n'
+2023-07-10 16:09:28,517 ERROR   wandb-upload_3:53642 [internal_api.py:upload_file():2192] upload_file exception https://storage.googleapis.com/wandb-production.appspot.com/ada4321/DiffHPE/ulz5t70j/conda-environment.yaml?Expires=1689062968&GoogleAccessId=gorilla-files-url-signer-man%40wandb-production.iam.gserviceaccount.com&Signature=SvYtdjyVXXEheIE2WCzhinJmQT5tYkBufztLqpIG%2FrxJ%2F9QES%2BCkGyIRxVfMqQOL%2B9tvETrix0qrYdx1RJ10%2Bl7n4Okx6%2BPVT7W0jjYsDP2SCKlWL1wEvgWYE8cr2FYhFPMoj74zQbDzOTCMazxdYlBQ51lIVf9EdurZvai5iNd5srdLMB4KTClyNAucCJoJy7O0l26TKaezwgmb2G%2FAIFgwabLYPZJ8R%2FLHvbiM%2B2ADzvtPVzrJmqYR%2B3JixCpOMUU9M1Ap3ARMuUDEhSxUjEfMelKmFxO2EdKZz%2F%2BXEuXM0fFXpe3AryhQX33rMNMtY6RvVstKCELMVWyi6yWQAQ%3D%3D: 404 Client Error: Not Found for url: https://storage.googleapis.com/wandb-production.appspot.com/ada4321/DiffHPE/ulz5t70j/conda-environment.yaml?Expires=1689062968&GoogleAccessId=gorilla-files-url-signer-man%40wandb-production.iam.gserviceaccount.com&Signature=SvYtdjyVXXEheIE2WCzhinJmQT5tYkBufztLqpIG%2FrxJ%2F9QES%2BCkGyIRxVfMqQOL%2B9tvETrix0qrYdx1RJ10%2Bl7n4Okx6%2BPVT7W0jjYsDP2SCKlWL1wEvgWYE8cr2FYhFPMoj74zQbDzOTCMazxdYlBQ51lIVf9EdurZvai5iNd5srdLMB4KTClyNAucCJoJy7O0l26TKaezwgmb2G%2FAIFgwabLYPZJ8R%2FLHvbiM%2B2ADzvtPVzrJmqYR%2B3JixCpOMUU9M1Ap3ARMuUDEhSxUjEfMelKmFxO2EdKZz%2F%2BXEuXM0fFXpe3AryhQX33rMNMtY6RvVstKCELMVWyi6yWQAQ%3D%3D
+2023-07-10 16:09:28,517 ERROR   wandb-upload_3:53642 [internal_api.py:upload_file():2194] upload_file request headers: {'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '1903'}
+2023-07-10 16:09:28,517 ERROR   wandb-upload_3:53642 [internal_api.py:upload_file():2196] upload_file response body: b'<!DOCTYPE html>\n<html lang=en>\n  <meta charset=utf-8>\n  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">\n  <title>Error 404 (Not Found)!!1</title>\n  <style>\n    *{margin:0;padding:0}html,code{font:15px/22px arial,sans-serif}html{background:#fff;color:#222;padding:15px}body{margin:7% auto 0;max-width:390px;min-height:180px;padding:30px 0 15px}* > body{background:url(//www.google.com/images/errors/robot.png) 100% 5px no-repeat;padding-right:205px}p{margin:11px 0 22px;overflow:hidden}ins{color:#777;text-decoration:none}a img{border:0}@media screen and (max-width:772px){body{background:none;margin-top:0;max-width:none;padding-right:0}}#logo{background:url(//www.google.com/images/branding/googlelogo/1x/googlelogo_color_150x54dp.png) no-repeat;margin-left:-5px}@media only screen and (min-resolution:192dpi){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat 0% 0%/100% 100%;-moz-border-image:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) 0}}@media only screen and (-webkit-min-device-pixel-ratio:2){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat;-webkit-background-size:100% 100%}}#logo{display:inline-block;height:54px;width:150px}\n  </style>\n  <a href=//www.google.com/><span id=logo aria-label=Google></span></a>\n  <p><b>404.</b> <ins>That\xe2\x80\x99s an error.</ins>\n  <p>The requested URL <code>/wandb-production.appspot.com/ada4321/DiffHPE/ulz5t70j/conda-environment.yaml</code> was not found on this server.  <ins>That\xe2\x80\x99s all we know.</ins>\n'
+2023-07-10 16:09:28,531 ERROR   wandb-upload_4:53642 [internal_api.py:upload_file():2192] upload_file exception https://storage.googleapis.com/wandb-production.appspot.com/ada4321/DiffHPE/ulz5t70j/output.log?Expires=1689062968&GoogleAccessId=gorilla-files-url-signer-man%40wandb-production.iam.gserviceaccount.com&Signature=vde1QgmSuKhrpmmYPgCkDoEMM0nZ13WVyS9aXcdcnQCSWFq8hkAd5uXBg6bytXqzkoXI7adN2%2BVMVlZ3pZzEhLLaJ2Y1MomfzSx9yj1FpWQz%2BJr73MK7Y6ChaZ3%2Bdu2cbDWuPqRCIZ9FGf%2BCxUHHrr%2BqwHAuiW28nP7TRN4J8IBvPzq%2B64nBa5lTKJFjydATJVzVpYC4CsXVc3pzRl06sToHecRTMo1398GfN%2BFgr%2FpG1mwbJHFAT3yL0WmvTffTDVxRjLOX69nuN2IIaiXpsRewyt%2BztHEdooGzzk85Y3gM6M1oT0QrBv69RA6Y4JAvszbCUcjQUU6%2FhLYnlxclSQ%3D%3D: 404 Client Error: Not Found for url: https://storage.googleapis.com/wandb-production.appspot.com/ada4321/DiffHPE/ulz5t70j/output.log?Expires=1689062968&GoogleAccessId=gorilla-files-url-signer-man%40wandb-production.iam.gserviceaccount.com&Signature=vde1QgmSuKhrpmmYPgCkDoEMM0nZ13WVyS9aXcdcnQCSWFq8hkAd5uXBg6bytXqzkoXI7adN2%2BVMVlZ3pZzEhLLaJ2Y1MomfzSx9yj1FpWQz%2BJr73MK7Y6ChaZ3%2Bdu2cbDWuPqRCIZ9FGf%2BCxUHHrr%2BqwHAuiW28nP7TRN4J8IBvPzq%2B64nBa5lTKJFjydATJVzVpYC4CsXVc3pzRl06sToHecRTMo1398GfN%2BFgr%2FpG1mwbJHFAT3yL0WmvTffTDVxRjLOX69nuN2IIaiXpsRewyt%2BztHEdooGzzk85Y3gM6M1oT0QrBv69RA6Y4JAvszbCUcjQUU6%2FhLYnlxclSQ%3D%3D
+2023-07-10 16:09:28,531 ERROR   wandb-upload_4:53642 [internal_api.py:upload_file():2194] upload_file request headers: {'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '27096'}
+2023-07-10 16:09:28,531 ERROR   wandb-upload_4:53642 [internal_api.py:upload_file():2196] upload_file response body: b'<!DOCTYPE html>\n<html lang=en>\n  <meta charset=utf-8>\n  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">\n  <title>Error 404 (Not Found)!!1</title>\n  <style>\n    *{margin:0;padding:0}html,code{font:15px/22px arial,sans-serif}html{background:#fff;color:#222;padding:15px}body{margin:7% auto 0;max-width:390px;min-height:180px;padding:30px 0 15px}* > body{background:url(//www.google.com/images/errors/robot.png) 100% 5px no-repeat;padding-right:205px}p{margin:11px 0 22px;overflow:hidden}ins{color:#777;text-decoration:none}a img{border:0}@media screen and (max-width:772px){body{background:none;margin-top:0;max-width:none;padding-right:0}}#logo{background:url(//www.google.com/images/branding/googlelogo/1x/googlelogo_color_150x54dp.png) no-repeat;margin-left:-5px}@media only screen and (min-resolution:192dpi){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat 0% 0%/100% 100%;-moz-border-image:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) 0}}@media only screen and (-webkit-min-device-pixel-ratio:2){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat;-webkit-background-size:100% 100%}}#logo{display:inline-block;height:54px;width:150px}\n  </style>\n  <a href=//www.google.com/><span id=logo aria-label=Google></span></a>\n  <p><b>404.</b> <ins>That\xe2\x80\x99s an error.</ins>\n  <p>The requested URL <code>/wandb-production.appspot.com/ada4321/DiffHPE/ulz5t70j/output.log</code> was not found on this server.  <ins>That\xe2\x80\x99s all we know.</ins>\n'
+2023-07-10 16:09:29,111 ERROR   wandb-upload_1:53642 [upload_job.py:push():136] Failed to upload file: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_160910-ulz5t70j/files/config.yaml
+Traceback (most recent call last):
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/apis/normalize.py", line 41, in wrapper
+    return func(*args, **kwargs)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/lib/retry.py", line 212, in wrapped_fn
+    return retrier(*args, **kargs)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/lib/retry.py", line 131, in __call__
+    result = self._call_fn(*args, **kwargs)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/internal/internal_api.py", line 2218, in upload_file
+    wandb._sentry.reraise(e)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/analytics/sentry.py", line 146, in reraise
+    raise exc.with_traceback(sys.exc_info()[2])
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/internal/internal_api.py", line 2190, in upload_file
+    response.raise_for_status()
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/requests/models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://storage.googleapis.com/wandb-production.appspot.com/ada4321/DiffHPE/ulz5t70j/config.yaml?Expires=1689062967&GoogleAccessId=gorilla-files-url-signer-man%40wandb-production.iam.gserviceaccount.com&Signature=K2ku%2FMe64XRB69SKcvCvNYten3dvfotfW2j8qcgDorbocBLA%2Bsksrt%2B7WzMQn9bmLIIGcjLkIu%2Fzu9TGPnIxNAnXx40WrfO1n5xm9AY08iW9yeQGsEqfyRhW4cz6o3lbDW9Oq77wbTyKNKEalhDNDv3SHkaP4eAaRnNvfKXUKM6k8%2FfuBxR%2BtYLLKocPJjAAerdyp4lwF%2BIm0lo4J8c54mfoLaa5wybDwlcaew2QoBC0kykATPTl4UyzYOGa8MmnwQuZ7cHEfukS5UM3UFCQapI0f2X39k2MG2QQvnf6KYhm8neVoSR0uo%2F%2FjxKxPiNRrKAYyVjGTXsBs5bC%2FsldHA%3D%3D
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/filesync/upload_job.py", line 127, in push
+    self._api.upload_file_retry(
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/apis/normalize.py", line 51, in wrapper
+    raise CommError(message, error)
+wandb.errors.CommError: <Response [404]>
+2023-07-10 16:09:29,112 ERROR   wandb-upload_2:53642 [upload_job.py:push():136] Failed to upload file: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_160910-ulz5t70j/files/requirements.txt
+Traceback (most recent call last):
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/apis/normalize.py", line 41, in wrapper
+    return func(*args, **kwargs)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/lib/retry.py", line 212, in wrapped_fn
+    return retrier(*args, **kargs)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/lib/retry.py", line 131, in __call__
+    result = self._call_fn(*args, **kwargs)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/internal/internal_api.py", line 2218, in upload_file
+    wandb._sentry.reraise(e)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/analytics/sentry.py", line 146, in reraise
+    raise exc.with_traceback(sys.exc_info()[2])
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/internal/internal_api.py", line 2190, in upload_file
+    response.raise_for_status()
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/requests/models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://storage.googleapis.com/wandb-production.appspot.com/ada4321/DiffHPE/ulz5t70j/requirements.txt?Expires=1689062967&GoogleAccessId=gorilla-files-url-signer-man%40wandb-production.iam.gserviceaccount.com&Signature=CrrO42ozbRbEsDIfQrHeI0H6%2B1KZADQ%2B9Kbe2LDiY80r4orngNIGImUZd4eVXTY64yUlAXBkZO8dKvru9rC3q%2FICfCRXZ4sZLu4pAi97tRyejSq6tDvduD3CqPOx%2Bv1uTEAhvkmCtdoIXgsZgTqdwfft5uD3F2et7xRO9uJZkVKpGZxrNVeVORGWOtKynN46A1JuCI%2Fta%2BWxn5VGgtjbj4mViRMsULpTEqtq7Bg5EKgudFsh7Pmbyz%2B9wFejyWVGM6xT3iB6bsoudUq6SkRFEPa72tURa5%2BVOAxXWBD2suMhG3sNmZKcd5u8KRd686q9yw%2BDpksgDuDD10JS1bax8g%3D%3D
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/filesync/upload_job.py", line 127, in push
+    self._api.upload_file_retry(
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/apis/normalize.py", line 51, in wrapper
+    raise CommError(message, error)
+wandb.errors.CommError: <Response [404]>
+2023-07-10 16:09:29,112 ERROR   wandb-upload_0:53642 [upload_job.py:push():136] Failed to upload file: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_160910-ulz5t70j/files/wandb-summary.json
+Traceback (most recent call last):
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/apis/normalize.py", line 41, in wrapper
+    return func(*args, **kwargs)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/lib/retry.py", line 212, in wrapped_fn
+    return retrier(*args, **kargs)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/lib/retry.py", line 131, in __call__
+    result = self._call_fn(*args, **kwargs)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/internal/internal_api.py", line 2218, in upload_file
+    wandb._sentry.reraise(e)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/analytics/sentry.py", line 146, in reraise
+    raise exc.with_traceback(sys.exc_info()[2])
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/internal/internal_api.py", line 2190, in upload_file
+    response.raise_for_status()
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/requests/models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://storage.googleapis.com/wandb-production.appspot.com/ada4321/DiffHPE/ulz5t70j/wandb-summary.json?Expires=1689062968&GoogleAccessId=gorilla-files-url-signer-man%40wandb-production.iam.gserviceaccount.com&Signature=Pd%2Bo2Nw%2Bbr1lnng3utQrAlr9g4tKirxJf%2BnwHxpWfEj%2F6pHu40a4xnvOTex7hDRx8eaY7CrZDxLsIIXctG9imsZs5DkxGulroEB%2FrZbJPjjHF8rMeYiSmx1TrOwMkFqI%2FY5QbGGieUVYXKBVvnUiRwhRE%2B7FgZxRUr6gcmzrqf4wF9e%2FqhO2YfiwHOt0%2FSuYtz78y2%2Fzgx2rCTZybbLCBofn1dEN%2BNEEhFILmv%2BrpKz6NaKCjH9qP2YidPyBMU8xEoW%2Fn15ZdxAVsiCnmBWOIgbra8pXwTiuKbWrI5P9EuxJjBrKEWJOrkusQfp1K5QTa8sVNNltBw5IghmsGiXWjw%3D%3D
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/filesync/upload_job.py", line 127, in push
+    self._api.upload_file_retry(
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/apis/normalize.py", line 51, in wrapper
+    raise CommError(message, error)
+wandb.errors.CommError: <Response [404]>
+2023-07-10 16:09:29,113 ERROR   wandb-upload_3:53642 [upload_job.py:push():136] Failed to upload file: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_160910-ulz5t70j/files/conda-environment.yaml
+Traceback (most recent call last):
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/apis/normalize.py", line 41, in wrapper
+    return func(*args, **kwargs)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/lib/retry.py", line 212, in wrapped_fn
+    return retrier(*args, **kargs)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/lib/retry.py", line 131, in __call__
+    result = self._call_fn(*args, **kwargs)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/internal/internal_api.py", line 2218, in upload_file
+    wandb._sentry.reraise(e)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/analytics/sentry.py", line 146, in reraise
+    raise exc.with_traceback(sys.exc_info()[2])
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/internal/internal_api.py", line 2190, in upload_file
+    response.raise_for_status()
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/requests/models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://storage.googleapis.com/wandb-production.appspot.com/ada4321/DiffHPE/ulz5t70j/conda-environment.yaml?Expires=1689062968&GoogleAccessId=gorilla-files-url-signer-man%40wandb-production.iam.gserviceaccount.com&Signature=SvYtdjyVXXEheIE2WCzhinJmQT5tYkBufztLqpIG%2FrxJ%2F9QES%2BCkGyIRxVfMqQOL%2B9tvETrix0qrYdx1RJ10%2Bl7n4Okx6%2BPVT7W0jjYsDP2SCKlWL1wEvgWYE8cr2FYhFPMoj74zQbDzOTCMazxdYlBQ51lIVf9EdurZvai5iNd5srdLMB4KTClyNAucCJoJy7O0l26TKaezwgmb2G%2FAIFgwabLYPZJ8R%2FLHvbiM%2B2ADzvtPVzrJmqYR%2B3JixCpOMUU9M1Ap3ARMuUDEhSxUjEfMelKmFxO2EdKZz%2F%2BXEuXM0fFXpe3AryhQX33rMNMtY6RvVstKCELMVWyi6yWQAQ%3D%3D
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/filesync/upload_job.py", line 127, in push
+    self._api.upload_file_retry(
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/apis/normalize.py", line 51, in wrapper
+    raise CommError(message, error)
+wandb.errors.CommError: <Response [404]>
+2023-07-10 16:09:29,113 ERROR   wandb-upload_4:53642 [upload_job.py:push():136] Failed to upload file: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_160910-ulz5t70j/files/output.log
+Traceback (most recent call last):
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/apis/normalize.py", line 41, in wrapper
+    return func(*args, **kwargs)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/lib/retry.py", line 212, in wrapped_fn
+    return retrier(*args, **kargs)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/lib/retry.py", line 131, in __call__
+    result = self._call_fn(*args, **kwargs)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/internal/internal_api.py", line 2218, in upload_file
+    wandb._sentry.reraise(e)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/analytics/sentry.py", line 146, in reraise
+    raise exc.with_traceback(sys.exc_info()[2])
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/internal/internal_api.py", line 2190, in upload_file
+    response.raise_for_status()
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/requests/models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://storage.googleapis.com/wandb-production.appspot.com/ada4321/DiffHPE/ulz5t70j/output.log?Expires=1689062968&GoogleAccessId=gorilla-files-url-signer-man%40wandb-production.iam.gserviceaccount.com&Signature=vde1QgmSuKhrpmmYPgCkDoEMM0nZ13WVyS9aXcdcnQCSWFq8hkAd5uXBg6bytXqzkoXI7adN2%2BVMVlZ3pZzEhLLaJ2Y1MomfzSx9yj1FpWQz%2BJr73MK7Y6ChaZ3%2Bdu2cbDWuPqRCIZ9FGf%2BCxUHHrr%2BqwHAuiW28nP7TRN4J8IBvPzq%2B64nBa5lTKJFjydATJVzVpYC4CsXVc3pzRl06sToHecRTMo1398GfN%2BFgr%2FpG1mwbJHFAT3yL0WmvTffTDVxRjLOX69nuN2IIaiXpsRewyt%2BztHEdooGzzk85Y3gM6M1oT0QrBv69RA6Y4JAvszbCUcjQUU6%2FhLYnlxclSQ%3D%3D
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/filesync/upload_job.py", line 127, in push
+    self._api.upload_file_retry(
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/apis/normalize.py", line 51, in wrapper
+    raise CommError(message, error)
+wandb.errors.CommError: <Response [404]>
+2023-07-10 16:09:30,233 ERROR   Thread-11 :53642 [step_upload.py:_handle_event():200] Failed to upload file: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_160910-ulz5t70j/files/config.yaml
+Traceback (most recent call last):
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/apis/normalize.py", line 41, in wrapper
+    return func(*args, **kwargs)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/lib/retry.py", line 212, in wrapped_fn
+    return retrier(*args, **kargs)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/lib/retry.py", line 131, in __call__
+    result = self._call_fn(*args, **kwargs)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/internal/internal_api.py", line 2218, in upload_file
+    wandb._sentry.reraise(e)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/analytics/sentry.py", line 146, in reraise
+    raise exc.with_traceback(sys.exc_info()[2])
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/internal/internal_api.py", line 2190, in upload_file
+    response.raise_for_status()
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/requests/models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://storage.googleapis.com/wandb-production.appspot.com/ada4321/DiffHPE/ulz5t70j/config.yaml?Expires=1689062967&GoogleAccessId=gorilla-files-url-signer-man%40wandb-production.iam.gserviceaccount.com&Signature=K2ku%2FMe64XRB69SKcvCvNYten3dvfotfW2j8qcgDorbocBLA%2Bsksrt%2B7WzMQn9bmLIIGcjLkIu%2Fzu9TGPnIxNAnXx40WrfO1n5xm9AY08iW9yeQGsEqfyRhW4cz6o3lbDW9Oq77wbTyKNKEalhDNDv3SHkaP4eAaRnNvfKXUKM6k8%2FfuBxR%2BtYLLKocPJjAAerdyp4lwF%2BIm0lo4J8c54mfoLaa5wybDwlcaew2QoBC0kykATPTl4UyzYOGa8MmnwQuZ7cHEfukS5UM3UFCQapI0f2X39k2MG2QQvnf6KYhm8neVoSR0uo%2F%2FjxKxPiNRrKAYyVjGTXsBs5bC%2FsldHA%3D%3D
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/filesync/step_upload.py", line 288, in run_and_notify
+    self._do_upload_sync(event)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/filesync/step_upload.py", line 330, in _do_upload_sync
+    job.run()
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/filesync/upload_job.py", line 57, in run
+    self.push()
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/filesync/upload_job.py", line 127, in push
+    self._api.upload_file_retry(
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/apis/normalize.py", line 51, in wrapper
+    raise CommError(message, error)
+wandb.errors.CommError: <Response [404]>
+2023-07-10 16:09:30,235 ERROR   Thread-11 :53642 [step_upload.py:_handle_event():200] Failed to upload file: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_160910-ulz5t70j/files/requirements.txt
+Traceback (most recent call last):
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/apis/normalize.py", line 41, in wrapper
+    return func(*args, **kwargs)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/lib/retry.py", line 212, in wrapped_fn
+    return retrier(*args, **kargs)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/lib/retry.py", line 131, in __call__
+    result = self._call_fn(*args, **kwargs)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/internal/internal_api.py", line 2218, in upload_file
+    wandb._sentry.reraise(e)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/analytics/sentry.py", line 146, in reraise
+    raise exc.with_traceback(sys.exc_info()[2])
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/internal/internal_api.py", line 2190, in upload_file
+    response.raise_for_status()
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/requests/models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://storage.googleapis.com/wandb-production.appspot.com/ada4321/DiffHPE/ulz5t70j/requirements.txt?Expires=1689062967&GoogleAccessId=gorilla-files-url-signer-man%40wandb-production.iam.gserviceaccount.com&Signature=CrrO42ozbRbEsDIfQrHeI0H6%2B1KZADQ%2B9Kbe2LDiY80r4orngNIGImUZd4eVXTY64yUlAXBkZO8dKvru9rC3q%2FICfCRXZ4sZLu4pAi97tRyejSq6tDvduD3CqPOx%2Bv1uTEAhvkmCtdoIXgsZgTqdwfft5uD3F2et7xRO9uJZkVKpGZxrNVeVORGWOtKynN46A1JuCI%2Fta%2BWxn5VGgtjbj4mViRMsULpTEqtq7Bg5EKgudFsh7Pmbyz%2B9wFejyWVGM6xT3iB6bsoudUq6SkRFEPa72tURa5%2BVOAxXWBD2suMhG3sNmZKcd5u8KRd686q9yw%2BDpksgDuDD10JS1bax8g%3D%3D
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/filesync/step_upload.py", line 288, in run_and_notify
+    self._do_upload_sync(event)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/filesync/step_upload.py", line 330, in _do_upload_sync
+    job.run()
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/filesync/upload_job.py", line 57, in run
+    self.push()
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/filesync/upload_job.py", line 127, in push
+    self._api.upload_file_retry(
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/apis/normalize.py", line 51, in wrapper
+    raise CommError(message, error)
+wandb.errors.CommError: <Response [404]>
+2023-07-10 16:09:30,236 ERROR   Thread-11 :53642 [step_upload.py:_handle_event():200] Failed to upload file: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_160910-ulz5t70j/files/wandb-summary.json
+Traceback (most recent call last):
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/apis/normalize.py", line 41, in wrapper
+    return func(*args, **kwargs)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/lib/retry.py", line 212, in wrapped_fn
+    return retrier(*args, **kargs)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/lib/retry.py", line 131, in __call__
+    result = self._call_fn(*args, **kwargs)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/internal/internal_api.py", line 2218, in upload_file
+    wandb._sentry.reraise(e)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/analytics/sentry.py", line 146, in reraise
+    raise exc.with_traceback(sys.exc_info()[2])
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/internal/internal_api.py", line 2190, in upload_file
+    response.raise_for_status()
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/requests/models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://storage.googleapis.com/wandb-production.appspot.com/ada4321/DiffHPE/ulz5t70j/wandb-summary.json?Expires=1689062968&GoogleAccessId=gorilla-files-url-signer-man%40wandb-production.iam.gserviceaccount.com&Signature=Pd%2Bo2Nw%2Bbr1lnng3utQrAlr9g4tKirxJf%2BnwHxpWfEj%2F6pHu40a4xnvOTex7hDRx8eaY7CrZDxLsIIXctG9imsZs5DkxGulroEB%2FrZbJPjjHF8rMeYiSmx1TrOwMkFqI%2FY5QbGGieUVYXKBVvnUiRwhRE%2B7FgZxRUr6gcmzrqf4wF9e%2FqhO2YfiwHOt0%2FSuYtz78y2%2Fzgx2rCTZybbLCBofn1dEN%2BNEEhFILmv%2BrpKz6NaKCjH9qP2YidPyBMU8xEoW%2Fn15ZdxAVsiCnmBWOIgbra8pXwTiuKbWrI5P9EuxJjBrKEWJOrkusQfp1K5QTa8sVNNltBw5IghmsGiXWjw%3D%3D
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/filesync/step_upload.py", line 288, in run_and_notify
+    self._do_upload_sync(event)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/filesync/step_upload.py", line 330, in _do_upload_sync
+    job.run()
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/filesync/upload_job.py", line 57, in run
+    self.push()
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/filesync/upload_job.py", line 127, in push
+    self._api.upload_file_retry(
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/apis/normalize.py", line 51, in wrapper
+    raise CommError(message, error)
+wandb.errors.CommError: <Response [404]>
+2023-07-10 16:09:30,237 ERROR   Thread-11 :53642 [step_upload.py:_handle_event():200] Failed to upload file: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_160910-ulz5t70j/files/output.log
+Traceback (most recent call last):
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/apis/normalize.py", line 41, in wrapper
+    return func(*args, **kwargs)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/lib/retry.py", line 212, in wrapped_fn
+    return retrier(*args, **kargs)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/lib/retry.py", line 131, in __call__
+    result = self._call_fn(*args, **kwargs)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/internal/internal_api.py", line 2218, in upload_file
+    wandb._sentry.reraise(e)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/analytics/sentry.py", line 146, in reraise
+    raise exc.with_traceback(sys.exc_info()[2])
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/internal/internal_api.py", line 2190, in upload_file
+    response.raise_for_status()
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/requests/models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://storage.googleapis.com/wandb-production.appspot.com/ada4321/DiffHPE/ulz5t70j/output.log?Expires=1689062968&GoogleAccessId=gorilla-files-url-signer-man%40wandb-production.iam.gserviceaccount.com&Signature=vde1QgmSuKhrpmmYPgCkDoEMM0nZ13WVyS9aXcdcnQCSWFq8hkAd5uXBg6bytXqzkoXI7adN2%2BVMVlZ3pZzEhLLaJ2Y1MomfzSx9yj1FpWQz%2BJr73MK7Y6ChaZ3%2Bdu2cbDWuPqRCIZ9FGf%2BCxUHHrr%2BqwHAuiW28nP7TRN4J8IBvPzq%2B64nBa5lTKJFjydATJVzVpYC4CsXVc3pzRl06sToHecRTMo1398GfN%2BFgr%2FpG1mwbJHFAT3yL0WmvTffTDVxRjLOX69nuN2IIaiXpsRewyt%2BztHEdooGzzk85Y3gM6M1oT0QrBv69RA6Y4JAvszbCUcjQUU6%2FhLYnlxclSQ%3D%3D
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/filesync/step_upload.py", line 288, in run_and_notify
+    self._do_upload_sync(event)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/filesync/step_upload.py", line 330, in _do_upload_sync
+    job.run()
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/filesync/upload_job.py", line 57, in run
+    self.push()
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/filesync/upload_job.py", line 127, in push
+    self._api.upload_file_retry(
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/apis/normalize.py", line 51, in wrapper
+    raise CommError(message, error)
+wandb.errors.CommError: <Response [404]>
+2023-07-10 16:09:30,237 ERROR   Thread-11 :53642 [step_upload.py:_handle_event():200] Failed to upload file: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_160910-ulz5t70j/files/conda-environment.yaml
+Traceback (most recent call last):
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/apis/normalize.py", line 41, in wrapper
+    return func(*args, **kwargs)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/lib/retry.py", line 212, in wrapped_fn
+    return retrier(*args, **kargs)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/lib/retry.py", line 131, in __call__
+    result = self._call_fn(*args, **kwargs)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/internal/internal_api.py", line 2218, in upload_file
+    wandb._sentry.reraise(e)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/analytics/sentry.py", line 146, in reraise
+    raise exc.with_traceback(sys.exc_info()[2])
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/sdk/internal/internal_api.py", line 2190, in upload_file
+    response.raise_for_status()
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/requests/models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://storage.googleapis.com/wandb-production.appspot.com/ada4321/DiffHPE/ulz5t70j/conda-environment.yaml?Expires=1689062968&GoogleAccessId=gorilla-files-url-signer-man%40wandb-production.iam.gserviceaccount.com&Signature=SvYtdjyVXXEheIE2WCzhinJmQT5tYkBufztLqpIG%2FrxJ%2F9QES%2BCkGyIRxVfMqQOL%2B9tvETrix0qrYdx1RJ10%2Bl7n4Okx6%2BPVT7W0jjYsDP2SCKlWL1wEvgWYE8cr2FYhFPMoj74zQbDzOTCMazxdYlBQ51lIVf9EdurZvai5iNd5srdLMB4KTClyNAucCJoJy7O0l26TKaezwgmb2G%2FAIFgwabLYPZJ8R%2FLHvbiM%2B2ADzvtPVzrJmqYR%2B3JixCpOMUU9M1Ap3ARMuUDEhSxUjEfMelKmFxO2EdKZz%2F%2BXEuXM0fFXpe3AryhQX33rMNMtY6RvVstKCELMVWyi6yWQAQ%3D%3D
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/filesync/step_upload.py", line 288, in run_and_notify
+    self._do_upload_sync(event)
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/filesync/step_upload.py", line 330, in _do_upload_sync
+    job.run()
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/filesync/upload_job.py", line 57, in run
+    self.push()
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/filesync/upload_job.py", line 127, in push
+    self._api.upload_file_retry(
+  File "/home/zhuhe/.conda/envs/diffhpe/lib/python3.9/site-packages/wandb/apis/normalize.py", line 51, in wrapper
+    raise CommError(message, error)
+wandb.errors.CommError: <Response [404]>
+2023-07-10 16:09:30,438 INFO    Thread-11 :53642 [sender.py:transition_state():602] send defer: 11
+2023-07-10 16:09:30,438 DEBUG   HandlerThread:53642 [handler.py:handle_request():144] handle_request: defer
+2023-07-10 16:09:30,439 INFO    HandlerThread:53642 [handler.py:handle_request_defer():170] handle defer: 11
+2023-07-10 16:09:30,439 DEBUG   SenderThread:53642 [sender.py:send_request():396] send_request: defer
+2023-07-10 16:09:30,440 INFO    SenderThread:53642 [sender.py:send_request_defer():598] handle sender defer: 11
+2023-07-10 16:09:30,440 INFO    SenderThread:53642 [file_pusher.py:join():164] waiting for file pusher
+2023-07-10 16:09:30,440 INFO    SenderThread:53642 [sender.py:transition_state():602] send defer: 12
+2023-07-10 16:09:30,440 DEBUG   HandlerThread:53642 [handler.py:handle_request():144] handle_request: defer
+2023-07-10 16:09:30,440 INFO    HandlerThread:53642 [handler.py:handle_request_defer():170] handle defer: 12
+2023-07-10 16:09:30,441 DEBUG   SenderThread:53642 [sender.py:send_request():396] send_request: defer
+2023-07-10 16:09:30,441 INFO    SenderThread:53642 [sender.py:send_request_defer():598] handle sender defer: 12
+2023-07-10 16:09:30,524 DEBUG   HandlerThread:53642 [handler.py:handle_request():144] handle_request: keepalive
+2023-07-10 16:09:30,682 INFO    SenderThread:53642 [sender.py:transition_state():602] send defer: 13
+2023-07-10 16:09:30,682 DEBUG   HandlerThread:53642 [handler.py:handle_request():144] handle_request: defer
+2023-07-10 16:09:30,682 INFO    HandlerThread:53642 [handler.py:handle_request_defer():170] handle defer: 13
+2023-07-10 16:09:30,683 DEBUG   SenderThread:53642 [sender.py:send_request():396] send_request: defer
+2023-07-10 16:09:30,683 INFO    SenderThread:53642 [sender.py:send_request_defer():598] handle sender defer: 13
+2023-07-10 16:09:30,683 INFO    SenderThread:53642 [sender.py:transition_state():602] send defer: 14
+2023-07-10 16:09:30,683 DEBUG   HandlerThread:53642 [handler.py:handle_request():144] handle_request: defer
+2023-07-10 16:09:30,683 INFO    HandlerThread:53642 [handler.py:handle_request_defer():170] handle defer: 14
+2023-07-10 16:09:30,683 DEBUG   SenderThread:53642 [sender.py:send():369] send: final
+2023-07-10 16:09:30,683 DEBUG   SenderThread:53642 [sender.py:send():369] send: footer
+2023-07-10 16:09:30,683 DEBUG   SenderThread:53642 [sender.py:send_request():396] send_request: defer
+2023-07-10 16:09:30,683 INFO    SenderThread:53642 [sender.py:send_request_defer():598] handle sender defer: 14
+2023-07-10 16:09:30,684 DEBUG   HandlerThread:53642 [handler.py:handle_request():144] handle_request: poll_exit
+2023-07-10 16:09:30,684 DEBUG   HandlerThread:53642 [handler.py:handle_request():144] handle_request: server_info
+2023-07-10 16:09:30,684 DEBUG   HandlerThread:53642 [handler.py:handle_request():144] handle_request: get_summary
+2023-07-10 16:09:30,684 DEBUG   SenderThread:53642 [sender.py:send_request():396] send_request: poll_exit
+2023-07-10 16:09:30,684 DEBUG   HandlerThread:53642 [handler.py:handle_request():144] handle_request: sampled_history
+2023-07-10 16:09:30,684 DEBUG   SenderThread:53642 [sender.py:send_request():396] send_request: server_info
+2023-07-10 16:09:31,290 INFO    MainThread:53642 [wandb_run.py:_footer_history_summary_info():3467] rendering history
+2023-07-10 16:09:31,290 INFO    MainThread:53642 [wandb_run.py:_footer_history_summary_info():3499] rendering summary
+2023-07-10 16:09:31,290 INFO    MainThread:53642 [wandb_run.py:_footer_sync_info():3426] logging synced files
+2023-07-10 16:09:31,291 DEBUG   HandlerThread:53642 [handler.py:handle_request():144] handle_request: shutdown
+2023-07-10 16:09:31,291 INFO    HandlerThread:53642 [handler.py:finish():854] shutting down handler
+2023-07-10 16:09:31,684 INFO    WriterThread:53642 [datastore.py:close():298] close: /home/zhuhe/HPE-with-Diffusion/wandb/run-20230710_160910-ulz5t70j/run-ulz5t70j.wandb
+2023-07-10 16:09:32,290 INFO    SenderThread:53642 [sender.py:finish():1526] shutting down sender
+2023-07-10 16:09:32,290 INFO    SenderThread:53642 [file_pusher.py:finish():159] shutting down file pusher
+2023-07-10 16:09:32,290 INFO    SenderThread:53642 [file_pusher.py:join():164] waiting for file pusher
