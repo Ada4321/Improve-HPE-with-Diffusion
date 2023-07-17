@@ -94,7 +94,7 @@
         "diffusion": "l2"
     },
     "train": {
-        "batch_size": 32,
+        "batch_size": 16,
         "end_epoch": 270,
         "optimizer": "adam",
         "lr": 0.001,
@@ -111,7 +111,7 @@
     },
     "test":{
         "heatmap2coord": "coord",
-        "batch_size": 32
+        "batch_size": 16
     },
     "wandb": {
         "project_name": "DiffHPE",

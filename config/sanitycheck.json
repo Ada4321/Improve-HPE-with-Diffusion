@@ -7,7 +7,7 @@
     "path": { //set the path
         "log": "logs",
         "checkpoint": "checkpoint",
-        "resume_state": "/home/zhuhe/HPE-with-Diffusion/experiments/sanitycheck_230711_005022/checkpoint/I90000_E19",
+        "resume_state": "/home/zhuhe/HPE-with-Diffusion/experiments/sanitycheck_230711_135310/checkpoint/I465000_E99",
         "json_dt": "/home/zhuhe/HPE-with-Diffusion/config/dt_val_results",
         "json_gt": "/home/zhuhe/HPE-with-Diffusion/config/gt_val_results"
         // "resume_state": "experiments/sr_ffhq_210806_204158/checkpoint/I640000_E37" //pretrain model or training state
@@ -93,15 +93,15 @@
         "regress": "l1"
     },
     "train": {
-        "batch_size": 32,
+        "batch_size": 48,
         "end_epoch": 270,
         "optimizer": "adam",
         "lr": 0.001,
         "lr_factor": 0.1,
         "lr_step": [170, 200],
-        "val_freq": 5000,    
-        "save_checkpoint_freq": 5000,
-        "print_freq": 50,  
+        "val_freq": 10000,    
+        "save_checkpoint_freq": 10000,
+        "print_freq": 200,  
         "ema_scheduler": {  // not used now
             "step_start_ema": 5000,
             "update_ema_every": 1,
@@ -110,7 +110,7 @@
     },
     "test":{
         "heatmap2coord": "coord",
-        "batch_size": 32
+        "batch_size": 48
     },
     "wandb": {
         "project_name": "DiffHPE",
