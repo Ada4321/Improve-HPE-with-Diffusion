@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 
 import sys
-sys.path.append('/home/zhuhe/HPE-with-Diffusion/model/regression_modules')
+sys.path.append('/home/ubuntu/Improve-HPE-with-Diffusion/model/regression_modules')
 from Resnet import ResNet
 
 

@@ -6,6 +6,8 @@ from inspect import isfunction
 from functools import partial
 import numpy as np
 from tqdm import tqdm
+import sys
+sys.path.append('/home/ubuntu/Improve-HPE-with-Diffusion')
 from core.criterion import build_criterion
 
 
@@ -277,7 +279,11 @@ class GaussianDiffusion(nn.Module):
     # def forward(self, x, *args, **kwargs):
     def forward(self, images, gt):
         # preds, im_feats, l_reg = self.regress(images=images, gt=gt)
-        preds, im_feats = self.regress(images=images)
+        if self.loss_opt['type'] == 'fixed_res_and_diff':
+            with torch.no_grad:
+                preds, im_feats = self.regress(images=images)
+        else:
+            preds, im_feats = self.regress(images=images)
 
         gt_res = torch.abs(preds - gt)
         x_in = {

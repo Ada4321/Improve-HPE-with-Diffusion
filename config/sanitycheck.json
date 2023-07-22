@@ -95,8 +95,12 @@
     "train": {
         "batch_size": 48,
         "end_epoch": 270,
-        "optimizer": "adam",
-        "lr": 0.001,
+        "optimizer":{
+            "reg": "adam"
+        },
+        "lr": {
+            "reg": 0.001
+        },
         "lr_factor": 0.1,
         "lr_step": [170, 200],
         "val_freq": 10000,    

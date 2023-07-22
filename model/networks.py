@@ -6,11 +6,13 @@ from torch.nn import init
 from torch.nn import modules
 logger = logging.getLogger('base')
 import sys
-sys.path.append('/home/zhuhe/HPE-with-Diffusion/model')
+sys.path.append('/home/ubuntu/Improve-HPE-with-Diffusion/model')
 
 from diffusion_modules.diffusion import GaussianDiffusion
 from diffusion_modules.denoise_transformer import DenoiseTransformer
 from regression_modules.regressor import Regressor
+
+from torch.nn.parallel import DistributedDataParallel as DDP
 
 ####################
 # initialize
@@ -107,6 +109,8 @@ def define_G(opt):
         # init_weights(netG, init_type='orthogonal')
     if opt['gpu_ids'] and opt['distributed']:
         assert torch.cuda.is_available()
-        netG = nn.DataParallel(netG)
+        # netG = nn.DataParallel(netG)
+        netG = netG.to(opt['current_id'])
+        netG = DDP(netG, device_ids=[opt['current_id']])
 
     return netG  # a nn.Module or DataParallel

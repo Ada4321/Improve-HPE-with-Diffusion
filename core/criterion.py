@@ -12,9 +12,8 @@ class SanityCheck(nn.Module):
             raise NotImplementedError
     
     def forward(self, **kwargs):
-        loss = self.loss_fn(kwargs['preds'], kwargs['gt'])
-        return {'reg_loss': loss,
-                'loss': loss}
+        loss = self.loss_fn(kwargs['preds'], kwargs['gt']) / len(kwargs['preds'])
+        return {'reg_loss': loss}
     
 class FixedResDiff(nn.Module):
     def __init__(self, opt, device) -> None:
@@ -27,9 +26,8 @@ class FixedResDiff(nn.Module):
             raise NotImplementedError 
     
     def forward(self, **kwargs):
-        loss = self.loss_fn(kwargs['pred_noise'], kwargs['gt_noise'])
-        return {'diff_loss': loss,
-                'loss': loss}
+        loss = self.loss_fn(kwargs['pred_noise'], kwargs['gt_noise']) / len(kwargs['pred_noise'])
+        return {'diff_loss': loss}
     
 class ResDiff(nn.Module):
     def __init__(self, opt, device) -> None:
@@ -47,12 +45,13 @@ class ResDiff(nn.Module):
         return loss_fn
 
     def forward(self, **kwargs):
-        reg_loss = self.res_loss_fn(kwargs['preds'], kwargs['gt'])
-        diff_loss = self.diff_loss_fn(kwargs['pred_noise'], kwargs['gt_noise'])
+
+        reg_loss = self.res_loss_fn(kwargs['preds'], kwargs['gt']) / len(kwargs['preds'])
+        diff_loss = self.diff_loss_fn(kwargs['pred_noise'], kwargs['gt_noise']) / len(kwargs['pred_noise'])
         losses = {
             'reg_loss': reg_loss,
             'diff_loss': diff_loss,
-            'loss': reg_loss + diff_loss,
+            # 'loss': reg_loss + diff_loss,
         }
         return  losses
     
@@ -72,12 +71,12 @@ class ResDiffPlus(nn.Module):
         return loss_fn
     
     def forward(self, **kwargs):
-        reg_loss = self.res_loss_fn(kwargs['preds']+kwargs['res'], kwargs['gt'])
-        diff_loss = self.diff_loss_fn(kwargs['pred_noise'], kwargs['gt_noise'])
+        reg_loss = self.res_loss_fn(kwargs['preds']+kwargs['res'], kwargs['gt']) / len(kwargs['preds'])
+        diff_loss = self.diff_loss_fn(kwargs['pred_noise'], kwargs['gt_noise']) / len(kwargs['pred_noise'])
         losses = {
             'reg_loss': reg_loss,
             'diff_loss': diff_loss,
-            'loss': reg_loss + diff_loss,
+            # 'loss': reg_loss + diff_loss,
         }
         return  losses
 
