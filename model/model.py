@@ -92,17 +92,18 @@ class DDPM(BaseModel):
 
 
     def optimize_parameters(self):
+        self.opt_reg.zero_grad()
+        self.opt_diff.zero_grad()
+
         losses = self.netG(self.data['images'], self.data['gt_kps'])
         
         if 'reg_loss' in losses:
-            self.opt_reg.zero_grad()
             losses['reg_loss'].backward()
-            self.opt_reg.step()
-
+            self.opt_reg.step()  
         if 'diff_loss' in losses:
-            self.opt_diff.zero_grad()
             losses['diff_loss'].backward()
             self.opt_diff.step()
+        dist.barrier()
 
         # set log
         for k,v in losses.items():

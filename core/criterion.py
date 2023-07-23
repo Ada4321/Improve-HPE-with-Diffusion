@@ -71,7 +71,7 @@ class ResDiffPlus(nn.Module):
         return loss_fn
     
     def forward(self, **kwargs):
-        reg_loss = self.res_loss_fn(kwargs['preds']+kwargs['res'], kwargs['gt']) / len(kwargs['preds'])
+        reg_loss = self.res_loss_fn(kwargs['preds']+kwargs['res'].detach(), kwargs['gt']) / len(kwargs['preds'])
         diff_loss = self.diff_loss_fn(kwargs['pred_noise'], kwargs['gt_noise']) / len(kwargs['pred_noise'])
         losses = {
             'reg_loss': reg_loss,

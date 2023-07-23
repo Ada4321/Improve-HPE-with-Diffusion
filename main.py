@@ -20,10 +20,10 @@ from torch.utils.data import DataLoader
 from torch.distributed import init_process_group, destroy_process_group
 import torch.distributed as dist
 import sys
-sys.path.append('/home/ubuntu/Improve-HPE-with-Diffusion')
+sys.path.append('/home/zhuhe/Improve-HPE-with-Diffusion-7.22/Improve-HPE-with-Diffusion')
 from core.dist import *
 
-num_gpu = torch.cuda.device_count()
+# num_gpu = torch.cuda.device_count()
 
 
 def _init_fn(worker_id):
@@ -56,7 +56,8 @@ def ddp_setup(rank, world_size):
 
 
 def main_worker(gpu, opt, args):
-    ddp_setup(gpu, num_gpu)
+    if opt['distributed']:
+        ddp_setup(gpu, opt['world_size'])
 
     # set up seed
     if opt['seed'] is not None:
@@ -83,7 +84,7 @@ def main_worker(gpu, opt, args):
         logger.info('Initial Dataset Finished')
 
     # dataloder
-    if not is_distributed():
+    if not opt['distributed']:
         train_loader = DataLoader(
             train_dataset, batch_size=opt['train']['batch_size'], shuffle=True)
         val_loader = DataLoader(
@@ -92,20 +93,20 @@ def main_worker(gpu, opt, args):
             test_dataset, batch_size=opt['test']['batch_size'], shuffle=False)
     else:
         train_sampler = DistributedSampler(
-            train_dataset, num_replicas=num_gpu, rank=get_rank())
+            train_dataset, num_replicas=opt['world_size'], rank=get_rank())
         train_loader = DataLoader(
-            train_dataset, batch_size=opt['train']['batch_size'], shuffle=(train_sampler is None), sampler=train_sampler, worker_init_fn=_init_fn)
+            train_dataset, batch_size=opt['train']['batch_size'], shuffle=(train_sampler is None), num_workers=0, sampler=train_sampler, worker_init_fn=_init_fn)
         val_sampler = DistributedSampler(
-            val_dataset, num_replicas=num_gpu, rank=get_rank())
+            val_dataset, num_replicas=opt['world_size'], rank=get_rank())
         val_loader = DataLoader(
-            val_dataset, batch_size=opt['test']['batch_size'], shuffle=False, sampler=val_sampler, drop_last=False)
+            val_dataset, batch_size=opt['test']['batch_size'], shuffle=False, num_workers=0, sampler=val_sampler, drop_last=False)
         test_sampler = DistributedSampler(
-            test_dataset, num_replicas=num_gpu, rank=get_rank())
+            test_dataset, num_replicas=opt['world_size'], rank=get_rank())
         test_loader = DataLoader(
-            test_dataset, batch_size=opt['test']['batch_size'], shuffle=False, sampler=test_sampler, drop_last=False)
+            test_dataset, batch_size=opt['test']['batch_size'], shuffle=False, num_workers=0, sampler=test_sampler, drop_last=False)
     
     # model
-    if is_distributed():
+    if opt['distributed']:
         opt['current_id'] = gpu
     diffusion = Model.create_model(opt)    # diffusion - DDPM
     if is_primary():
@@ -134,7 +135,8 @@ def main_worker(gpu, opt, args):
                 logger.info('Starting training from epoch: 0, iter: 0.')
 
         while current_epoch < num_of_epochs:
-            train_sampler.set_epoch(current_epoch)
+            if opt['distributed']:
+                train_sampler.set_epoch(current_epoch)
             for _, (inps, labels, _, _) in enumerate(train_loader):
                 train_data = (inps, labels)             
                 
@@ -209,18 +211,18 @@ def main_worker(gpu, opt, args):
 
 def main(opt, args):
     # launch main_worker
-    if num_gpu == 1:
+    if opt['world_size'] == 1:
         if opt['seed'] is not None:
             setup_seed(opt['seed'])
-        main_worker(None, opt)
+        main_worker(None, opt, args)
     else:
-        mp.spawn(main_worker, nprocs=num_gpu, args=(opt, args))
+        mp.spawn(main_worker, nprocs=opt['world_size'], args=(opt, args))
     
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('-c', '--config', type=str, default='config/sanitycheck.json',
+    parser.add_argument('-c', '--config', type=str, default='/home/zhuhe/Improve-HPE-with-Diffusion-7.22/Improve-HPE-with-Diffusion/config/res_diff_plus.json',
                         help='JSON file for configuration')
     parser.add_argument('-p', '--phase', type=str, choices=['train', 'val'],
                          help='Run either train(training) or val(generation)', default='train')

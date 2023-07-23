@@ -8,14 +8,14 @@
         "log": "logs",
         "checkpoint": "checkpoint",
         "resume_state": null,
-        "json_dt": "/home/ubuntu/Improve-HPE-with-Diffusion/config/dt_val_results/res_diff_plus",
-        "json_gt": "/home/ubuntu/Improve-HPE-with-Diffusion/config/gt_val_results/res_diff_plus"
+        "json_dt": "/home/zhuhe/Improve-HPE-with-Diffusion-7.22/Improve-HPE-with-Diffusion/config/dt_val_results/res_diff_plus",
+        "json_gt": "/home/zhuhe/Improve-HPE-with-Diffusion-7.22/Improve-HPE-with-Diffusion/config/gt_val_results/res_diff_plus"
         // "resume_state": "experiments/sr_ffhq_210806_204158/checkpoint/I640000_E37" //pretrain model or training state
     },
     "datasets": {
         "train": {
             "type": "mscoco",
-            "root": "/home/ubuntu/Improve-HPE-with-Diffusion/data/coco/",
+            "root": "/home/zhuhe/Improve-HPE-with-Diffusion-7.22/Improve-HPE-with-Diffusion/data/coco/",
             "img_prefix": "images/train2017",
             "ann": "annotations/person_keypoints_train2017.json",
             "aug":{
@@ -28,15 +28,15 @@
         },
         "val": {
             "type": "mscoco",
-            "root": "/home/ubuntu/Improve-HPE-with-Diffusion/data/coco/",
+            "root": "/home/zhuhe/Improve-HPE-with-Diffusion-7.22/Improve-HPE-with-Diffusion/data/coco/",
             "img_prefix": "images/val2017",
             "ann": "annotations/person_keypoints_val2017.json"
         },
         "test": {
             "type": "mscoco_det",
-            "root": "/home/ubuntu/Improve-HPE-with-Diffusion/data/coco/",
+            "root": "/home/zhuhe/Improve-HPE-with-Diffusion-7.22/Improve-HPE-with-Diffusion/data/coco/",
             "img_prefix": "images/val2017",
-            "det_file": "/home/ubuntu/Improve-HPE-with-Diffusion/config/test_det_rcnn.json",
+            "det_file": "/home/zhuhe/Improve-HPE-with-Diffusion-7.22/Improve-HPE-with-Diffusion/config/test_det_rcnn.json",
             "ann": "annotations/person_keypoints_val2017.json"
         }
     },
@@ -94,15 +94,15 @@
         "diffusion": "l2"
     },
     "train": {
-        "batch_size": 28,
+        "batch_size": 16,
         "end_epoch": 270,
-        "optimizer": {
+        "optimizer":{
             "reg": "adam",
             "diff": "adam"
         },
         "lr": {
             "reg": 0.001,
-            "diff": 1.1e-4
+            "diff": 1e-4
         },
         "lr_factor": 0.1,
         "lr_step": [170, 200],
@@ -113,12 +113,11 @@
             "step_start_ema": 5000,
             "update_ema_every": 1,
             "ema_decay": 0.9999
-        },
-        "nThreads": 60
+        }
     },
     "test":{
         "heatmap2coord": "coord",
-        "batch_size": 30
+        "batch_size": 16
     },
     "wandb": {
         "project_name": "DiffHPE",

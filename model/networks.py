@@ -6,7 +6,7 @@ from torch.nn import init
 from torch.nn import modules
 logger = logging.getLogger('base')
 import sys
-sys.path.append('/home/ubuntu/Improve-HPE-with-Diffusion/model')
+sys.path.append('/home/zhuhe/Improve-HPE-with-Diffusion-7.22/Improve-HPE-with-Diffusion/model')
 
 from diffusion_modules.diffusion import GaussianDiffusion
 from diffusion_modules.denoise_transformer import DenoiseTransformer
@@ -107,10 +107,13 @@ def define_G(opt):
     # if opt['phase'] == 'train':
         # init_weights(netG, init_type='kaiming', scale=0.1)
         # init_weights(netG, init_type='orthogonal')
-    if opt['gpu_ids'] and opt['distributed']:
+    if opt['gpu_ids']:
         assert torch.cuda.is_available()
-        # netG = nn.DataParallel(netG)
-        netG = netG.to(opt['current_id'])
-        netG = DDP(netG, device_ids=[opt['current_id']])
+        if opt['distributed']:
+            # netG = nn.DataParallel(netG)
+            netG = netG.to(opt['current_id'])
+            netG = DDP(netG, device_ids=[opt['current_id']])
+        else:
+            netG = netG.to('cuda')
 
     return netG  # a nn.Module or DataParallel
