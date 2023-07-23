@@ -7,7 +7,7 @@ from functools import partial
 import numpy as np
 from tqdm import tqdm
 import sys
-sys.path.append('/home/ubuntu/Improve-HPE-with-Diffusion')
+sys.path.append('/home/zhuhe/Improve-HPE-with-Diffusion-7.22/Improve-HPE-with-Diffusion')
 from core.criterion import build_criterion
 
 
@@ -287,9 +287,9 @@ class GaussianDiffusion(nn.Module):
 
         gt_res = torch.abs(preds - gt)
         x_in = {
-            'im_feats': im_feats, 
-            'gt_res': gt_res, 
-            'cur_preds': preds
+            'im_feats': im_feats.detach(), 
+            'gt_res': gt_res.detach(), 
+            'cur_preds': preds.detach()
         }
 
         # l_pix = self.diffuse(x_in=x_in)
