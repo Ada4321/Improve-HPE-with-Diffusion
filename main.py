@@ -160,7 +160,8 @@ def main_worker(gpu, opt, args):
                     wandb.log(logs, step=current_step, commit=False)
 
                 # validation
-                if current_step != 0 and current_step % opt['train']['val_freq'] == 0:
+                #if current_step != 0 and current_step % opt['train']['val_freq'] == 0:
+                if current_step % opt['train']['val_freq'] == 0:
 
                     diffusion.set_new_noise_schedule(
                         opt['model']['beta_schedule']['val'], schedule_phase='val')
@@ -179,7 +180,8 @@ def main_worker(gpu, opt, args):
                         logger.info(message)
                         wandb.log(eval_logs, step=current_step)
 
-                if current_step != 0 and current_step % opt['train']['save_checkpoint_freq'] == 0 and is_primary():
+                #if current_step != 0 and current_step % opt['train']['save_checkpoint_freq'] == 0 and is_primary():
+                if current_step % opt['train']['save_checkpoint_freq'] == 0 and is_primary():
                     logger.info('Saving models and training states.')
                     diffusion.save_network(current_epoch, current_step)
 
@@ -222,7 +224,7 @@ def main(opt, args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('-c', '--config', type=str, default='/home/zhuhe/Improve-HPE-with-Diffusion-7.22/Improve-HPE-with-Diffusion/config/res_diff_plus.json',
+    parser.add_argument('-c', '--config', type=str, default='/home/zhuhe/Improve-HPE-with-Diffusion-7.22/Improve-HPE-with-Diffusion/config/fixed_res_and_diff.json',
                         help='JSON file for configuration')
     parser.add_argument('-p', '--phase', type=str, choices=['train', 'val'],
                          help='Run either train(training) or val(generation)', default='train')

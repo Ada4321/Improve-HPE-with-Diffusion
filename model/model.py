@@ -9,6 +9,10 @@ import numpy as np
 import os
 import json
 import pickle as pk
+
+import sys
+sys.path.append('/home/zhuhe/Improve-HPE-with-Diffusion-7.22/Improve-HPE-with-Diffusion')
+
 import model.networks as networks
 from .base_model import BaseModel
 from core.metrics import evaluate_mAP
@@ -103,7 +107,7 @@ class DDPM(BaseModel):
         if 'diff_loss' in losses:
             losses['diff_loss'].backward()
             self.opt_diff.step()
-        dist.barrier()
+        #dist.barrier()
 
         # set log
         for k,v in losses.items():
@@ -235,29 +239,33 @@ class DDPM(BaseModel):
                 kpt_json.append(data)
             # break
 
-        with open(os.path.join(json_path, 'test_kpt_rank_{}.pkl'.format(opt['current_id'] if opt['current_id'] is not None else 0)), 'wb') as fid:
-            pk.dump(kpt_json, fid, pk.HIGHEST_PROTOCOL)
+        if isinstance(self.netG, DDP):
+            with open(os.path.join(json_path, 'test_kpt_rank_{}.pkl'.format(opt['current_id'] if opt['current_id'] is not None else 0)), 'wb') as fid:
+                pk.dump(kpt_json, fid, pk.HIGHEST_PROTOCOL)
 
-        dist.barrier()  # Make sure all JSON files are saved
+            dist.barrier()  # Make sure all JSON files are saved
 
-        if is_primary():
-            kpt_json_all = []
-            for r in range(opt['world_size']):
-                with open(os.path.join(json_path, f'test_kpt_rank_{r}.pkl'), 'rb') as fid:
-                    kpt_pred = pk.load(fid)
+            if is_primary():
+                kpt_json_all = []
+                for r in range(opt['world_size']):
+                    with open(os.path.join(json_path, f'test_kpt_rank_{r}.pkl'), 'rb') as fid:
+                        kpt_pred = pk.load(fid)
 
-                os.remove(os.path.join(json_path, f'test_kpt_rank_{r}.pkl'))
-                kpt_json_all += kpt_pred
+                    os.remove(os.path.join(json_path, f'test_kpt_rank_{r}.pkl'))
+                    kpt_json_all += kpt_pred
 
-            kpt_json_all = oks_pose_nms(kpt_json_all)
+                kpt_json_all = oks_pose_nms(kpt_json_all)
 
+                with open(os.path.join(json_path, 'result.json'), 'w') as fid:
+                    json.dump(kpt_json_all, fid)
+        else:
             with open(os.path.join(json_path, 'result.json'), 'w') as fid:
-                json.dump(kpt_json_all, fid)
-            res = evaluate_mAP(json_path, ann_type='keypoints')
+                    json.dump(kpt_json, fid)
 
-            self.eval_dict['det_AP'] = res['AP']
-            self.eval_dict['det_AP50'] = res['Ap .5']
-            self.eval_dict['det_AP75'] = res['AP .75']
+        res = evaluate_mAP(json_path, ann_type='keypoints')
+        self.eval_dict['det_AP'] = res['AP']
+        self.eval_dict['det_AP50'] = res['Ap .5']
+        self.eval_dict['det_AP75'] = res['AP .75']
 
     
     def validate_gt(self, json_path, heatmap_to_coord, val_loader, opt):
@@ -285,24 +293,29 @@ class DDPM(BaseModel):
 
                 kpt_json.append(data)
             # break
-        with open(os.path.join(json_path, 'test_gt_kpt_rank_{}.pkl'.format(opt['current_id'] if opt['current_id'] is not None else 0)), 'wb') as fid:
-            pk.dump(kpt_json, fid, pk.HIGHEST_PROTOCOL)
 
-        dist.barrier()  # Make sure all JSON files are saved
+        if isinstance(self.netG, DDP):
+            with open(os.path.join(json_path, 'test_gt_kpt_rank_{}.pkl'.format(opt['current_id'] if opt['current_id'] is not None else 0)), 'wb') as fid:
+                pk.dump(kpt_json, fid, pk.HIGHEST_PROTOCOL)
 
-        if is_primary():
-            kpt_json_all = []
-            for r in range(opt['world_size']):
-                with open(os.path.join(json_path, f'test_gt_kpt_rank_{r}.pkl'), 'rb') as fid:
-                    kpt_pred = pk.load(fid)
+            dist.barrier()  # Make sure all JSON files are saved
 
-                os.remove(os.path.join(json_path, f'test_gt_kpt_rank_{r}.pkl'))
-                kpt_json_all += kpt_pred
-            
+            if is_primary():
+                kpt_json_all = []
+                for r in range(opt['world_size']):
+                    with open(os.path.join(json_path, f'test_gt_kpt_rank_{r}.pkl'), 'rb') as fid:
+                        kpt_pred = pk.load(fid)
+
+                    os.remove(os.path.join(json_path, f'test_gt_kpt_rank_{r}.pkl'))
+                    kpt_json_all += kpt_pred
+                
+                with open(os.path.join(json_path, 'result.json'), 'w') as fid:
+                    json.dump(kpt_json_all, fid)
+        else:
             with open(os.path.join(json_path, 'result.json'), 'w') as fid:
                 json.dump(kpt_json, fid)
-            res = evaluate_mAP(json_path, ann_type='keypoints')
 
-            self.eval_dict['GT_AP'] = res['AP']
-            self.eval_dict['GT_AP50'] = res['Ap .5']
-            self.eval_dict['GT_AP75'] = res['AP .75']
+        res = evaluate_mAP(json_path, ann_type='keypoints')
+        self.eval_dict['GT_AP'] = res['AP']
+        self.eval_dict['GT_AP50'] = res['Ap .5']
+        self.eval_dict['GT_AP75'] = res['AP .75']

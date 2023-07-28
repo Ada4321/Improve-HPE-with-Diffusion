@@ -7,7 +7,7 @@ from einops import rearrange, repeat, reduce, pack, unpack
 from rotary_embedding_torch import RotaryEmbedding
 
 import sys
-sys.path.append('/home/ubuntu/Improve-HPE-with-Diffusion/model/diffusion_modules')
+sys.path.append('/home/zhuhe/Improve-HPE-with-Diffusion-7.22/Improve-HPE-with-Diffusion/model/diffusion_modules')
 from utils import *
 
 
@@ -118,7 +118,7 @@ class Attention(nn.Module):
         self.norm = LayerNorm(dim)
         self.dropout = nn.Dropout(dropout)
 
-        self.null_kv = nn.Parameter(torch.randn(2, dim_head))
+        self.null_kv = nn.Parameter(torch.randn(2, dim_head))  # learnable
         self.to_q = nn.Linear(dim, inner_dim, bias = False)
         self.to_kv = nn.Linear(dim, dim_head * 2, bias = False)
 
@@ -135,7 +135,7 @@ class Attention(nn.Module):
         x = self.norm(x)
         q, k, v = (self.to_q(x), *self.to_kv(x).chunk(2, dim = -1))
 
-        q = rearrange(q, 'b n (h d) -> b h n d', h = self.heads)
+        q = rearrange(q, 'b n (h d) -> b h n d', h = self.heads)  # q -- (b,h,n,d)  # k,v -- (b,n,d)
         q = q * self.scale
 
         # rotary embeddings
@@ -146,7 +146,7 @@ class Attention(nn.Module):
         # add null key / value for classifier free guidance in prior net
 
         nk, nv = map(lambda t: repeat(t, 'd -> b 1 d', b = b), self.null_kv.unbind(dim = -2))
-        k = torch.cat((nk, k), dim = -2)
+        k = torch.cat((nk, k), dim = -2)  # k,v -- (b,n+1,d)
         v = torch.cat((nv, v), dim = -2)
 
         # whether to use cosine sim
@@ -235,66 +235,172 @@ class CausalTransformer(nn.Module):
 
         attn_bias = self.rel_pos_bias(n, n + 1, device = device)
 
-        for attn, ff in self.layers:
-            x = attn(x, attn_bias = attn_bias) + x
-            x = ff(x) + x
+        for attn, ff in self.layers:  # transformer encoder layers
+            x = attn(x, attn_bias = attn_bias) + x  # self-attention layer
+            x = ff(x) + x                           # ff layer
 
         out = self.norm(x)
         return self.project_out(out[..., -1, :])
 
-# def image_embeds_maxpool(image_embeds):
-#     # kernel_size = image_embeds.size()[0]
-#     # pooling_layer = nn.MaxPool2d(kernel_size=kernel_size)
-#     return torch.max(image_embeds.reshape(-1, image_embeds.size()[-1]), dim=0)
+class SimpleAttention(nn.Module):
+    def __init__(
+            self,
+            dim,
+            *,
+            dim_head = 64,
+            heads = 8,
+            dropout = 0.,
+            cosine_sim = True,
+            cosine_sim_scale = 16
+            ) -> None:
+        super().__init__()
+        self.scale = cosine_sim_scale if cosine_sim else (dim_head ** -0.5)
+        self.cosine_sim = cosine_sim
+
+        self.heads = heads
+        inner_dim = dim_head * heads
+
+        self.norm = LayerNorm(dim)
+        self.dropout = nn.Dropout(dropout)
+
+        # self.null_kv = nn.Parameter(torch.randn(2, dim_head))  # learnable
+        self.to_q = nn.Linear(dim, inner_dim, bias = False)
+        self.to_kv = nn.Linear(dim, dim_head * 2, bias = False)
+
+        self.to_out = nn.Sequential(
+            nn.Linear(inner_dim, dim, bias = False),
+            LayerNorm(dim)
+        )
+
+    def forward(self, x, mask = None):
+        # b, n, device = *x.shape[:2], x.device
+
+        x = self.norm(x)
+        q, k, v = (self.to_q(x), *self.to_kv(x).chunk(2, dim = -1))
+
+        q = rearrange(q, 'b n (h d) -> b h n d', h = self.heads)  # q -- (b,h,n,d)  # k,v -- (b,n,d)
+        q = q * self.scale
+
+        # add null key / value for classifier free guidance in prior net
+
+        # nk, nv = map(lambda t: repeat(t, 'd -> b 1 d', b = b), self.null_kv.unbind(dim = -2))
+        # k = torch.cat((nk, k), dim = -2)  # k,v -- (b,n+1,d)
+        # v = torch.cat((nv, v), dim = -2)
+
+        # whether to use cosine sim
+
+        if self.cosine_sim:
+            q, k = map(l2norm, (q, k))
+
+        q, k = map(lambda t: t * math.sqrt(self.scale), (q, k))
+
+        # calculate query / key similarities
+
+        sim = einsum('b h i d, b j d -> b h i j', q, k)
+
+        # masking
+
+        max_neg_value = -torch.finfo(sim.dtype).max
+
+        if exists(mask):
+            mask = F.pad(mask, (1, 0), value = True)
+            mask = rearrange(mask, 'b j -> b 1 1 j')
+            sim = sim.masked_fill(~mask, max_neg_value)
+
+        # attention
+
+        attn = sim.softmax(dim = -1, dtype = torch.float32)
+        attn = attn.type(sim.dtype)
+
+        attn = self.dropout(attn)
+
+        # aggregate values
+
+        out = einsum('b h i j, b j d -> b h i d', attn, v)
+
+        out = rearrange(out, 'b h n d -> b n (h d)')
+        return self.to_out(out)
+
+class SimpleTransformer(nn.Module):
+    def __init__(
+            self,
+            *,
+            dim,
+            pose_dim,
+            depth,
+            dim_head = 64,
+            heads = 8,
+            ff_mult = 4,
+            norm_in = False,
+            norm_out = True,
+            attn_dropout = 0.,
+            ff_dropout = 0.,
+            final_proj = True,
+            normformer = False
+            ) -> None:
+        super().__init__()
+        self.init_norm = LayerNorm(dim) if norm_in else nn.Identity() # from latest BLOOM model and Yandex's YaLM
+
+        self.layers = nn.ModuleList([])
+        for _ in range(depth):
+            self.layers.append(nn.ModuleList([
+                SimpleAttention(dim = dim, dim_head = dim_head, heads = heads, dropout = attn_dropout),
+                FeedForward(dim = dim, mult = ff_mult, dropout = ff_dropout, post_activation_norm = normformer)
+            ]))
+
+        self.norm = LayerNorm(dim, stable = True) if norm_out else nn.Identity()  # unclear in paper whether they projected after the classic layer norm for the final denoised image embedding, or just had the transformer output it directly: plan on offering both options
+        self.project_out = nn.Linear(dim, pose_dim, bias = False) if final_proj else nn.Identity()
+
+    def forward(self, x):
+        # n, device = x.shape[1], x.device
+
+        x = self.init_norm(x)
+
+        for attn, ff in self.layers:  # transformer encoder layers
+            x = attn(x) + x  # self-attention layer
+            x = ff(x) + x                           # ff layer
+
+        out = self.norm(x)
+        return self.project_out(out[..., -1, :])
 
 class DenoiseTransformer(nn.Module):
     def __init__(
         self,
-        opt,
-        # dim,
-        # pose_dim,  
-        # time_dim,  # time_dim = 64
-        # num_time_embeds = 1,
-        # num_image_embeds = 4,
-        # num_pose_embeds = 1,
-        # num_keypoints = 17,  
+        opt
     ):
         super().__init__()
 
         self.dim = opt['dim']  # dim = dim of image channels
-        # self.pose_dim = pose_dim
-        # self.time_dim = time_dim
 
-        self.num_time_embeds = opt['num_time_embeds']
-        self.num_image_embeds = opt['num_image_embeds']
-        self.num_pose_embeds = opt['num_pose_embeds']
+        # self.num_time_embeds = opt['num_time_embeds']
+        # self.num_image_embeds = opt['num_image_embeds']
+        # self.num_pose_embeds = opt['num_pose_embeds']
         self.num_keypoints = opt['num_keypoints']
 
         self.to_time_embeds = nn.Sequential(
             PositionalEncoding(self.dim),
             nn.Linear(self.dim, self.dim * 2),
             Swish(),
-            nn.Linear(self.dim * 2, self.dim * self.num_time_embeds),
-            Rearrange('b c (h w) -> b c h w', h = self.num_time_embeds), 
+            nn.Linear(self.dim * 2, self.dim),
+            Rearrange('b c (h w) -> b c h w', h = 1), 
             Rearrange('b c h w -> b (c h) w')  # (B,1,d)
         )
+        assert opt['image_dim'] % self.dim == 0
         self.to_image_embeds = nn.Sequential(
-            nn.Linear(self.dim, self.dim * self.num_image_embeds) if self.num_image_embeds > 1 else nn.Identity(),
-            Rearrange('b (n d) -> b n d', n = self.num_image_embeds)  # (B,4,d)
+            # nn.Linear(self.dim, self.dim * self.num_image_embeds) if self.num_image_embeds > 1 else nn.Identity(),
+            Rearrange('b (n d) -> b n d', n = opt['image_dim'] // self.dim)  # (B,4,d)
         )
         self.to_pose_embeds = nn.Sequential(
             PositionalEncoding(self.dim),
             nn.Linear(self.dim, self.dim * 2),
             Swish(),
-            nn.Linear(self.dim * 2, self.dim * self.num_pose_embeds),
-            Rearrange('b c (h w) -> b c h w', h = self.num_pose_embeds), 
+            nn.Linear(self.dim * 2, self.dim),
+            Rearrange('b c (h w) -> b c h w', h = 1), 
             Rearrange('b c h w -> b (c h) w')  # (B,34,d)
         )
 
         self.learned_query = nn.Parameter(torch.randn(self.dim))
-        self.causal_transformer = CausalTransformer(dim = self.dim, pose_dim=self.num_keypoints*2, **opt['casual_transformer'])
-
-        # self.raw_predictor = kwargs["raw_predictor"] if "raw_predictor" in kwargs else "openpose"
+        self.transformer = SimpleTransformer(dim = self.dim, pose_dim=self.num_keypoints*2, **opt['transformer'])
 
     def forward(
         self,
@@ -335,9 +441,6 @@ class DenoiseTransformer(nn.Module):
 
         # attention
         # get learned query, which should predict the denoised pose
-        pred_res = self.causal_transformer(tokens)  # pred_pose should be the same size as input x
-
-        # # get learned query, which should predict the denoised pose
-        # pred_pose = tokens[..., -1, :]
+        pred_res = self.transformer(tokens)  # pred_pose should be the same size as input x
 
         return pred_res

@@ -88,25 +88,24 @@ def init_weights(net, init_type='kaiming', scale=1, std=0.02):
 # Generator
 def define_G(opt):
     model_opt = opt['model']
+
+    #init regressor
     model_opt['regressor']['preset'] = opt['data_preset']
-    # if model_opt['which_model_G'] == 'ddpm':
-    #     from .ddpm_modules import diffusion, unet
-    # elif model_opt['which_model_G'] == 'sr3':
-    #     from .sr3_modules import diffusion, unet
-    
+    model_opt['regressor']['pretrained_path'] = opt['path']['pretrained_regressor']
     regressor = Regressor(model_opt['regressor'])
+
+    # init denoiser
+    model_opt['denoise_transformer']['image_dim'] = regressor.feature_channel
     denoiser = DenoiseTransformer(model_opt['denoise_transformer'])
-    
+
+    # init diffusion
     netG = GaussianDiffusion(
         regressor,
         denoiser,
-        #loss_type=opt['loss']['type'],
-        loss_opt=opt['loss'],
-        condition_on_preds=model_opt['diffusion']['condition_on_preds'],
+        model_opt['diffusion'],
+        loss_opt=opt['loss']
     )
-    # if opt['phase'] == 'train':
-        # init_weights(netG, init_type='kaiming', scale=0.1)
-        # init_weights(netG, init_type='orthogonal')
+
     if opt['gpu_ids']:
         assert torch.cuda.is_available()
         if opt['distributed']:

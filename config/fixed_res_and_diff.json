@@ -1,16 +1,16 @@
 {
-    "name": "res_diff_plus",
+    "name": "fixed_res_and_diff",
     "phase": "train", // train or val
     "gpu_ids": [
-        0,1
+        1
     ],
     "path": { //set the path
         "log": "logs",
         "checkpoint": "checkpoint",
         "resume_state": null,
-        "json_dt": "/home/zhuhe/Improve-HPE-with-Diffusion-7.22/Improve-HPE-with-Diffusion/config/dt_val_results/res_diff_plus",
-        "json_gt": "/home/zhuhe/Improve-HPE-with-Diffusion-7.22/Improve-HPE-with-Diffusion/config/gt_val_results/res_diff_plus",
-        "pretrained_regressor": null
+        "json_dt": "/home/zhuhe/Improve-HPE-with-Diffusion-7.22/Improve-HPE-with-Diffusion/config/dt_val_results/fixed_res_and_diff",
+        "json_gt": "/home/zhuhe/Improve-HPE-with-Diffusion-7.22/Improve-HPE-with-Diffusion/config/gt_val_results/fixed_res_and_diff",
+        "pretrained_regressor": "/data1/zhuhe/experiments/sanitycheck_230714_134223/checkpoint/I910000_E241_gen.pth"
         // "resume_state": "experiments/sr_ffhq_210806_204158/checkpoint/I640000_E37" //pretrain model or training state
     },
     "datasets": {
@@ -64,8 +64,7 @@
                 "attn_dropout": 0.05,
                 "ff_dropout": 0.05,
                 "final_proj": true,
-                "normformer": true,
-                "rotary_emb": false
+                "normformer": true
             }
         },
         "diffusion": {
@@ -90,7 +89,7 @@
         }
     },
     "loss": {
-        "type": "res_and_diff_plus",
+        "type": "fixed_res_and_diff",
         "avg_batch":{
             "reg": false,
             "diff": true
@@ -99,7 +98,7 @@
         "diffusion": "l2"
     },
     "train": {
-        "batch_size": 16,
+        "batch_size": 32,
         "end_epoch": 270,
         "optimizer":{
             "reg": "adam",
@@ -111,7 +110,7 @@
         },
         "lr_factor": 0.1,
         "lr_step": [170, 200],
-        "val_freq": 1e6,    
+        "val_freq": 2e4,    
         "save_checkpoint_freq": 1e4,
         "print_freq": 200,  
         "ema_scheduler": {  // not used now
@@ -122,12 +121,12 @@
     },
     "test":{
         "heatmap2coord": "coord",
-        "batch_size": 16
+        "batch_size": 32
     },
     "wandb": {
         "project_name": "DiffHPE",
-        "run_name": "res_diff_plus"
+        "run_name": "fixed_res_and_diff"
     },
-    "world_size": 2,
+    "world_size": 1,
     "seed": 123123
 }
