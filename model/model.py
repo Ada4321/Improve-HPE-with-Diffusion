@@ -11,7 +11,7 @@ import json
 import pickle as pk
 
 import sys
-sys.path.append('/home/zhuhe/Improve-HPE-with-Diffusion-7.22/Improve-HPE-with-Diffusion')
+sys.path.append('/home/ubuntu/Improve-HPE-with-Diffusion')
 
 import model.networks as networks
 from .base_model import BaseModel
@@ -184,7 +184,8 @@ class DDPM(BaseModel):
         # opt
         opt_state = {'epoch': epoch, 'iter': iter_step,
                      'scheduler': None, 'optimizer': None}
-        opt_state['optimizer'] = self.optG.state_dict()
+        opt_state['optimizer_reg'] = self.opt_reg.state_dict()
+        opt_state['optimizer_diff'] = self.opt_diff.state_dict()
         torch.save(opt_state, opt_path)
 
         logger.info(
@@ -208,7 +209,8 @@ class DDPM(BaseModel):
             if self.opt['phase'] == 'train':
                 # optimizer
                 opt = torch.load(opt_path)
-                self.optG.load_state_dict(opt['optimizer'])
+                self.opt_reg.load_state_dict(opt['optimizer_reg'])
+                self.opt_diff.load_state_dict(opt['optimizer_diff'])
                 self.begin_step = opt['iter']
                 self.begin_epoch = opt['epoch']
 
@@ -237,7 +239,7 @@ class DDPM(BaseModel):
                 data['area'] = float((crop_bboxes[i][2] - crop_bboxes[i][0]) * (crop_bboxes[i][3] - crop_bboxes[i][1]))
 
                 kpt_json.append(data)
-            # break
+            break
 
         if isinstance(self.netG, DDP):
             with open(os.path.join(json_path, 'test_kpt_rank_{}.pkl'.format(opt['current_id'] if opt['current_id'] is not None else 0)), 'wb') as fid:
@@ -260,9 +262,9 @@ class DDPM(BaseModel):
                     json.dump(kpt_json_all, fid)
         else:
             with open(os.path.join(json_path, 'result.json'), 'w') as fid:
-                    json.dump(kpt_json, fid)
+                json.dump(kpt_json, fid)
 
-        res = evaluate_mAP(json_path, ann_type='keypoints')
+        res = evaluate_mAP(os.path.join(json_path, 'result.json'), ann_type='keypoints')
         self.eval_dict['det_AP'] = res['AP']
         self.eval_dict['det_AP50'] = res['Ap .5']
         self.eval_dict['det_AP75'] = res['AP .75']
@@ -292,7 +294,7 @@ class DDPM(BaseModel):
                 data['keypoints'] = keypoints
 
                 kpt_json.append(data)
-            # break
+            break
 
         if isinstance(self.netG, DDP):
             with open(os.path.join(json_path, 'test_gt_kpt_rank_{}.pkl'.format(opt['current_id'] if opt['current_id'] is not None else 0)), 'wb') as fid:
@@ -315,7 +317,7 @@ class DDPM(BaseModel):
             with open(os.path.join(json_path, 'result.json'), 'w') as fid:
                 json.dump(kpt_json, fid)
 
-        res = evaluate_mAP(json_path, ann_type='keypoints')
+        res = evaluate_mAP(os.path.join(json_path, 'result.json'), ann_type='keypoints')
         self.eval_dict['GT_AP'] = res['AP']
         self.eval_dict['GT_AP50'] = res['Ap .5']
         self.eval_dict['GT_AP75'] = res['AP .75']

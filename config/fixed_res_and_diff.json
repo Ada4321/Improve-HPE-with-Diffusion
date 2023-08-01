@@ -2,21 +2,21 @@
     "name": "fixed_res_and_diff",
     "phase": "train", // train or val
     "gpu_ids": [
-        1
+        0
     ],
     "path": { //set the path
         "log": "logs",
         "checkpoint": "checkpoint",
         "resume_state": null,
-        "json_dt": "/home/zhuhe/Improve-HPE-with-Diffusion-7.22/Improve-HPE-with-Diffusion/config/dt_val_results/fixed_res_and_diff",
-        "json_gt": "/home/zhuhe/Improve-HPE-with-Diffusion-7.22/Improve-HPE-with-Diffusion/config/gt_val_results/fixed_res_and_diff",
-        "pretrained_regressor": "/data1/zhuhe/experiments/sanitycheck_230714_134223/checkpoint/I910000_E241_gen.pth"
+        "json_dt": "/home/ubuntu/Improve-HPE-with-Diffusion/config/dt_val_results/fixed_res_and_diff",
+        "json_gt": "/home/ubuntu/Improve-HPE-with-Diffusion/config/gt_val_results/fixed_res_and_diff",
+        "pretrained_regressor": "/home/ubuntu/coco-laplace-rle.pth"
         // "resume_state": "experiments/sr_ffhq_210806_204158/checkpoint/I640000_E37" //pretrain model or training state
     },
     "datasets": {
         "train": {
             "type": "mscoco",
-            "root": "/home/zhuhe/Improve-HPE-with-Diffusion-7.22/Improve-HPE-with-Diffusion/data/coco/",
+            "root": "/home/ubuntu/Improve-HPE-with-Diffusion/data/coco/",
             "img_prefix": "images/train2017",
             "ann": "annotations/person_keypoints_train2017.json",
             "aug":{
@@ -29,15 +29,15 @@
         },
         "val": {
             "type": "mscoco",
-            "root": "/home/zhuhe/Improve-HPE-with-Diffusion-7.22/Improve-HPE-with-Diffusion/data/coco/",
+            "root": "/home/ubuntu/Improve-HPE-with-Diffusion/data/coco/",
             "img_prefix": "images/val2017",
             "ann": "annotations/person_keypoints_val2017.json"
         },
         "test": {
             "type": "mscoco_det",
-            "root": "/home/zhuhe/Improve-HPE-with-Diffusion-7.22/Improve-HPE-with-Diffusion/data/coco/",
+            "root": "/home/ubuntu/Improve-HPE-with-Diffusion/data/coco/",
             "img_prefix": "images/val2017",
-            "det_file": "/home/zhuhe/Improve-HPE-with-Diffusion-7.22/Improve-HPE-with-Diffusion/config/test_det_rcnn.json",
+            "det_file": "/home/ubuntu/Improve-HPE-with-Diffusion/config/test_det_rcnn.json",
             "ann": "annotations/person_keypoints_val2017.json"
         }
     },
@@ -50,7 +50,8 @@
     },
     "model": {
         "regressor": {
-            "num_layers": 50
+            "num_layers": 50,
+            "is_rle": true
         },
         "denoise_transformer": {
             "dim": 256,
@@ -69,6 +70,7 @@
         },
         "diffusion": {
             "is_ddim": true,
+            "clip_denoised": false,
             "predict_x_start": false,
             "condition_on_preds": true // condition on current preds from the regressor
         },
@@ -98,7 +100,7 @@
         "diffusion": "l2"
     },
     "train": {
-        "batch_size": 32,
+        "batch_size": 512,
         "end_epoch": 270,
         "optimizer":{
             "reg": "adam",
@@ -112,7 +114,7 @@
         "lr_step": [170, 200],
         "val_freq": 2e4,    
         "save_checkpoint_freq": 1e4,
-        "print_freq": 200,  
+        "print_freq": 50,  
         "ema_scheduler": {  // not used now
             "step_start_ema": 5000,
             "update_ema_every": 1,
@@ -121,11 +123,11 @@
     },
     "test":{
         "heatmap2coord": "coord",
-        "batch_size": 32
+        "batch_size": 512
     },
     "wandb": {
         "project_name": "DiffHPE",
-        "run_name": "fixed_res_and_diff"
+        "run_name": "fixed_rle"
     },
     "world_size": 1,
     "seed": 123123

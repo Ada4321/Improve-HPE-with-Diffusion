@@ -7,7 +7,7 @@ from functools import partial
 import numpy as np
 from tqdm import tqdm
 import sys
-sys.path.append('/home/zhuhe/Improve-HPE-with-Diffusion-7.22/Improve-HPE-with-Diffusion')
+sys.path.append('/home/ubuntu/Improve-HPE-with-Diffusion')
 from core.criterion import build_criterion
 
 
@@ -79,6 +79,7 @@ class GaussianDiffusion(nn.Module):
         self.loss_opt = loss_opt
         self.condition_on_preds = diff_opt['condition_on_preds']
         self.is_ddim = diff_opt.get('is_ddim', True)
+        self.clip_denoised = diff_opt.get('clip_denoised', False)
         self.predict_x_start = diff_opt.get('predict_x_start', False)
         # if schedule_opt is not None:
         #     pass
@@ -172,7 +173,7 @@ class GaussianDiffusion(nn.Module):
         posterior_log_variance_clipped = self.posterior_log_variance_clipped[t]  # estimated sigma_{t-1}
         return posterior_mean, posterior_log_variance_clipped
 
-    def p_mean_variance_ddpm(self, x, t,  image_embed, cur_preds, clip_denoised: bool):
+    def p_mean_variance_ddpm(self, x, t,  image_embed, cur_preds):
         batch_size = x.shape[0]
 
         noise_level = torch.FloatTensor(  # repeat noise_level for each batch
@@ -191,14 +192,14 @@ class GaussianDiffusion(nn.Module):
             else:
                 x_recon = self.denoise_fn(x, image_embed, noise_level, cur_preds=cur_preds)
 
-        # if clip_denoised:
-        #     x_recon.clamp_(-1., 1.)
+        if self.clip_denoised:
+            x_recon.clamp_(-1., 1.)
 
         model_mean, posterior_log_variance = self.q_posterior(
             x_start=x_recon, x_t=x, t=t)
         return model_mean, posterior_log_variance
 
-    def p_mean_variance_ddim(self, x, t, alpha, alpha_next, image_embed, cur_preds, clip_denoised: bool):
+    def p_mean_variance_ddim(self, x, t, alpha, alpha_next, image_embed, cur_preds):
         batch_size = x.shape[0]
 
         noise_level = torch.FloatTensor(  # repeat noise_level for each batch
@@ -217,8 +218,8 @@ class GaussianDiffusion(nn.Module):
                 x_recon = self.denoise_fn(x, image_embed, noise_level, cur_preds=cur_preds)
             pred_noise = self.predict_noise_from_start(x, t=t, x_start=x_recon)  # noise
 
-        # if clip_denoised:
-        #     x_recon.clamp_(-1., 1.)
+        if self.clip_denoised:
+            x_recon.clamp_(-1., 1.)
 
         posterior_variance = ((1 - alpha / alpha_next) * (1 - alpha_next) / (1 - alpha)).sqrt()
         c = ((1 - alpha_next) - torch.square(posterior_variance)).sqrt()
@@ -227,16 +228,16 @@ class GaussianDiffusion(nn.Module):
 
 
     @torch.no_grad()
-    def p_sample_ddpm(self, x, t, image_embed, cur_preds, clip_denoised=True):
+    def p_sample_ddpm(self, x, t, image_embed, cur_preds):
         model_mean, model_log_variance = self.p_mean_variance_ddpm(
-            x=x, t=t, image_embed=image_embed, cur_preds=cur_preds, clip_denoised=clip_denoised)
+            x=x, t=t, image_embed=image_embed, cur_preds=cur_preds)
         noise = torch.randn_like(x) if t > 0 else torch.zeros_like(x)
         return model_mean + noise * (0.5 * model_log_variance).exp()  # return X_{t-1}
     
     @torch.no_grad()
-    def p_sample_ddim(self, x, t, t_next, alpha, alpha_next, image_embed, cur_preds, clip_denoised=True):
+    def p_sample_ddim(self, x, t, t_next, alpha, alpha_next, image_embed, cur_preds):
         x_recon, pred_noise, c, model_variance = self.p_mean_variance_ddim(
-            x=x, t=t, alpha=alpha, alpha_next=alpha_next, image_embed=image_embed, cur_preds=cur_preds, clip_denoised=clip_denoised)
+            x=x, t=t, alpha=alpha, alpha_next=alpha_next, image_embed=image_embed, cur_preds=cur_preds)
         
         if t_next < 0:
             return x_recon

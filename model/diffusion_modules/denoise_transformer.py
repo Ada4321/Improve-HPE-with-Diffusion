@@ -7,7 +7,7 @@ from einops import rearrange, repeat, reduce, pack, unpack
 from rotary_embedding_torch import RotaryEmbedding
 
 import sys
-sys.path.append('/home/zhuhe/Improve-HPE-with-Diffusion-7.22/Improve-HPE-with-Diffusion/model/diffusion_modules')
+sys.path.append('/home/ubuntu/Improve-HPE-with-Diffusion/model/diffusion_modules')
 from utils import *
 
 

@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 
 import sys
-sys.path.append('/home/zhuhe/Improve-HPE-with-Diffusion-7.22/Improve-HPE-with-Diffusion/model/regression_modules')
+sys.path.append('/home/ubuntu/Improve-HPE-with-Diffusion/model/regression_modules')
 from Resnet import ResNet
 
 
@@ -39,6 +39,7 @@ class Regressor(nn.Module):
         self.height_dim = self.preset_opt['image_size'][0]
         self.width_dim = self.preset_opt['image_size'][1]
         self.pretrained_path = opt['pretrained_path']
+        self.is_rle = opt['is_rle']
 
         # ResNet layers
         assert opt['num_layers'] in [18, 34, 50, 101, 152]
@@ -92,8 +93,12 @@ class Regressor(nn.Module):
         assert self.pretrained_path is not None
 
         pretrained_model = torch.load(self.pretrained_path)
-        preact_weights = {'.'.join(k.split('.')[2:]):v for (k,v) in pretrained_model.items() if 'regressor.preact' in k}
-        fc_weights = {'.'.join(k.split('.')[2:]):v for (k,v) in pretrained_model.items() if 'regressor.fc_layer' in k}
+        if not self.is_rle:
+            preact_weights = {'.'.join(k.split('.')[2:]):v for (k,v) in pretrained_model.items() if 'regressor.preact' in k}
+            fc_weights = {'.'.join(k.split('.')[2:]):v for (k,v) in pretrained_model.items() if 'regressor.fc_layer' in k}
+        else:
+            preact_weights = {'.'.join(k.split('.')[1:]):v for (k,v) in pretrained_model.items() if 'preact' in k}
+            fc_weights = {'.'.join(k.split('.')[1:]):v for (k,v) in pretrained_model.items() if 'fc_coord' in k}
 
         self.preact.load_state_dict(preact_weights, strict=True)
         self.fc_layer.load_state_dict(fc_weights, strict=True)
