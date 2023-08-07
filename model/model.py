@@ -11,7 +11,7 @@ import json
 import pickle as pk
 
 import sys
-sys.path.append('/home/ubuntu/Improve-HPE-with-Diffusion')
+sys.path.append('/root/Improve-HPE-with-Diffusion')
 
 import model.networks as networks
 from .base_model import BaseModel

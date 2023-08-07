@@ -5,4 +5,9 @@ lmdb
 opencv-python
 pillow
 wandb
-
+easydict
+scipy
+pycocotools
+imageio
+einops
+rotary_embedding_torch

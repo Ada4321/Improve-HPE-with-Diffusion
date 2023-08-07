@@ -7,7 +7,7 @@ from functools import partial
 import numpy as np
 from tqdm import tqdm
 import sys
-sys.path.append('/home/ubuntu/Improve-HPE-with-Diffusion')
+sys.path.append('/root/Improve-HPE-with-Diffusion')
 from core.criterion import build_criterion
 
 

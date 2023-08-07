@@ -20,7 +20,7 @@ from torch.utils.data import DataLoader
 from torch.distributed import init_process_group, destroy_process_group
 import torch.distributed as dist
 import sys
-sys.path.append('/home/ubuntu/Improve-HPE-with-Diffusion')
+sys.path.append('/root/Improve-HPE-with-Diffusion')
 from core.dist import *
 
 # num_gpu = torch.cuda.device_count()
@@ -225,7 +225,7 @@ def main(opt, args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('-c', '--config', type=str, default='/home/ubuntu/Improve-HPE-with-Diffusion/config/fixed_res_and_diff.json',
+    parser.add_argument('-c', '--config', type=str, default='/root/Improve-HPE-with-Diffusion/config/fixed_res_and_diff.json',
                         help='JSON file for configuration')
     parser.add_argument('-p', '--phase', type=str, choices=['train', 'val'],
                          help='Run either train(training) or val(generation)', default='train')

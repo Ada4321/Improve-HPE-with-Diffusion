@@ -6,7 +6,7 @@ from torch.nn import init
 from torch.nn import modules
 logger = logging.getLogger('base')
 import sys
-sys.path.append('/home/ubuntu/Improve-HPE-with-Diffusion/model')
+sys.path.append('/root/Improve-HPE-with-Diffusion/model')
 
 from diffusion_modules.diffusion import GaussianDiffusion
 from diffusion_modules.denoise_transformer import DenoiseTransformer
