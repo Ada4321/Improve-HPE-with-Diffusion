@@ -20,6 +20,7 @@ from core.nms import oks_pose_nms
 logger = logging.getLogger('base')
 
 from core.dist import is_primary
+from core.optimize import MyExponentialLR
 
 
 class DDPM(BaseModel):
@@ -57,17 +58,18 @@ class DDPM(BaseModel):
                     self.netG.module.denoise_fn.parameters(), 
                     lr=opt['train']['lr']['diff'], 
                     opt_type=opt['train']['optimizer']['diff'])
-            # scheduler
-            self.lr_scheduler_reg = torch.optim.lr_scheduler.MultiStepLR(
-                self.opt_reg, milestones=opt['train']['lr_step'], gamma=opt['train']['lr_factor']
-            )
-            self.lr_scheduler_diff = torch.optim.lr_scheduler.MultiStepLR(
-                self.opt_diff, milestones=opt['train']['lr_step'], gamma=opt['train']['lr_factor']
-            )
             # log dict
             self.log_dict = OrderedDict()
         self.eval_dict = OrderedDict()
         self.load_network()
+        if self.opt['phase'] == 'train':
+            # scheduler
+            self.lr_scheduler_reg = MyExponentialLR(
+                self.opt_reg, decay_epochs=opt['train']['decay_epochs'], gamma=opt['train']['lr_factor'], last_epoch=self.begin_epoch-1
+            )
+            self.lr_scheduler_diff = MyExponentialLR(
+                self.opt_diff, decay_epochs=opt['train']['decay_epochs'], gamma=opt['train']['lr_factor'], last_epoch=self.begin_epoch-1
+            )
         self.print_network()
 
     def feed_data(self, data):
@@ -239,7 +241,7 @@ class DDPM(BaseModel):
                 data['area'] = float((crop_bboxes[i][2] - crop_bboxes[i][0]) * (crop_bboxes[i][3] - crop_bboxes[i][1]))
 
                 kpt_json.append(data)
-            break
+            #break
 
         if isinstance(self.netG, DDP):
             with open(os.path.join(json_path, 'test_kpt_rank_{}.pkl'.format(opt['current_id'] if opt['current_id'] is not None else 0)), 'wb') as fid:
@@ -294,7 +296,7 @@ class DDPM(BaseModel):
                 data['keypoints'] = keypoints
 
                 kpt_json.append(data)
-            break
+            #break
 
         if isinstance(self.netG, DDP):
             with open(os.path.join(json_path, 'test_gt_kpt_rank_{}.pkl'.format(opt['current_id'] if opt['current_id'] is not None else 0)), 'wb') as fid:

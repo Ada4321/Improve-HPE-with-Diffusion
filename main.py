@@ -133,6 +133,7 @@ def main_worker(gpu, opt, args):
                     current_epoch, current_step))
             else:
                 logger.info('Starting training from epoch: 0, iter: 0.')
+            
 
         while current_epoch < num_of_epochs:
             if opt['distributed']:
@@ -144,9 +145,9 @@ def main_worker(gpu, opt, args):
                 diffusion.feed_data(train_data)
                 diffusion.optimize_parameters()
 
-                # lr stepping
-                diffusion.lr_scheduler_reg.step()
-                diffusion.lr_scheduler_diff.step()
+                if args.debug:
+                    print('lr', diffusion.opt_diff.param_groups[0]['lr'])
+                    diffusion.opt_diff.param_groups[0]['lr'] = diffusion.opt_diff.param_groups[0]['lr'] * 2
 
                 # log
                 if current_step % opt['train']['print_freq'] == 0 and is_primary():
@@ -158,10 +159,12 @@ def main_worker(gpu, opt, args):
                         #tb_logger.add_scalar(k, v, current_step)
                     logger.info(message)
                     wandb.log(logs, step=current_step, commit=False)
+                    wandb.log({'lr_reg': diffusion.opt_reg.param_groups[0]['lr'],
+                               'lr_diff': diffusion.opt_diff.param_groups[0]['lr']}, step=current_step, commit=False)
 
                 # validation
                 #if current_step != 0 and current_step % opt['train']['val_freq'] == 0:
-                if current_step % opt['train']['val_freq'] == 0:
+                if current_step % opt['train']['val_freq'] == 0 and current_step != 0:
 
                     diffusion.set_new_noise_schedule(
                         opt['model']['beta_schedule']['val'], schedule_phase='val')
@@ -181,11 +184,16 @@ def main_worker(gpu, opt, args):
                         wandb.log(eval_logs, step=current_step)
 
                 #if current_step != 0 and current_step % opt['train']['save_checkpoint_freq'] == 0 and is_primary():
-                if current_step % opt['train']['save_checkpoint_freq'] == 0 and is_primary():
+                if current_step % opt['train']['save_checkpoint_freq'] == 0 and is_primary() and current_step != 0:
                     logger.info('Saving models and training states.')
                     diffusion.save_network(current_epoch, current_step)
 
                 current_step += 1
+                
+            # lr stepping
+            diffusion.lr_scheduler_reg.step()
+            diffusion.lr_scheduler_diff.step()
+            # end of epoch ===================================================================
 
             if opt['distributed']:
                 dist.barrier()  # Sync
@@ -230,6 +238,7 @@ if __name__ == "__main__":
     parser.add_argument('-p', '--phase', type=str, choices=['train', 'val'],
                          help='Run either train(training) or val(generation)', default='train')
     parser.add_argument('-gpu', '--gpu_ids', type=str, default=None)
+    parser.add_argument('--debug', action='store_true')
 
     # parse configs
     args = parser.parse_args()

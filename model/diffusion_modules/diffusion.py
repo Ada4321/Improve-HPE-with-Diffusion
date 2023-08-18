@@ -297,7 +297,7 @@ class GaussianDiffusion(nn.Module):
     def sample(self, images):
         preds, imfeats = self.regressor(images)
         if self.loss_opt['type'] == 'sanity_check':
-            return preds
+            return preds + torch.ones_like(preds) * 0.
         else:
             x_in = {
                 'im_feats': imfeats,
@@ -305,6 +305,7 @@ class GaussianDiffusion(nn.Module):
             }
             res = self.p_sample_loop(x_in)
             return preds + res
+            #return preds
 
     def q_sample(self, x_start, continuous_sqrt_alpha_cumprod, noise=None):  # sample X_t from X_0
         noise = default(noise, lambda: torch.randn_like(x_start))
@@ -387,7 +388,7 @@ class GaussianDiffusion(nn.Module):
             losses = self.loss_fn(
                 preds=preds, 
                 gt=gt,  
-                res=res_recon,
+                res_recon=res_recon,
                 gt_res=gt_res,
                 predict_x_start=self.predict_x_start
                 )
