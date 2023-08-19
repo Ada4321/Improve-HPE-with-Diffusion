@@ -86,16 +86,6 @@ class GaussianDiffusion(nn.Module):
             # self.set_new_noise_schedule(schedule_opt)
 
     def set_loss(self, device):
-        # losses = []
-        # for i, loss_type in enumerate([self.reg_loss_type, self.diff_loss_type]):
-        #     if loss_type == 'l1':
-        #         losses[i] = nn.L1Loss(reduction='sum').to(device)
-        #     elif loss_type == 'l2':
-        #         losses[i] = nn.MSELoss(reduction='sum').to(device)
-        #     else:
-        #         losses[i] = None
-        # self.reg_loss_func = losses[0]
-        # self.diff_loss_func = losses[1]
         self.loss_fn = build_criterion(self.loss_opt, device)
 
     def set_new_noise_schedule(self, schedule_opt, device):
@@ -297,14 +287,18 @@ class GaussianDiffusion(nn.Module):
     def sample(self, images):
         preds, imfeats = self.regressor(images)
         if self.loss_opt['type'] == 'sanity_check':
-            return preds + torch.ones_like(preds) * 0.
+            return {'preds': preds}
+            #pred_jts = preds['raw_pred_jts']
+            #return pred_jts + torch.ones_like(pred_jts) * 0.
         else:
             x_in = {
                 'im_feats': imfeats,
-                'cur_preds': preds
+                'cur_preds': preds['raw_pred_jts']
             }
             res = self.p_sample_loop(x_in)
-            return preds + res
+
+            return {'preds': preds, 'res': res}
+            #return preds + res
             #return preds
 
     def q_sample(self, x_start, continuous_sqrt_alpha_cumprod, noise=None):  # sample X_t from X_0
@@ -366,17 +360,19 @@ class GaussianDiffusion(nn.Module):
         else:
             preds, im_feats = self.regress(images=images)
 
-        gt_res = torch.abs(preds - gt)
+        pred_jts = preds['raw_pred_jts']
+        # gt_res = torch.abs(pred_jts - gt)
+        gt_res = gt - pred_jts
         x_in = {
             'im_feats': im_feats.detach(), 
             'gt_res': gt_res.detach(), 
-            'cur_preds': preds.detach()
+            'cur_preds': pred_jts.detach()
         }
 
         if not self.predict_x_start:
             pred_noise, gt_noise, res_recon = self.diffuse(x_in=x_in)
             losses = self.loss_fn(
-                preds=preds, 
+                preds=pred_jts, 
                 gt=gt, 
                 pred_noise=pred_noise, 
                 gt_noise=gt_noise, 
@@ -386,7 +382,7 @@ class GaussianDiffusion(nn.Module):
         else:
             res_recon = self.diffuse(x_in=x_in)
             losses = self.loss_fn(
-                preds=preds, 
+                preds=pred_jts, 
                 gt=gt,  
                 res_recon=res_recon,
                 gt_res=gt_res,

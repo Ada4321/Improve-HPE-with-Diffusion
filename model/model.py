@@ -20,6 +20,7 @@ from core.nms import oks_pose_nms
 logger = logging.getLogger('base')
 
 from core.dist import is_primary
+from core.optimize import build_scheduler
 from core.optimize import MyExponentialLR
 
 
@@ -64,12 +65,24 @@ class DDPM(BaseModel):
         self.load_network()
         if self.opt['phase'] == 'train':
             # scheduler
-            self.lr_scheduler_reg = MyExponentialLR(
-                self.opt_reg, decay_epochs=opt['train']['decay_epochs'], gamma=opt['train']['lr_factor'], last_epoch=self.begin_epoch-1
+            opt['train']['scheduler']['reg']['last_epoch'] = self.begin_epoch * 140 - 1
+            opt['train']['scheduler']['diff']['last_epoch']= self.begin_epoch * 140 - 1  # num of iters
+            self.lr_scheduler_reg = self.set_scheduler(
+                sche_type=opt['train']['scheduler_type']['reg'],
+                optimizer=self.opt_reg, 
+                **opt['train']['scheduler']['reg']
             )
-            self.lr_scheduler_diff = MyExponentialLR(
-                self.opt_diff, decay_epochs=opt['train']['decay_epochs'], gamma=opt['train']['lr_factor'], last_epoch=self.begin_epoch-1
-            )
+            self.lr_scheduler_diff = self.set_scheduler(
+                sche_type=opt['train']['scheduler_type']['diff'],
+                optimizer=self.opt_diff, 
+                **opt['train']['scheduler']['diff']
+            ) 
+            # self.lr_scheduler_reg = MyExponentialLR(
+            #     self.opt_reg, decay_epochs=opt['train']['decay_epochs'], gamma=opt['train']['lr_factor'], last_epoch=self.begin_epoch-1
+            # )
+            # self.lr_scheduler_diff = MyExponentialLR(
+            #     self.opt_diff, decay_epochs=opt['train']['decay_epochs'], gamma=opt['train']['lr_factor'], last_epoch=self.begin_epoch-1
+            # )
         self.print_network()
 
     def feed_data(self, data):
@@ -120,9 +133,14 @@ class DDPM(BaseModel):
         self.netG.eval()
         with torch.no_grad():
             if isinstance(self.netG, DDP):
-                self.pred_kpt = self.netG.module.sample(self.data['images'])
+                ret = self.netG.module.sample(self.data['images'])
             else:
-                self.pred_kpt = self.netG.sample(self.data['images'])  # self.pred_res为self.netG.sample的输出
+                ret = self.netG.sample(self.data['images'])
+            self.results = {'preds': ret['preds']}
+            self.results['preds']['pred_jts'] = ret['preds']['raw_pred_jts']
+            if 'res' in ret.keys():
+                self.results['res'] = ret['res']
+                self.results['preds']['pred_jts'] += ret['res']
         self.netG.train()
 
     def set_loss(self):
@@ -138,6 +156,9 @@ class DDPM(BaseModel):
             return torch.optim.SGD(list(optim_params), lr=lr, momentum=0.9, weight_decay=0.0001)
         else:
             raise NotImplementedError
+    
+    def set_scheduler(self, sche_type, optimizer, **kwargs):
+        return build_scheduler(sche_type=sche_type, optimizer=optimizer, **kwargs)
 
     def set_new_noise_schedule(self, schedule_opt, schedule_phase='train'):
         if self.schedule_phase is None or self.schedule_phase != schedule_phase:
@@ -222,11 +243,14 @@ class DDPM(BaseModel):
         for inps, crop_bboxes, bboxes, img_ids, scores, _, _ in val_loader:
             self.feed_data(inps)
             self.test()
+            
             # compute metrics
             for i in range(inps.shape[0]):
                 bbox = crop_bboxes[i].tolist()
-                pose_coords = heatmap_to_coord(self.pred_kpt.reshape(inps.shape[0], -1, 2), bbox, idx=i)
-                pose_scores = np.ones((pose_coords.shape[0], pose_coords.shape[1], 1))    
+                raw_preds = {k:v.reshape(inps.shape[0], opt['data_preset']['num_joints'], -1) for k,v in self.results['preds'].items()}
+                pose_coords, pose_scores = heatmap_to_coord(raw_preds, bbox, idx=i)
+                if pose_scores is None:
+                    pose_scores = np.zeros((pose_coords.shape[0], pose_coords.shape[1], 1))    
                 
                 keypoints = np.concatenate((pose_coords[0], pose_scores[0]), axis=1)
                 keypoints = keypoints.reshape(-1).tolist()
@@ -234,8 +258,8 @@ class DDPM(BaseModel):
                 data = dict()
                 data['bbox'] = bboxes[i, 0].tolist()
                 data['image_id'] = int(img_ids[i])
-                # data['score'] = float(scores[i] + np.mean(pose_scores) + np.max(pose_scores))
-                data['score'] = float(scores[i])
+                data['score'] = float(scores[i] + np.mean(pose_scores) + np.max(pose_scores))
+                #data['score'] = float(scores[i])
                 data['category_id'] = 1
                 data['keypoints'] = keypoints
                 data['area'] = float((crop_bboxes[i][2] - crop_bboxes[i][0]) * (crop_bboxes[i][3] - crop_bboxes[i][1]))
@@ -275,14 +299,24 @@ class DDPM(BaseModel):
     def validate_gt(self, json_path, heatmap_to_coord, val_loader, opt):
         kpt_json = []
         
-        for inps, _, img_ids, bboxes in val_loader:
-            self.feed_data(inps)
+        for inps, labels, img_ids, bboxes in val_loader:
+            self.feed_data((inps, labels))
             self.test()
+            with torch.no_grad():
+                # val losses
+                val_losses = {
+                    'val_reg_loss': torch.nn.L1Loss(reduction='sum')(self.results['preds']['pred_jts'], self.data['gt_kps']).item(),
+                    #'val_diff_loss': torch.nn.MSELoss(self.results['preds'][''], self.data['gt_kps']-self.raw_kpt).item()
+                }
+                if 'res' in self.results.keys():
+                    val_losses['val_diff_loss'] = torch.nn.MSELoss(reduction='sum')(self.results['res'], self.data['gt_kps']-self.results['preds']['raw_pred_jts']).item() / inps.shape[0]
             # compute metrics
             for i in range(inps.shape[0]):
                 bbox = bboxes[i].tolist()
-                pose_coords = heatmap_to_coord(self.pred_kpt.reshape(inps.shape[0], -1, 2), bbox, idx=i)
-                pose_scores = np.ones((pose_coords.shape[0], pose_coords.shape[1], 1))
+                raw_preds = {k:v.reshape(inps.shape[0], opt['data_preset']['num_joints'], -1) for k,v in self.results['preds'].items()}
+                pose_coords, pose_scores = heatmap_to_coord(raw_preds, bbox, idx=i)
+                if pose_scores is None:
+                    pose_scores = np.ones((pose_coords.shape[0], pose_coords.shape[1], 1))
 
                 keypoints = np.concatenate((pose_coords[0], pose_scores[0]), axis=1)
                 keypoints = keypoints.reshape(-1).tolist()
@@ -290,7 +324,6 @@ class DDPM(BaseModel):
                 data = dict()
                 data['bbox'] = bboxes[i].tolist()
                 data['image_id'] = int(img_ids[i])
-                # data['score'] = float(np.mean(pose_scores) + np.max(pose_scores))
                 data['score'] = float(np.mean(pose_scores) + np.max(pose_scores))
                 data['category_id'] = 1
                 data['keypoints'] = keypoints
@@ -323,3 +356,4 @@ class DDPM(BaseModel):
         self.eval_dict['GT_AP'] = res['AP']
         self.eval_dict['GT_AP50'] = res['Ap .5']
         self.eval_dict['GT_AP75'] = res['AP .75']
+        self.eval_dict.update(val_losses)

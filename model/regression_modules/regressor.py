@@ -54,6 +54,8 @@ class Regressor(nn.Module):
 
         # fc layer: global feature => key points
         self.fc_layer = Linear(self.feature_channel, self.num_joints * 2)
+        if self.is_rle:
+            self.fc_sigma_layer = Linear(self.feature_channel, self.num_joints * 2, norm=False)
 
         if self.pretrained_path is None:
             # Imagenet pretrain model
@@ -80,13 +82,27 @@ class Regressor(nn.Module):
         _, _, f_h, f_w = feat.shape  # (B,C,H,W)
         feat = self.avg_pool(feat).reshape(BATCH_SIZE, -1) # global ResNet feature (B,C,1,1) => (B,C)
 
+        output = {}
         # regress key points from global features
         pred_jts = self.fc_layer(feat).reshape(BATCH_SIZE, self.num_joints, -1)
         assert pred_jts.shape[-1] == 2
-        pred_jts = pred_jts.reshape(BATCH_SIZE, -1)       # produce mu
+        pred_jts = pred_jts.reshape(BATCH_SIZE, -1)  # produce mu
         assert pred_jts.shape[-1] == self.num_joints * 2
+        output['raw_pred_jts'] = pred_jts
 
-        return pred_jts, feat
+        if self.is_rle:
+            # regress sigma per joint from global features
+            pred_sigmas = self.fc_sigma_layer(feat).reshape(BATCH_SIZE, self.num_joints, -1).sigmoid()
+            assert pred_sigmas.shape[-1] == 2
+            scores = 1. - pred_sigmas
+            scores = torch.mean(scores, dim=-1, keepdim=True)
+            
+            pred_sigmas = pred_sigmas.reshape(BATCH_SIZE, -1)  # produce sigma
+            scores = scores.reshape(BATCH_SIZE, -1)
+            output['pred_sigmas'] = pred_sigmas
+            output['pred_scores'] = scores
+
+        return output, feat
     
     # load pretrained regressor
     def load_pretrained(self):
@@ -99,6 +115,8 @@ class Regressor(nn.Module):
         else:
             preact_weights = {'.'.join(k.split('.')[1:]):v for (k,v) in pretrained_model.items() if 'preact' in k}
             fc_weights = {'.'.join(k.split('.')[1:]):v for (k,v) in pretrained_model.items() if 'fc_coord' in k}
+            fc_sigma_weights = {'.'.join(k.split('.')[1:]):v for (k,v) in pretrained_model.items() if 'fc_sigma' in k}
+            self.fc_sigma_layer.load_state_dict(fc_sigma_weights, strict=True)
 
         self.preact.load_state_dict(preact_weights, strict=True)
         self.fc_layer.load_state_dict(fc_weights, strict=True)
