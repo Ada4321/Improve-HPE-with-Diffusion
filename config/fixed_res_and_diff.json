@@ -7,11 +7,11 @@
     "path": { //set the path
         "log": "logs",
         "checkpoint": "checkpoint",
+        "resume_state": null, //pretrain model or training state,
         //"resume_state": "Improve-HPE-with-Diffusion/experiments/fixed_res_and_diff_230812_175646/checkpoint",
         "json_dt": "/root/Improve-HPE-with-Diffusion/config/dt_val_results/fixed_res_and_diff",
         "json_gt": "/root/Improve-HPE-with-Diffusion/config/gt_val_results/fixed_res_and_diff",
-        "pretrained_regressor": "/root/coco-laplace-rle.pth",
-        "resume_state": null //pretrain model or training state
+        "pretrained_regressor": "/root/coco-laplace-rle.pth"
     },
     "datasets": {
         "train": {
@@ -109,6 +109,20 @@
         "lr": {
             "reg": 2e-3,
             "diff": 2e-3
+        },
+        "scheduler_type": {
+            "reg": "multistep",
+            "diff": "multistep"
+        },
+        "scheduler":{
+            "reg": {
+                "milestones": [0],
+                "gamma": 0.5
+            },
+            "diff": {
+                "milestones": [2000, 10000, 50000],
+                "gamma": 0.1
+            }
         },
         "lr_factor": 0.1,
         "lr_step": 20,

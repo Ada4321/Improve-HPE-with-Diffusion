@@ -144,6 +144,11 @@ def main_worker(gpu, opt, args):
                 # forward pass
                 diffusion.feed_data(train_data)
                 diffusion.optimize_parameters()
+                # lr stepping
+                if opt['train']['scheduler_type']['reg'] != 'plateau':
+                    diffusion.lr_scheduler_reg.step()
+                if opt['train']['scheduler_type']['diff'] != 'plateau':
+                    diffusion.lr_scheduler_diff.step()
 
                 if args.debug:
                     print('lr', diffusion.opt_diff.param_groups[0]['lr'])
@@ -170,8 +175,6 @@ def main_worker(gpu, opt, args):
                         opt['model']['beta_schedule']['val'], schedule_phase='val')
                     diffusion.validate(json_path, heatmap_to_coord, test_loader, opt)
                     diffusion.validate_gt(json_path_gt, heatmap_to_coord, val_loader, opt)
-                    diffusion.set_new_noise_schedule(
-                        opt['model']['beta_schedule']['train'], schedule_phase='train')
                     
                     # log
                     if is_primary():
@@ -182,21 +185,25 @@ def main_worker(gpu, opt, args):
                             message += '{:s}: {:.4e} '.format(k, v)
                         logger.info(message)
                         wandb.log(eval_logs, step=current_step)
+                        if opt['train']['scheduler_type']['reg'] == 'plateau':
+                            diffusion.lr_scheduler_reg.step(eval_logs['val_reg_loss'])
+                        if opt['train']['scheduler_type']['diff'] == 'plateau':
+                            diffusion.lr_scheduler_diff.step(eval_logs['val_diff_loss'])
 
-                #if current_step != 0 and current_step % opt['train']['save_checkpoint_freq'] == 0 and is_primary():
+                    diffusion.set_new_noise_schedule(
+                        opt['model']['beta_schedule']['train'], schedule_phase='train')
+
+                #if current_step % opt['train']['save_checkpoint_freq'] == 0 and is_primary():
                 if current_step % opt['train']['save_checkpoint_freq'] == 0 and is_primary() and current_step != 0:
                     logger.info('Saving models and training states.')
                     diffusion.save_network(current_epoch, current_step)
 
                 current_step += 1
-                
-            # lr stepping
-            diffusion.lr_scheduler_reg.step()
-            diffusion.lr_scheduler_diff.step()
             # end of epoch ===================================================================
 
             if opt['distributed']:
                 dist.barrier()  # Sync
+
             current_epoch += 1
 
         # save model
@@ -233,10 +240,10 @@ def main(opt, args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('-c', '--config', type=str, default='/root/Improve-HPE-with-Diffusion/config/fixed_res_and_diff.json',
+    parser.add_argument('-c', '--config', type=str, default='/root/Improve-HPE-with-Diffusion/config/sanitycheck_val.json',
                         help='JSON file for configuration')
     parser.add_argument('-p', '--phase', type=str, choices=['train', 'val'],
-                         help='Run either train(training) or val(generation)', default='train')
+                         help='Run either train(training) or val(generation)', default='val')
     parser.add_argument('-gpu', '--gpu_ids', type=str, default=None)
     parser.add_argument('--debug', action='store_true')
 

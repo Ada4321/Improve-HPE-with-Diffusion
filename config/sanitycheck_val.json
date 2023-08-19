@@ -7,7 +7,8 @@
     "path": { //set the path
         "log": "logs",
         "checkpoint": "checkpoint",
-        "resume_state": "/root/Improve-HPE-with-Diffusion/experiments/fixed_res_and_diff_230812_175646/checkpoint",
+        //"resume_state": null,
+        "resume_state": "/root/Improve-HPE-with-Diffusion/experiments/sanitycheck_val_230818_222716/checkpoint",
         "json_dt": "/root/Improve-HPE-with-Diffusion/config/dt_val_results/fixed_res_and_diff",
         "json_gt": "/root/Improve-HPE-with-Diffusion/config/gt_val_results/fixed_res_and_diff",
         "pretrained_regressor": "/root/coco-laplace-rle.pth"
@@ -100,15 +101,29 @@
         "diffusion": "l2"
     },
     "train": {
-        "batch_size": 1024,
+        "batch_size": 256,
         "end_epoch": 270,
         "optimizer":{
             "reg": "adam",
             "diff": "adam"
         },
         "lr": {
-            "reg": 0.001,
+            "reg": 2e-3,
             "diff": 2e-3
+        },
+        "scheduler_type": {
+            "reg": "multistep",
+            "diff": "multistep"
+        },
+        "scheduler":{
+            "reg": {
+                "milestones": [0],
+                "gamma": 0.5
+            },
+            "diff": {
+                "milestones": [2000, 20000, 100000],
+                "gamma": 0.1
+            }
         },
         "lr_factor": 0.1,
         "lr_step": [170, 200],
@@ -123,11 +138,11 @@
     },
     "test":{
         "heatmap2coord": "coord",
-        "batch_size": 1024
+        "batch_size": 256
     },
     "wandb": {
         "project_name": "DiffHPE",
-        "run_name": "rleckpt_val"
+        "run_name": "rleckpt_val_score"
     },
     "world_size": 1,
     "seed": 123123
