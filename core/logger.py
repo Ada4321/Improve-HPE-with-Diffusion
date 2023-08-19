@@ -38,7 +38,7 @@ def parse(args):
         'experiments', '{}_{}'.format(opt['name'], get_timestamp()))
     opt['path']['experiments_root'] = experiments_root
     for key, path in opt['path'].items():
-        if 'resume' not in key and 'experiments' not in key:
+        if 'resume' not in key and 'experiments' not in key and 'pretrained' not in key:
             opt['path'][key] = os.path.join(experiments_root, path)
             mkdirs(opt['path'][key])
 

@@ -295,8 +295,8 @@ def heatmap_to_coord_simple(hms, bbox, **kwargs):
     return preds[None, :, :], maxvals[None, :, :]
 
 
-# def heatmap_to_coord(pred_jts, pred_scores, hm_shape, bbox, output_3d=False):
-def heatmap_to_coord(pred_jts, hm_shape, bbox, output_3d=False):
+def heatmap_to_coord(pred_jts, pred_scores, hm_shape, bbox, output_3d=False):
+#def heatmap_to_coord(pred_jts, hm_shape, bbox, output_3d=False):
     hm_height, hm_width = hm_shape
     hm_height = hm_height * 4
     hm_width = hm_width * 4
@@ -305,12 +305,14 @@ def heatmap_to_coord(pred_jts, hm_shape, bbox, output_3d=False):
     assert ndims in [2, 3], "Dimensions of input heatmap should be 2 or 3"
     if ndims == 2:
         pred_jts = pred_jts.unsqueeze(0)
-        # pred_scores = pred_scores.unsqueeze(0)
+        if pred_scores is not None:
+            pred_scores = pred_scores.unsqueeze(0)
 
     coords = pred_jts.cpu().numpy()
     coords = coords.astype(float)
-    # pred_scores = pred_scores.cpu().numpy()
-    # pred_scores = pred_scores.astype(float)
+    if pred_scores is not None:
+        pred_scores = pred_scores.cpu().numpy()
+        pred_scores = pred_scores.astype(float)
 
     coords[:, :, 0] = (coords[:, :, 0] + 0.5) * hm_width
     coords[:, :, 1] = (coords[:, :, 1] + 0.5) * hm_height
@@ -330,8 +332,8 @@ def heatmap_to_coord(pred_jts, hm_shape, bbox, output_3d=False):
             if output_3d:
                 preds[i, j, 2] = coords[i, j, 2]
 
-    # return preds, pred_scores
-    return preds
+    return preds, pred_scores
+    # return preds
 
 
 def transform_preds(coords, center, scale, output_size):
@@ -487,11 +489,11 @@ class get_coord(object):
 
     def __call__(self, output, bbox, idx):
         if self.type == 'coord':
-            pred_jts = output[idx]
-            # pred_jts = output.pred_jts[idx]
-            # pred_scores = output.maxvals[idx]
-            # return heatmap_to_coord(pred_jts, pred_scores, self.norm_size, bbox, self.output_3d)
-            return heatmap_to_coord(pred_jts, self.norm_size, bbox, self.output_3d)
+            # pred_jts = output[idx]
+            pred_jts = output['pred_jts'][idx]
+            pred_scores = output['pred_scores'][idx] if 'pred_scores' in output.keys() else None
+            return heatmap_to_coord(pred_jts, pred_scores, self.norm_size, bbox, self.output_3d)
+            #return heatmap_to_coord(pred_jts, self.norm_size, bbox, self.output_3d)
         elif self.type == 'heatmap':
             pred_hms = output.heatmap[idx]
             return heatmap_to_coord_simple(pred_hms, bbox)

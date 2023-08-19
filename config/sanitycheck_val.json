@@ -2,20 +2,22 @@
     "name": "sanitycheck_val",
     "phase": "val", // train or val
     "gpu_ids": [
-        0
+        1
     ],
     "path": { //set the path
         "log": "logs",
         "checkpoint": "checkpoint",
-        "resume_state": "/home/zhuhe/HPE-with-Diffusion/experiments/sanitycheck_230711_005022/checkpoint/I90000_E19",
-        "json_dt": "/home/zhuhe/HPE-with-Diffusion/config/dt_val_results",
-        "json_gt": "/home/zhuhe/HPE-with-Diffusion/config/gt_val_results"
+        //"resume_state": null,
+        "resume_state": "/root/Improve-HPE-with-Diffusion/experiments/sanitycheck_val_230818_222716/checkpoint",
+        "json_dt": "/root/Improve-HPE-with-Diffusion/config/dt_val_results/fixed_res_and_diff",
+        "json_gt": "/root/Improve-HPE-with-Diffusion/config/gt_val_results/fixed_res_and_diff",
+        "pretrained_regressor": "/root/coco-laplace-rle.pth"
         // "resume_state": "experiments/sr_ffhq_210806_204158/checkpoint/I640000_E37" //pretrain model or training state
     },
     "datasets": {
         "train": {
             "type": "mscoco",
-            "root": "/home/zhuhe/HPE-with-Diffusion/data/coco/",
+            "root": "/root/Improve-HPE-with-Diffusion/data/coco/",
             "img_prefix": "images/train2017",
             "ann": "annotations/person_keypoints_train2017.json",
             "aug":{
@@ -28,15 +30,15 @@
         },
         "val": {
             "type": "mscoco",
-            "root": "/home/zhuhe/HPE-with-Diffusion/data/coco/",
+            "root": "/root/Improve-HPE-with-Diffusion/data/coco/",
             "img_prefix": "images/val2017",
             "ann": "annotations/person_keypoints_val2017.json"
         },
         "test": {
             "type": "mscoco_det",
-            "root": "/home/zhuhe/HPE-with-Diffusion/data/coco/",
+            "root": "/root/Improve-HPE-with-Diffusion/data/coco/",
             "img_prefix": "images/val2017",
-            "det_file": "/home/zhuhe/HPE-with-Diffusion/config/test_det_rcnn.json",
+            "det_file": "/root/Improve-HPE-with-Diffusion/config/test_det_rcnn.json",
             "ann": "annotations/person_keypoints_val2017.json"
         }
     },
@@ -49,40 +51,41 @@
     },
     "model": {
         "regressor": {
-            "num_layers": 50
+            "num_layers": 50,
+            "is_rle": true
         },
         "denoise_transformer": {
-            "dim": 2048,
-            "num_time_embeds": 1,
-            "num_image_embeds": 4,
-            "num_pose_embeds": 1,
+            "dim": 256,
             "num_keypoints": 17,
-            "casual_transformer": {
-                "depth": 12,
+            "transformer": {
+                "depth": 8,
                 "dim_head": 64,
-                "heads": 12,
+                "heads": 4,
                 "ff_mult": 4,
                 "norm_out": true,
                 "attn_dropout": 0.05,
                 "ff_dropout": 0.05,
                 "final_proj": true,
-                "normformer": true,
-                "rotary_emb": true
+                "normformer": true
             }
         },
         "diffusion": {
+            "is_ddim": true,
+            "clip_denoised": true,
+            "predict_x_start": true,
             "condition_on_preds": true // condition on current preds from the regressor
         },
         "beta_schedule": { // use munual beta_schedule for acceleration
             "train": {
                 "schedule": "linear",
-                "n_timestep": 2000,
+                "n_timestep": 1000,
                 "linear_start": 1e-6,
                 "linear_end": 1e-2
             },
             "val": {
                 "schedule": "linear",
-                "n_timestep": 2000,
+                "n_timestep": 1000,
+                "sample_step": 64,
                 "linear_start": 1e-6,
                 "linear_end": 1e-2
             }
@@ -90,18 +93,43 @@
     },
     "loss": {
         "type": "sanity_check",
-        "regress": "l1"
+        "avg_batch":{
+            "reg": false,
+            "diff": true
+        },
+        "regress": "l1",
+        "diffusion": "l2"
     },
     "train": {
-        "batch_size": 32,
+        "batch_size": 256,
         "end_epoch": 270,
-        "optimizer": "adam",
-        "lr": 0.001,
+        "optimizer":{
+            "reg": "adam",
+            "diff": "adam"
+        },
+        "lr": {
+            "reg": 2e-3,
+            "diff": 2e-3
+        },
+        "scheduler_type": {
+            "reg": "multistep",
+            "diff": "multistep"
+        },
+        "scheduler":{
+            "reg": {
+                "milestones": [0],
+                "gamma": 0.5
+            },
+            "diff": {
+                "milestones": [2000, 20000, 100000],
+                "gamma": 0.1
+            }
+        },
         "lr_factor": 0.1,
         "lr_step": [170, 200],
-        "val_freq": 1000,    //
-        "save_checkpoint_freq": 5000,
-        "print_freq": 50,  //
+        "val_freq": 2e3,    
+        "save_checkpoint_freq": 2e3,
+        "print_freq": 50,  
         "ema_scheduler": {  // not used now
             "step_start_ema": 5000,
             "update_ema_every": 1,
@@ -110,10 +138,12 @@
     },
     "test":{
         "heatmap2coord": "coord",
-        "batch_size": 32
+        "batch_size": 256
     },
     "wandb": {
         "project_name": "DiffHPE",
-        "run_name": "sanitycheck_val"
-    }
+        "run_name": "rleckpt_val_score"
+    },
+    "world_size": 1,
+    "seed": 123123
 }

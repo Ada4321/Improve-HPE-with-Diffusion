@@ -1,13 +1,17 @@
 import os
 import torch
 import torch.nn as nn
+from torch.nn.parallel import DistributedDataParallel as DDP
 
 
 class BaseModel():
     def __init__(self, opt):
         self.opt = opt
-        self.device = torch.device(
-            'cuda' if opt['gpu_ids'] is not None else 'cpu')
+        if self.opt['current_id'] is not None:
+            self.device = self.opt['current_id']
+        else:
+            self.device = torch.device(
+                'cuda' if opt['gpu_ids'] is not None else 'cpu')
         self.begin_step = 0
         self.begin_epoch = 0
 
@@ -41,7 +45,7 @@ class BaseModel():
 
     def get_network_description(self, network):
         '''Get the string and total parameters of the network'''
-        if isinstance(network, nn.DataParallel):
+        if isinstance(network, DDP):
             network = network.module
         s = str(network)
         n = sum(map(lambda x: x.numel(), network.parameters()))
