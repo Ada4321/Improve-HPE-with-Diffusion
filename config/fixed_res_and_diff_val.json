@@ -1,14 +1,14 @@
 {
     "name": "fixed_res_and_diff",
-    "phase": "train", // train or val
+    "phase": "val", // train or val
     "gpu_ids": [
-        0
+        1
     ],
     "path": { //set the path
         "log": "logs",
         "checkpoint": "checkpoint",
-        "resume_state": null, //pretrain model or training state,
-        //"resume_state": "Improve-HPE-with-Diffusion/experiments/fixed_res_and_diff_230812_175646/checkpoint",
+        //"resume_state": null, //pretrain model or training state,
+        "resume_state": "Improve-HPE-with-Diffusion/experiments/fixed_res_and_diff_230820_092507/checkpoint",
         "json_dt": "/root/Improve-HPE-with-Diffusion/config/dt_val_results/fixed_res_and_diff",
         "json_gt": "/root/Improve-HPE-with-Diffusion/config/gt_val_results/fixed_res_and_diff",
         "pretrained_regressor": "/root/coco-laplace-rle.pth"
@@ -150,7 +150,7 @@
     },
     "wandb": {
         "project_name": "DiffHPE",
-        "run_name": "fixed_rle_prestart_clip_lr2e-3_explr"
+        "run_name": "fixed_rle_prestart_val"
     },
     "world_size": 1,
     "seed": 123123

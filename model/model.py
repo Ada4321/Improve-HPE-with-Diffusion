@@ -298,6 +298,7 @@ class DDPM(BaseModel):
     
     def validate_gt(self, json_path, heatmap_to_coord, val_loader, opt):
         kpt_json = []
+        val_losses_all = []
         
         for inps, labels, img_ids, bboxes in val_loader:
             self.feed_data((inps, labels))
@@ -306,10 +307,10 @@ class DDPM(BaseModel):
                 # val losses
                 val_losses = {
                     'val_reg_loss': torch.nn.L1Loss(reduction='sum')(self.results['preds']['pred_jts'], self.data['gt_kps']).item(),
-                    #'val_diff_loss': torch.nn.MSELoss(self.results['preds'][''], self.data['gt_kps']-self.raw_kpt).item()
                 }
                 if 'res' in self.results.keys():
                     val_losses['val_diff_loss'] = torch.nn.MSELoss(reduction='sum')(self.results['res'], self.data['gt_kps']-self.results['preds']['raw_pred_jts']).item() / inps.shape[0]
+                val_losses_all.append(val_losses)
             # compute metrics
             for i in range(inps.shape[0]):
                 bbox = bboxes[i].tolist()
@@ -330,6 +331,11 @@ class DDPM(BaseModel):
 
                 kpt_json.append(data)
             #break
+        val_losses_dict = {}
+        for val_losses in val_losses_all:
+            for k in val_losses:
+                val_losses_dict[k] = val_losses_dict[k] + val_losses[k] if k in val_losses_dict else val_losses[k]
+        val_losses_dict = {k:v/len(val_losses_all) for k,v in val_losses_dict.items()}
 
         if isinstance(self.netG, DDP):
             with open(os.path.join(json_path, 'test_gt_kpt_rank_{}.pkl'.format(opt['current_id'] if opt['current_id'] is not None else 0)), 'wb') as fid:
@@ -356,4 +362,4 @@ class DDPM(BaseModel):
         self.eval_dict['GT_AP'] = res['AP']
         self.eval_dict['GT_AP50'] = res['Ap .5']
         self.eval_dict['GT_AP75'] = res['AP .75']
-        self.eval_dict.update(val_losses)
+        self.eval_dict.update(val_losses_dict)

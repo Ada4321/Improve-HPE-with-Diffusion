@@ -2,13 +2,13 @@
     "name": "fixed_res_and_diff",
     "phase": "train", // train or val
     "gpu_ids": [
-        0
+        1
     ],
     "path": { //set the path
         "log": "logs",
         "checkpoint": "checkpoint",
-        "resume_state": null, //pretrain model or training state,
-        //"resume_state": "Improve-HPE-with-Diffusion/experiments/fixed_res_and_diff_230812_175646/checkpoint",
+        //"resume_state": null, //pretrain model or training state,
+        "resume_state": "Improve-HPE-with-Diffusion/experiments/fixed_res_and_diff_230820_092507/checkpoint",
         "json_dt": "/root/Improve-HPE-with-Diffusion/config/dt_val_results/fixed_res_and_diff",
         "json_gt": "/root/Improve-HPE-with-Diffusion/config/gt_val_results/fixed_res_and_diff",
         "pretrained_regressor": "/root/coco-laplace-rle.pth"
@@ -17,8 +17,8 @@
         "train": {
             "type": "mscoco",
             "root": "/root/Improve-HPE-with-Diffusion/data/coco/",
-            "img_prefix": "images/train2017",
-            "ann": "annotations/person_keypoints_train2017.json",
+            "img_prefix": "images/val2017",
+            "ann": "annotations/person_keypoints_val2017.json",
             "aug":{
                 "flip": true,
                 "rot_factor": 45,
@@ -100,7 +100,7 @@
         "diffusion": "l2"
     },
     "train": {
-        "batch_size": 1024,
+        "batch_size": 128,
         "end_epoch": 270,
         "optimizer":{
             "reg": "adam",
@@ -146,11 +146,11 @@
     },
     "test":{
         "heatmap2coord": "coord",
-        "batch_size": 1024
+        "batch_size": 128
     },
     "wandb": {
         "project_name": "DiffHPE",
-        "run_name": "fixed_rle_prestart_clip_lr2e-3_explr"
+        "run_name": "fixed_rle_prestart_val"
     },
     "world_size": 1,
     "seed": 123123
