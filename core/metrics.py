@@ -42,7 +42,7 @@ def save_img(img, img_path, mode='RGB'):
     # cv2.imwrite(img_path, img)
 
 
-def evaluate_mAP(res_file, ann_type='bbox', ann_file='person_keypoints_val2017.json', silence=True):
+def evaluate_mAP(res_file, ann_type='bbox', ann_file='person_keypoints_val2017.json', silence=True, img_ids=None):
     """Evaluate mAP result for coco dataset.
 
     Parameters
@@ -71,7 +71,7 @@ def evaluate_mAP(res_file, ann_type='bbox', ann_file='person_keypoints_val2017.j
     cocoGt = COCO(ann_file)
     cocoDt = cocoGt.loadRes(res_file)
 
-    cocoEval = COCOeval(cocoGt, cocoDt, ann_type)
+    cocoEval = COCOeval(cocoGt, cocoDt, ann_type, img_ids=img_ids)
     cocoEval.evaluate()
     cocoEval.accumulate()
     cocoEval.summarize()
