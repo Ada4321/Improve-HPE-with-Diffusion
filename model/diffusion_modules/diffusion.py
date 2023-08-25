@@ -388,5 +388,10 @@ class GaussianDiffusion(nn.Module):
                 gt_res=gt_res,
                 predict_x_start=self.predict_x_start
                 )
+            a = torch.mean(torch.sum(gt_res - res_recon, dim=-1))
+            b = gt_res - res_recon
+            c = torch.min(torch.abs(b))
+            d = torch.max(torch.abs(b))
+            e = nn.L1Loss(reduction='sum')(res_recon, gt_res)
 
         return losses

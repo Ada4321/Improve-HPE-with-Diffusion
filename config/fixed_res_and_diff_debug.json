@@ -7,8 +7,8 @@
     "path": { //set the path
         "log": "logs",
         "checkpoint": "checkpoint",
-        //"resume_state": null, //pretrain model or training state,
-        "resume_state": "Improve-HPE-with-Diffusion/experiments/fixed_res_and_diff_230820_092507/checkpoint",
+        "resume_state": null, //pretrain model or training state,
+        //"resume_state": "/root/Improve-HPE-with-Diffusion/experiments/fixed_res_and_diff_230824_180014/checkpoint",
         "json_dt": "/root/Improve-HPE-with-Diffusion/config/dt_val_results/fixed_res_and_diff",
         "json_gt": "/root/Improve-HPE-with-Diffusion/config/gt_val_results/fixed_res_and_diff",
         "pretrained_regressor": "/root/coco-laplace-rle.pth"
@@ -100,15 +100,15 @@
         "diffusion": "l2"
     },
     "train": {
-        "batch_size": 128,
-        "end_epoch": 270,
+        "batch_size": 1024,
+        "end_epoch": 2e5,
         "optimizer":{
             "reg": "adam",
             "diff": "adam"
         },
         "lr": {
-            "reg": 2e-3,
-            "diff": 2e-3
+            "reg": 5e-5,
+            "diff": 5e-5
         },
         "scheduler_type": {
             "reg": "exponential",
@@ -129,14 +129,12 @@
                 },
             "diff": {
                 "decay_epochs": 36000,
-                "gamma": 0.1
+                "gamma": 1.0
             }
         },
         "lr_factor": 0.1,
-        "lr_step": 20,
-        "decay_epochs": 1000,
-        "val_freq": 2e3,    
-        "save_checkpoint_freq": 2e3,
+        "val_freq": 40,    
+        "save_checkpoint_freq": 40,
         "print_freq": 5,  
         "ema_scheduler": {  // not used now
             "step_start_ema": 5000,
@@ -146,11 +144,11 @@
     },
     "test":{
         "heatmap2coord": "coord",
-        "batch_size": 128
+        "batch_size": 1024
     },
     "wandb": {
         "project_name": "DiffHPE",
-        "run_name": "fixed_rle_prestart_val"
+        "run_name": "fixed_rle_prestart_debug_with_one_batch_128"
     },
     "world_size": 1,
     "seed": 123123

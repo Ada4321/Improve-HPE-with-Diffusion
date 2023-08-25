@@ -23,6 +23,7 @@ class FixedResDiff(nn.Module):
     def __init__(self, opt, device) -> None:
         super().__init__()
         self.opt = opt
+        self.reg_loss = nn.L1Loss(reduction='sum').to(device)
         #print(opt['diffusion'])
         if opt['diffusion'] == 'l1':
             self.loss_fn = nn.L1Loss(reduction='sum').to(device)
@@ -32,6 +33,12 @@ class FixedResDiff(nn.Module):
             raise NotImplementedError 
     
     def forward(self, **kwargs):
+        # res loss
+        if self.opt['avg_batch']['reg']:
+            reg_loss = self.reg_loss(kwargs['res_recon'], kwargs['gt_res']) / len(kwargs['preds'])
+        else:
+            reg_loss = self.reg_loss(kwargs['res_recon'], kwargs['gt_res'])
+
         if kwargs['predict_x_start']:
             if self.opt['avg_batch']['diff']:
                 loss = self.loss_fn(kwargs['res_recon'], kwargs['gt_res']) / len(kwargs['res_recon'])
@@ -43,7 +50,7 @@ class FixedResDiff(nn.Module):
             else:
                 loss = self.loss_fn(kwargs['pred_noise'], kwargs['gt_noise'])
 
-        return {'diff_loss': loss}
+        return {'reg_loss': reg_loss, 'diff_loss': loss}
     
 class ResDiff(nn.Module):
     def __init__(self, opt, device) -> None:
