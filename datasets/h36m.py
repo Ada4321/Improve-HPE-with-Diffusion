@@ -15,8 +15,10 @@ from rlepose.utils.pose_utils import (cam2pixel, pixel2cam,
                                       world2cam)
 from rlepose.utils.presets import SimpleTransform3D
 
+from core.registry import DATASET_REGISTRY
 
-@DATASET.register_module
+
+@DATASET_REGISTRY.register()
 class H36m(data.Dataset):
     """ Human3.6M dataset.
 

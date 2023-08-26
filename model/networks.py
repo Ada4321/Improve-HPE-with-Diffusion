@@ -10,7 +10,8 @@ sys.path.append('/root/Improve-HPE-with-Diffusion/model')
 
 from diffusion_modules.diffusion import GaussianDiffusion
 from diffusion_modules.denoise_transformer import DenoiseTransformer
-from regression_modules.regressor import Regressor
+from regression_modules import build_regressor
+#from regression_modules.regressor import Regressor
 
 from torch.nn.parallel import DistributedDataParallel as DDP
 
@@ -92,7 +93,8 @@ def define_G(opt):
     #init regressor
     model_opt['regressor']['preset'] = opt['data_preset']
     model_opt['regressor']['pretrained_path'] = opt['path']['pretrained_regressor']
-    regressor = Regressor(model_opt['regressor'])
+    #regressor = Regressor(model_opt['regressor'])
+    regressor = build_regressor(model_opt['regressor'])
 
     # init denoiser
     model_opt['denoise_transformer']['image_dim'] = regressor.feature_channel

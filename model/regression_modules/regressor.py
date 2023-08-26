@@ -2,8 +2,10 @@ import torch
 import torch.nn as nn
 
 import sys
+sys.path.append('/root/Improve-HPE-with-Diffusion')
 sys.path.append('/root/Improve-HPE-with-Diffusion/model/regression_modules')
 from Resnet import ResNet
+from core.registry import MODEL_REGISTRY
 
 
 class Linear(nn.Module):
@@ -25,6 +27,7 @@ class Linear(nn.Module):
             y = y + self.linear.bias
         return y
     
+@MODEL_REGISTRY.register()
 class Regressor(nn.Module):
     def __init__(
             self,
@@ -120,3 +123,11 @@ class Regressor(nn.Module):
 
         self.preact.load_state_dict(preact_weights, strict=True)
         self.fc_layer.load_state_dict(fc_weights, strict=True)
+
+@MODEL_REGISTRY.register()
+class Regressor3D(nn.Module):
+    def __init__(self) -> None:
+        super().__init__()
+
+    def forward():
+        pass
