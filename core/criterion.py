@@ -1,5 +1,9 @@
 import torch.nn as nn
-from registry import LOSS_REGISTRY
+import sys
+sys.path.append('/root/Improve-HPE-with-Diffusion')
+from core.registry import Registry
+
+LOSS_REGISTRY = Registry('loss')
 
 
 # basic loss functions for regression and diffusion
@@ -123,6 +127,6 @@ def build_criterion(loss_opt, device):
     if not loss_opt['diffusion'] is None:
         diff_loss_fn = LOSS_REGISTRY.get(loss_opt['diffusion'])(dev=device)
         losses['diff'] = diff_loss_fn
-    loss_fn = LOSS_REGISTRY.get(loss_opt['type'])(losses)
+    loss_fn = LOSS_REGISTRY.get(loss_opt['type'])(**losses)
 
     return loss_fn

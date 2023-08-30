@@ -5,7 +5,8 @@ import sys
 sys.path.append('/root/Improve-HPE-with-Diffusion')
 sys.path.append('/root/Improve-HPE-with-Diffusion/model/regression_modules')
 from Resnet import ResNet
-from core.registry import MODEL_REGISTRY
+from core.registry import Registry
+MODEL_REGISTRY = Registry('model')
 
 
 class Linear(nn.Module):

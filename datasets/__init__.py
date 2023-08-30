@@ -4,7 +4,7 @@
 # from .h36m import H36m
 # from .h36m_mpii import H36mMpii
 # from .mpii import Mpii
-from core.registry import DATASET_REGISTRY
+from .datasets import DATASET_REGISTRY
 
 # __all__ = ['CustomDataset', 'Mscoco', 'Mscoco_det', 'H36m', 'H36mMpii', 'Mpii']
 

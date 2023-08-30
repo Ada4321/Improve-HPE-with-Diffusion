@@ -69,8 +69,8 @@ class Registry():
         return self._obj_map.keys()
 
 
-DATASET_REGISTRY = Registry('dataset')
+#DATASET_REGISTRY = Registry('dataset')
 ARCH_REGISTRY = Registry('arch')
-MODEL_REGISTRY = Registry('model')
-LOSS_REGISTRY = Registry('loss')
+#MODEL_REGISTRY = Registry('model')
+#LOSS_REGISTRY = Registry('loss')
 #METRIC_REGISTRY = Registry('metric')
