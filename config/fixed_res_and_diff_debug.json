@@ -50,6 +50,7 @@
     },
     "model": {
         "regressor": {
+            "name": "Regressor",
             "num_layers": 50,
             "is_rle": true
         },
@@ -91,13 +92,13 @@
         }
     },
     "loss": {
-        "type": "fixed_res_and_diff",
-        "avg_batch":{
-            "reg": false,
-            "diff": true
-        },
-        "regress": "l1",
-        "diffusion": "l2"
+        "type": "FixedResDiff",
+        // "avg_batch":{
+        //     "reg": false,
+        //     "diff": true
+        // },
+        "regress": "L1Loss",
+        "diffusion": "L2LossBatchAvg"
     },
     "train": {
         "batch_size": 1024,

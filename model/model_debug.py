@@ -116,7 +116,7 @@ class DDPM(BaseModel):
 
         losses = self.netG(self.data['images'], self.data['gt_kps'])
         
-        if 'reg_loss' in losses and self.opt['loss']['type'] != 'fixed_res_and_diff':
+        if 'reg_loss' in losses and self.opt['loss']['type'] != 'FixedResDiff':
             losses['reg_loss'].backward()
             self.opt_reg.step() 
         if 'diff_loss' in losses:
@@ -299,44 +299,45 @@ class DDPM(BaseModel):
         self.eval_dict['det_AP75'] = res['AP .75']
 
     
-    def validate_gt(self, json_path, heatmap_to_coord, val_data, opt):
+    #def validate_gt(self, json_path, heatmap_to_coord, val_data, opt):
+    def validate_gt(self, json_path, heatmap_to_coord, val_loader, opt):
         kpt_json = []
         val_losses_all = []
         
-        inps, labels, img_ids, bboxes = val_data
-        self.feed_data((inps, labels))
-        self.test()
-        with torch.no_grad():
-            a = self.data['gt_kps']-self.results['preds']['raw_pred_jts'] - self.results['res']
-            b = torch.mean(torch.sum(a, dim=-1))
-            c = torch.min(torch.abs(a))
-            d = torch.max(torch.abs(a))
-            # val losses
-            val_losses = {
-                'val_reg_loss': torch.nn.L1Loss(reduction='sum')(self.results['preds']['pred_jts'], self.data['gt_kps']).item(),
-            }
-            if 'res' in self.results.keys():
-                val_losses['val_diff_loss'] = torch.nn.MSELoss(reduction='sum')(self.results['res'], self.data['gt_kps']-self.results['preds']['raw_pred_jts']).item() / inps.shape[0]
-            val_losses_all.append(val_losses)
-        # compute metrics
-        for i in range(inps.shape[0]):
-            bbox = bboxes[i].tolist()
-            raw_preds = {k:v.reshape(inps.shape[0], opt['data_preset']['num_joints'], -1) for k,v in self.results['preds'].items()}
-            pose_coords, pose_scores = heatmap_to_coord(raw_preds, bbox, idx=i)
-            if pose_scores is None:
-                pose_scores = np.ones((pose_coords.shape[0], pose_coords.shape[1], 1))
+        for inps, labels, img_ids, bboxes in val_loader:
+            self.feed_data((inps, labels))
+            self.test()
+            with torch.no_grad():
+                a = self.data['gt_kps']-self.results['preds']['raw_pred_jts'] - self.results['res']
+                b = torch.mean(torch.sum(a, dim=-1))
+                c = torch.min(torch.abs(a))
+                d = torch.max(torch.abs(a))
+                # val losses
+                val_losses = {
+                    'val_reg_loss': torch.nn.L1Loss(reduction='sum')(self.results['preds']['pred_jts'], self.data['gt_kps']).item(),
+                }
+                if 'res' in self.results.keys():
+                    val_losses['val_diff_loss'] = torch.nn.MSELoss(reduction='sum')(self.results['res'], self.data['gt_kps']-self.results['preds']['raw_pred_jts']).item() / inps.shape[0]
+                val_losses_all.append(val_losses)
+            # compute metrics
+            for i in range(inps.shape[0]):
+                bbox = bboxes[i].tolist()
+                raw_preds = {k:v.reshape(inps.shape[0], opt['data_preset']['num_joints'], -1) for k,v in self.results['preds'].items()}
+                pose_coords, pose_scores = heatmap_to_coord(raw_preds, bbox, idx=i)
+                if pose_scores is None:
+                    pose_scores = np.ones((pose_coords.shape[0], pose_coords.shape[1], 1))
 
-            keypoints = np.concatenate((pose_coords[0], pose_scores[0]), axis=1)
-            keypoints = keypoints.reshape(-1).tolist()
+                keypoints = np.concatenate((pose_coords[0], pose_scores[0]), axis=1)
+                keypoints = keypoints.reshape(-1).tolist()
 
-            data = dict()
-            data['bbox'] = bboxes[i].tolist()
-            data['image_id'] = int(img_ids[i])
-            data['score'] = float(np.mean(pose_scores) + np.max(pose_scores))
-            data['category_id'] = 1
-            data['keypoints'] = keypoints
+                data = dict()
+                data['bbox'] = bboxes[i].tolist()
+                data['image_id'] = int(img_ids[i])
+                data['score'] = float(np.mean(pose_scores) + np.max(pose_scores))
+                data['category_id'] = 1
+                data['keypoints'] = keypoints
 
-            kpt_json.append(data)
+                kpt_json.append(data)
             #break
         val_losses_dict = {}
         for val_losses in val_losses_all:

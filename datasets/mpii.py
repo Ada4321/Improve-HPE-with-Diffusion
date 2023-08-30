@@ -16,7 +16,10 @@ from pycocotools.coco import COCO
 from rlepose.utils.bbox import bbox_clip_xyxy, bbox_xywh_to_xyxy
 from rlepose.utils.presets import SimpleTransform3D
 
+from core.registry import DATASET_REGISTRY
 
+
+@DATASET_REGISTRY.register()
 class Mpii(data.Dataset):
     """ MPII Human Pose Dataset.
     Parameters

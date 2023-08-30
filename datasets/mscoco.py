@@ -2,14 +2,13 @@
 import os
 
 import numpy as np
-
+from .custom import CustomDataset
 #from rlepose.models.builder import DATASET
 from core.bbox import bbox_clip_xyxy, bbox_xywh_to_xyxy
+from core.registry import DATASET_REGISTRY
 
-from .custom import CustomDataset
 
-
-#@DATASET.register_module
+@DATASET_REGISTRY.register()
 class Mscoco(CustomDataset):
     """ COCO Person dataset.
 

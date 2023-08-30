@@ -10,9 +10,10 @@ import sys
 sys.path.append('/root/Improve-HPE-with-Diffusion')
 from rlepose.utils.presets import SimpleTransform
 #from rlepose.models.builder import DATASET
+from core.registry import DATASET_REGISTRY
 
 
-#@DATASET.register_module
+@DATASET_REGISTRY.register()
 class Mscoco_det(data.Dataset):
     """ COCO human detection box dataset.
 

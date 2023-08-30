@@ -12,8 +12,10 @@ s_mpii_2_hm36_jt = [6, 2, 1, 0, 3, 4, 5, -1, 8,
                     -1, 9, 13, 14, 15, 12, 11, 10, 7]
 s_36_jt_num = 18
 
+from core.registry import DATASET_REGISTRY
 
-@DATASET.register_module
+
+@DATASET_REGISTRY.register()
 class H36mMpii(data.Dataset):
     CLASSES = ['person']
     EVAL_JOINTS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
