@@ -23,6 +23,9 @@ import sys
 sys.path.append('/root/Improve-HPE-with-Diffusion')
 from core.dist import *
 
+# sweep search
+from config.sweep_config import *
+
 # num_gpu = torch.cuda.device_count()
 
 
@@ -65,9 +68,15 @@ def main_worker(gpu, opt, args):
 
     if is_primary():
         # init wandb
-        project_name = opt['wandb']['project_name']
-        run_name = opt['wandb']['run_name']
-        wandb.init(project=project_name, config=args, name=run_name)
+        if not args.sweep:
+            project_name = opt['wandb']['project_name']
+            run_name = opt['wandb']['run_name']
+            wandb.init(project=project_name, config=args, name=run_name)
+        else:
+            wandb.init(project="sweep-coco-subset")
+            sweep_cfg = wandb.config
+            print(sweep_cfg)
+            opt = merge_opt(opt=opt, sweep_config=sweep_cfg)
 
         # logging
         torch.backends.cudnn.enabled = True
@@ -86,7 +95,7 @@ def main_worker(gpu, opt, args):
     # dataloder
     if not opt['distributed']:
         train_loader = DataLoader(
-            train_dataset, batch_size=opt['test']['batch_size'], shuffle=False)
+            train_dataset, batch_size=opt['test']['batch_size'], shuffle=True)
         val_loader = DataLoader(
             val_dataset, batch_size=opt['test']['batch_size'], shuffle=False)
         test_loader = DataLoader(
@@ -122,7 +131,7 @@ def main_worker(gpu, opt, args):
         opt['model']['beta_schedule'][opt['phase']], schedule_phase=opt['phase'])
     
     if opt['phase'] == 'train':
-        # Train
+        #Train
         num_of_epochs = opt['train']['end_epoch']
         current_step = diffusion.begin_step
         current_epoch = diffusion.begin_epoch
@@ -140,8 +149,8 @@ def main_worker(gpu, opt, args):
                 train_sampler.set_epoch(current_epoch)
             for _, (inps, labels, img_ids, bboxes) in enumerate(train_loader):
                 train_data = (inps, labels)
-                val_data = (inps, labels, img_ids, bboxes)
-                test_data = (inps, labels, img_ids, bboxes)             
+                # val_data = (inps, labels, img_ids, bboxes)
+                # test_data = (inps, labels, img_ids, bboxes)             
                 
                 # forward pass
                 diffusion.feed_data(train_data)
@@ -176,8 +185,9 @@ def main_worker(gpu, opt, args):
                     diffusion.set_new_noise_schedule(
                         opt['model']['beta_schedule']['val'], schedule_phase='val')
                     #diffusion.validate(json_path, heatmap_to_coord, test_data, opt)
-                    diffusion.validate_gt(json_path_gt, heatmap_to_coord, val_data, opt)
-                    
+                    #diffusion.validate_gt(json_path_gt, heatmap_to_coord, val_data, opt)
+                    diffusion.validate_gt(json_path_gt, heatmap_to_coord, val_loader, opt)
+
                     # log
                     if is_primary():
                         eval_logs = diffusion.get_current_metrics()
@@ -201,7 +211,7 @@ def main_worker(gpu, opt, args):
                     diffusion.save_network(current_epoch, current_step)
 
                 current_step += 1
-                break
+                #break
             # end of epoch ===================================================================
 
             if opt['distributed']:
@@ -219,10 +229,11 @@ def main_worker(gpu, opt, args):
         diffusion.set_new_noise_schedule(
             opt['model']['beta_schedule']['val'], schedule_phase='val')
         #diffusion.validate(json_path, heatmap_to_coord, test_loader, opt)
-        for inps, labels, img_ids, bboxes in train_loader:
-            val_data = (inps, labels, img_ids, bboxes)
-            diffusion.validate_gt(json_path_gt, heatmap_to_coord, val_data, opt)
-            break
+        # for inps, labels, img_ids, bboxes in train_loader:
+        #     val_data = (inps, labels, img_ids, bboxes)
+        #     diffusion.validate_gt(json_path_gt, heatmap_to_coord, val_data, opt)
+        #     break
+        diffusion.validate_gt(json_path, heatmap_to_coord, val_loader, opt)
 
         # log
         if is_primary():
@@ -243,15 +254,24 @@ def main(opt, args):
         mp.spawn(main_worker, nprocs=opt['world_size'], args=(opt, args))
     
 
+# def sweep_main(opt, args):
+#     # get sweep config
+#     sweep_config = build_sweep_config()
+#     opt = merge_opt(opt, sweep_config)
+#     # init sweep_id
+#     sweep_id = wandb.sweep(opt, project)
+#     wandb.agent(function=main, count=64)
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('-c', '--config', type=str, default='/root/Improve-HPE-with-Diffusion/config/fixed_res_and_diff_debug.json',
                         help='JSON file for configuration')
     parser.add_argument('-p', '--phase', type=str, choices=['train', 'val'],
-                         help='Run either train(training) or val(generation)', default='val')
+                         help='Run either train(training) or val(generation)', default='train')
     parser.add_argument('-gpu', '--gpu_ids', type=str, default=None)
     parser.add_argument('--debug', action='store_true')
+    parser.add_argument('--sweep', action='store_true')
 
     # parse configs
     args = parser.parse_args()
@@ -259,4 +279,13 @@ if __name__ == "__main__":
     # Convert to NoneDict, which return None for missing key.
     opt = Logger.dict_to_nonedict(opt)
 
-    main(opt, args)
+    # search hyperparams with wandb sweep
+    if not args.sweep:
+        main(opt, args)
+    else:
+        sweep_config = build_sweep_config()
+        #opt = merge_opt(opt, sweep_config)
+        sweep_fn = lambda opt=opt, args=args: main(opt, args)
+        sweep_id = wandb.sweep(sweep_config)
+        #wandb.init()
+        wandb.agent(sweep_id=sweep_id, function=sweep_fn, count=64)
