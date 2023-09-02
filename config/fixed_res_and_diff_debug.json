@@ -15,7 +15,7 @@
     },
     "datasets": {
         "train": {
-            "type": "mscoco",
+            "type": "Mscoco",
             "root": "/root/Improve-HPE-with-Diffusion/data/coco/",
             "img_prefix": "images/val2017",
             "ann": "annotations/person_keypoints_val2017.json",
@@ -28,13 +28,13 @@
             }
         },
         "val": {
-            "type": "mscoco",
+            "type": "Mscoco",
             "root": "/root/Improve-HPE-with-Diffusion/data/coco/",
             "img_prefix": "images/val2017",
             "ann": "annotations/person_keypoints_val2017.json"
         },
         "test": {
-            "type": "mscoco_det",
+            "type": "Mscoco_det",
             "root": "/root/Improve-HPE-with-Diffusion/data/coco/",
             "img_prefix": "images/val2017",
             "det_file": "/root/Improve-HPE-with-Diffusion/config/test_det_rcnn.json",
@@ -57,6 +57,7 @@
         "denoise_transformer": {
             "dim": 256,
             "num_keypoints": 17,
+            "num_image_embeds": 4,
             "transformer": {
                 "depth": 8,
                 "dim_head": 64,
@@ -101,8 +102,8 @@
         "diffusion": "L2LossBatchAvg"
     },
     "train": {
-        "batch_size": 1024,
-        "end_epoch": 2e5,
+        "batch_size": 128,
+        "end_epoch": 50,
         "optimizer":{
             "reg": "adam",
             "diff": "adam"
@@ -134,8 +135,8 @@
             }
         },
         "lr_factor": 0.1,
-        "val_freq": 40,    
-        "save_checkpoint_freq": 40,
+        "val_freq": 2490,    
+        "save_checkpoint_freq": 2e5,
         "print_freq": 5,  
         "ema_scheduler": {  // not used now
             "step_start_ema": 5000,
@@ -145,11 +146,11 @@
     },
     "test":{
         "heatmap2coord": "coord",
-        "batch_size": 1024
+        "batch_size": 128
     },
     "wandb": {
         "project_name": "DiffHPE",
-        "run_name": "fixed_rle_prestart_debug_with_one_batch_128"
+        "run_name": "fixed_rle_prestart_debug_with_valset_128"
     },
     "world_size": 1,
     "seed": 123123

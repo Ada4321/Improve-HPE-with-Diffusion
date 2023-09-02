@@ -54,10 +54,10 @@ def build_datasets_debug(dataset_cfg, preset_cfg):
     #     dataset_cfg[phase]['preset'] = preset_cfg
 
     train_dataset = DATASET_REGISTRY.get(train_name)(
-        train=False,
+        train=True,
         heatmap2coord=dataset_cfg['test']['heatmap2coord'],
         preset=preset_cfg,
-        **dataset_cfg['val']
+        **dataset_cfg['train']
     )
 
     val_dataset = DATASET_REGISTRY.get(val_name)(

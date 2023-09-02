@@ -376,6 +376,7 @@ class DenoiseTransformer(nn.Module):
         # self.num_image_embeds = opt['num_image_embeds']
         # self.num_pose_embeds = opt['num_pose_embeds']
         self.num_keypoints = opt['num_keypoints']
+        self.num_image_embeds = opt['num_image_embeds']
 
         self.to_time_embeds = nn.Sequential(
             PositionalEncoding(self.dim),
@@ -385,10 +386,12 @@ class DenoiseTransformer(nn.Module):
             Rearrange('b c (h w) -> b c h w', h = 1), 
             Rearrange('b c h w -> b (c h) w')  # (B,1,d)
         )
-        assert opt['image_dim'] % self.dim == 0
+        #assert opt['image_dim'] % self.dim == 0
         self.to_image_embeds = nn.Sequential(
-            # nn.Linear(self.dim, self.dim * self.num_image_embeds) if self.num_image_embeds > 1 else nn.Identity(),
-            Rearrange('b (n d) -> b n d', n = opt['image_dim'] // self.dim)  # (B,4,d)
+            #nn.Linear(opt['image_dim'], self.dim) if self.num_image_embeds > 1 else nn.Identity(),
+            nn.Linear(opt['image_dim'], self.num_image_embeds * self.dim),
+            #Rearrange('b (n d) -> b n d', n = opt['image_dim'] // self.dim)  # (B,4,d)
+            Rearrange('b (n d) -> b n d', n = self.num_image_embeds)
         )
         self.to_pose_embeds = nn.Sequential(
             PositionalEncoding(self.dim),

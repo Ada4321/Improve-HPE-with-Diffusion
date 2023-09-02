@@ -5,7 +5,8 @@ import numpy as np
 from .custom import CustomDataset
 #from rlepose.models.builder import DATASET
 from core.bbox import bbox_clip_xyxy, bbox_xywh_to_xyxy
-from core.registry import DATASET_REGISTRY
+from core.registry import Registry
+DATASET_REGISTRY = Registry('dataset')
 
 
 @DATASET_REGISTRY.register()
