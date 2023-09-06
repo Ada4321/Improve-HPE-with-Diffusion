@@ -149,6 +149,10 @@ def main_worker(gpu, opt, args):
                 train_sampler.set_epoch(current_epoch)
             for _, (inps, labels, img_ids, bboxes) in enumerate(train_loader):
                 train_data = (inps, labels)
+                a = labels['target_uv'][4]
+                # for index, inp in enumerate(inps):
+                #     from imageio.v2 import imwrite
+                #     imwrite('/root/Improve-HPE-with-Diffusion/vis/vis_input_train/{}.png'.format(index), ((inp+0.5)*255).permute(1,2,0).cpu().numpy().astype(np.uint8))
                 # val_data = (inps, labels, img_ids, bboxes)
                 # test_data = (inps, labels, img_ids, bboxes)             
                 
