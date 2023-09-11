@@ -203,9 +203,9 @@ class GaussianDiffusion(nn.Module):
             x_recon = self.predict_start_from_noise(x, t=t, noise=pred_noise)     # X_0
         else:
             if not self.condition_on_preds:
-                x_recon = self.denoise_fn(x, image_embed, noise_level)
+                x_recon = self.denoise_fn(x.reshape(batch_size,-1,2), image_embed, noise_level)
             else:
-                x_recon = self.denoise_fn(x, image_embed, noise_level, cur_preds=cur_preds)
+                x_recon = self.denoise_fn(x.reshape(batch_size,-1,2), image_embed, noise_level, cur_preds=cur_preds.reshape(batch_size,-1,2))
             pred_noise = self.predict_noise_from_start(x, t=t, x_start=x_recon)  # noise
 
         if self.clip_denoised:
@@ -324,7 +324,7 @@ class GaussianDiffusion(nn.Module):
         cur_preds = x_in['cur_preds']
         
         # [b, c, h, w] = x_start.shape
-        [b, num_kp_coords] = x_start.shape
+        b, num_kp_coords = x_start.shape
         t = np.random.randint(1, self.num_timesteps + 1)  # sample a 't' value -- total diffusion step T
         continuous_sqrt_alpha_cumprod = torch.FloatTensor( # sample one alpha value for each sample in the batch
             np.random.uniform(
@@ -340,10 +340,10 @@ class GaussianDiffusion(nn.Module):
             x_start=x_start, continuous_sqrt_alpha_cumprod=continuous_sqrt_alpha_cumprod, noise=noise)
 
         if not self.condition_on_preds:
-            x_recon = self.denoise_fn(x_noisy, image_embed, continuous_sqrt_alpha_cumprod) # x_recon -- reconstructed noise
+            x_recon = self.denoise_fn(x_noisy.reshape(b,-1,2), image_embed, continuous_sqrt_alpha_cumprod) # x_recon -- reconstructed noise
         else:
             x_recon = self.denoise_fn(
-                x_noisy, image_embed, continuous_sqrt_alpha_cumprod, cur_preds)
+                x_noisy.reshape(b,-1,2), image_embed, continuous_sqrt_alpha_cumprod, cur_preds.reshape(b,-1,2))
             
         if not self.predict_x_start:    
             res_recon = self.predict_start_from_noise_continuous(x_noisy, continuous_sqrt_alpha_cumprod.view(-1)[0], x_recon)
@@ -363,6 +363,8 @@ class GaussianDiffusion(nn.Module):
         pred_jts = preds['raw_pred_jts']
         # gt_res = torch.abs(pred_jts - gt)
         gt_res = gt - pred_jts
+        # pred_jts = pred_jts.reshape(images.shape[0],-1,2)
+        # gt_res = gt_res.reshape(images.shape[0],-1,2)
         x_in = {
             'im_feats': im_feats.detach(), 
             'gt_res': gt_res.detach(), 
@@ -388,10 +390,5 @@ class GaussianDiffusion(nn.Module):
                 gt_res=gt_res,
                 predict_x_start=self.predict_x_start
                 )
-            a = torch.mean(torch.sum(gt_res - res_recon, dim=-1))
-            b = gt_res - res_recon
-            c = torch.min(torch.abs(b))
-            d = torch.max(torch.abs(b))
-            e = nn.L1Loss(reduction='sum')(res_recon, gt_res)
 
         return losses

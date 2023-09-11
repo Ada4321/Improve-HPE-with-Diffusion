@@ -2,7 +2,7 @@
     "name": "fixed_res_and_diff",
     "phase": "train", // train or val
     "gpu_ids": [
-        1
+        0
     ],
     "path": { //set the path
         "log": "logs",
@@ -17,8 +17,8 @@
         "train": {
             "type": "Mscoco",
             "root": "/root/Improve-HPE-with-Diffusion/data/coco/",
-            "img_prefix": "images/val2017",
-            "ann": "annotations/person_keypoints_val2017.json",
+            "img_prefix": "images/train2017",
+            "ann": "annotations/person_keypoints_train2017.json",
             "aug":{
                 "flip": true,
                 "rot_factor": 45,
@@ -55,13 +55,14 @@
             "is_rle": true
         },
         "denoise_transformer": {
-            "dim": 256,
+            "dim": 768,
+            "input_dim": 2,
             "num_keypoints": 17,
-            "num_image_embeds": 4,
+            "num_image_embeds": 1,
             "transformer": {
                 "depth": 8,
                 "dim_head": 64,
-                "heads": 4,
+                "heads": 12,
                 "ff_mult": 4,
                 "norm_out": true,
                 "attn_dropout": 0.05,
@@ -103,7 +104,7 @@
     },
     "train": {
         "batch_size": 128,
-        "end_epoch": 50,
+        "end_epoch": 400,
         "optimizer":{
             "reg": "adam",
             "diff": "adam"
@@ -135,7 +136,7 @@
             }
         },
         "lr_factor": 0.1,
-        "val_freq": 2490,    
+        "val_freq": 200,    
         "save_checkpoint_freq": 2e5,
         "print_freq": 5,  
         "ema_scheduler": {  // not used now
@@ -150,7 +151,7 @@
     },
     "wandb": {
         "project_name": "DiffHPE",
-        "run_name": "fixed_rle_prestart_debug_with_valset_128"
+        "run_name": "debug_with_valset_768_8_8"
     },
     "world_size": 1,
     "seed": 123123

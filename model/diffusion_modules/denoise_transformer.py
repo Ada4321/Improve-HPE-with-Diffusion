@@ -102,7 +102,7 @@ class Attention(nn.Module):
         dim_head = 64,
         heads = 8,
         dropout = 0.,
-        causal = False,
+        causal = True,
         rotary_emb = None,
         cosine_sim = True,
         cosine_sim_scale = 16
@@ -145,9 +145,9 @@ class Attention(nn.Module):
 
         # add null key / value for classifier free guidance in prior net
 
-        nk, nv = map(lambda t: repeat(t, 'd -> b 1 d', b = b), self.null_kv.unbind(dim = -2))
-        k = torch.cat((nk, k), dim = -2)  # k,v -- (b,n+1,d)
-        v = torch.cat((nv, v), dim = -2)
+        # nk, nv = map(lambda t: repeat(t, 'd -> b 1 d', b = b), self.null_kv.unbind(dim = -2))
+        # k = torch.cat((nk, k), dim = -2)  # k,v -- (b,n+1,d)
+        # v = torch.cat((nv, v), dim = -2)
 
         # whether to use cosine sim
 
@@ -233,7 +233,8 @@ class CausalTransformer(nn.Module):
 
         x = self.init_norm(x)
 
-        attn_bias = self.rel_pos_bias(n, n + 1, device = device)
+        #attn_bias = self.rel_pos_bias(n, n + 1, device = device)
+        attn_bias = self.rel_pos_bias(n, n, device = device)
 
         for attn, ff in self.layers:  # transformer encoder layers
             x = attn(x, attn_bias = attn_bias) + x  # self-attention layer
@@ -371,6 +372,7 @@ class DenoiseTransformer(nn.Module):
         super().__init__()
 
         self.dim = opt['dim']  # dim = dim of image channels
+        self.input_dim = opt['input_dim']
 
         # self.num_time_embeds = opt['num_time_embeds']
         # self.num_image_embeds = opt['num_image_embeds']
@@ -381,8 +383,10 @@ class DenoiseTransformer(nn.Module):
         self.to_time_embeds = nn.Sequential(
             PositionalEncoding(self.dim),
             nn.Linear(self.dim, self.dim * 2),
+            #nn.Linear(self.dim, self.dim),
             Swish(),
             nn.Linear(self.dim * 2, self.dim),
+            #nn.Linear(self.dim, self.dim),
             Rearrange('b c (h w) -> b c h w', h = 1), 
             Rearrange('b c h w -> b (c h) w')  # (B,1,d)
         )
@@ -394,16 +398,26 @@ class DenoiseTransformer(nn.Module):
             Rearrange('b (n d) -> b n d', n = self.num_image_embeds)
         )
         self.to_pose_embeds = nn.Sequential(
-            PositionalEncoding(self.dim),
-            nn.Linear(self.dim, self.dim * 2),
-            Swish(),
-            nn.Linear(self.dim * 2, self.dim),
+            #PositionalEncoding(self.dim),
+            # nn.Linear(self.dim, self.dim * 2),
+            # Swish(),
+            # nn.Linear(self.dim * 2, self.dim),
+            nn.Linear(self.input_dim, self.dim),
+            Rearrange('b c (h w) -> b c h w', h = 1), 
+            Rearrange('b c h w -> b (c h) w')  # (B,34,d)
+        )
+        self.to_res_embeds = nn.Sequential(
+            # PositionalEncoding(self.dim),
+            # nn.Linear(self.dim, self.dim * 2),
+            # Swish(),
+            # nn.Linear(self.dim * 2, self.dim),
+            nn.Linear(self.input_dim, self.dim),
             Rearrange('b c (h w) -> b c h w', h = 1), 
             Rearrange('b c h w -> b (c h) w')  # (B,34,d)
         )
 
         self.learned_query = nn.Parameter(torch.randn(self.dim))
-        self.transformer = SimpleTransformer(dim = self.dim, pose_dim=self.num_keypoints*2, **opt['transformer'])
+        self.transformer = CausalTransformer(dim = self.dim, pose_dim=self.num_keypoints*2, **opt['transformer'])
 
     def forward(
         self,
@@ -421,7 +435,7 @@ class DenoiseTransformer(nn.Module):
         time_embed = self.to_time_embeds(time)           #  (B,num_time_embeds,dim)
         if cur_preds is not None:
             pose_embed = self.to_pose_embeds(cur_preds)  #  (B,num_pose_embeds,dim)
-        noisy_res_embed = self.to_pose_embeds(x)         #  (B,num_pose_embeds,dim)
+        noisy_res_embed = self.to_res_embeds(x)         #  (B,num_pose_embeds,dim)
 
         learned_queries = repeat(self.learned_query, 'd -> b 1 d', b = image_embed.shape[0])
 

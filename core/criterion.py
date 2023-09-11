@@ -62,7 +62,7 @@ class FixedResDiff(nn.Module):
         if kwargs['predict_x_start']:
             diff_loss = self.diff_loss_fn(kwargs['res_recon'], kwargs['gt_res'])
         else:
-            diff_loss = self.loss_fn(kwargs['pred_noise'], kwargs['gt_noise'])
+            diff_loss = self.diff_loss_fn(kwargs['pred_noise'], kwargs['gt_noise'])
 
         return {'reg_loss': reg_loss, 'diff_loss': diff_loss}
 
