@@ -15,22 +15,43 @@ def default(val, d):
         return val
     return d() if isfunction(d) else d
 
+class AddEmbeds(nn.Module):
+    def __init__(self, embeds) -> None:
+        super().__init__()
+        self.embeds = embeds
+        self.func = lambda x, e: x + e
+    def forward(self, x):
+        assert x.ndim == 3
+        self.embeds = self.embeds.unsqueeze(0).expand(x.shape[0], x.shape[1], -1)
+        return self.func(x, self.embeds)
+
 # PositionalEncoding Source： https://github.com/lmnt-com/wavegrad/blob/master/src/wavegrad/model.py
 class PositionalEncoding(nn.Module):
-    def __init__(self, dim):
+    def __init__(self, dim, use_coord_type_embeds=False, coord_type_embeds=None):
         super().__init__()
         self.dim = dim
+        self.use_coord_type_embeds = use_coord_type_embeds
+        self.coord_type_embeds = coord_type_embeds
+        # self.use_coord_dim_embeds = use_coord_dim_embeds
+        # self.coord_dim = coord_dim
+        # self.coord_dim_embeds = nn.Embedding(self.coord_dim, self.dim)
 
     def forward(self, noise_level):
         count = self.dim // 2
         step = torch.arange(count, dtype=noise_level.dtype,
-                            device=noise_level.device) / count
-        
-        # print('noise_level', noise_level.size())
-        # print('step', step.size())
-        encoding = noise_level.unsqueeze(-1) * torch.exp(-math.log(1e4) * step.unsqueeze(0))  # (B,n,1) * (1,N) => (B,n,N)
+                            device=noise_level.device) / count  #(count,)
+        # noise_level.unsqueeze(-1) -- (b,1,1)
+        # step.unsqueeze(0) -- (1,count)
+        if noise_level.ndim == 2:
+            noise_level = noise_level.unsqueeze(-1)
+        step = step.unsqueeze(0).expand(noise_level.shape[-1], -1)
+        if self.use_coord_type_embeds:
+            assert self.coord_type_embeds is not None
+            step = step + self.coord_type_embeds
+        # encoding = noise_level * torch.exp(-math.log(1e4) * step)  # (B,n,1) * (1,N) => (B,n,N)
+        encoding = torch.matmul(noise_level, torch.exp(-math.log(1e4) * step))  # (B,n,1) * (1,N) => (B,n,N)
         encoding = torch.cat(
-            [torch.sin(encoding), torch.cos(encoding)], dim=-1) # (B,n,2N)
+            [torch.sin(encoding), torch.cos(encoding)], dim=-1)    # (B,n,2N)
         # print('encoding', encoding.size())
 
         return encoding

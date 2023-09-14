@@ -101,8 +101,7 @@ class GaussianDiffusion(nn.Module):
         alphas = 1. - betas
         alphas_cumprod = np.cumprod(alphas, axis=0)
         alphas_cumprod_prev = np.append(1., alphas_cumprod[:-1])
-        self.sqrt_alphas_cumprod_prev = np.sqrt(
-            np.append(1., alphas_cumprod))
+        self.sqrt_alphas_cumprod_prev = np.sqrt(np.append(1., alphas_cumprod))
 
         timesteps, = betas.shape
         self.num_timesteps = int(timesteps)
@@ -361,6 +360,8 @@ class GaussianDiffusion(nn.Module):
             preds, im_feats = self.regress(images=images)
 
         pred_jts = preds['raw_pred_jts']
+        pred_sigmas = preds['pred_sigmas'] if 'pred_sigmas' in preds else None
+        pred_sigmas = self.denoise_fn.sigma_linear(pred_sigmas.unsqueeze(-1)).squeeze(-1)
         # gt_res = torch.abs(pred_jts - gt)
         gt_res = gt - pred_jts
         # pred_jts = pred_jts.reshape(images.shape[0],-1,2)
@@ -379,7 +380,9 @@ class GaussianDiffusion(nn.Module):
                 pred_noise=pred_noise, 
                 gt_noise=gt_noise, 
                 res=res_recon,
-                predict_x_start=self.predict_x_start
+                predict_x_start=self.predict_x_start,
+                rle_loss=self.loss_opt['rle_loss'],
+                sigma=pred_sigmas
                 )
         else:
             res_recon = self.diffuse(x_in=x_in)
@@ -388,7 +391,9 @@ class GaussianDiffusion(nn.Module):
                 gt=gt,  
                 res_recon=res_recon,
                 gt_res=gt_res,
-                predict_x_start=self.predict_x_start
+                predict_x_start=self.predict_x_start,
+                rle_loss=self.loss_opt['rle_loss'],
+                sigma=pred_sigmas
                 )
 
         return losses

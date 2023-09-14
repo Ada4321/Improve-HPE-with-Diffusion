@@ -308,10 +308,6 @@ class DDPM(BaseModel):
             self.feed_data((inps, labels))
             self.test()
             with torch.no_grad():
-                a = self.data['gt_kps']-self.results['preds']['raw_pred_jts'] - self.results['res']
-                b = torch.mean(torch.sum(a, dim=-1))
-                c = torch.min(torch.abs(a))
-                d = torch.max(torch.abs(a))
                 # val losses
                 val_losses = {
                     'val_reg_loss': torch.nn.L1Loss(reduction='sum')(self.results['preds']['pred_jts'], self.data['gt_kps']).item(),

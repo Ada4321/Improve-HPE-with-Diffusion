@@ -241,7 +241,8 @@ class CausalTransformer(nn.Module):
             x = ff(x) + x                           # ff layer
 
         out = self.norm(x)
-        return self.project_out(out[..., -1, :])
+        #return self.project_out(out[..., -1, :])
+        return self.project_out(out)
 
 class SimpleAttention(nn.Module):
     def __init__(
@@ -373,12 +374,22 @@ class DenoiseTransformer(nn.Module):
 
         self.dim = opt['dim']  # dim = dim of image channels
         self.input_dim = opt['input_dim']
+        self.input_dim = opt['input_dim']
+        self.use_coord_type_embeds = opt['use_coord_type_embeds']
+        self.use_kp_type_embeds = opt['use_kp_type_embeds']
+        self.use_cur_preds_type_embed = opt['use_cur_preds_type_embed']
+        self.use_noisy_res_type_embed = opt['use_noisy_res_type_embed']
 
         # self.num_time_embeds = opt['num_time_embeds']
         # self.num_image_embeds = opt['num_image_embeds']
         # self.num_pose_embeds = opt['num_pose_embeds']
         self.num_keypoints = opt['num_keypoints']
         self.num_image_embeds = opt['num_image_embeds']
+
+        self.coord_type_embeds = nn.Embedding(self.input_dim, int(self.dim // 2))
+        self.kp_type_embeds = nn.Embedding(self.num_keypoints, self.dim)
+        self.cur_preds_type_embed = nn.Embedding(1, self.dim)
+        self.noisy_res_type_embed = nn.Embedding(1, self.dim)
 
         self.to_time_embeds = nn.Sequential(
             PositionalEncoding(self.dim),
@@ -387,8 +398,8 @@ class DenoiseTransformer(nn.Module):
             Swish(),
             nn.Linear(self.dim * 2, self.dim),
             #nn.Linear(self.dim, self.dim),
-            Rearrange('b c (h w) -> b c h w', h = 1), 
-            Rearrange('b c h w -> b (c h) w')  # (B,1,d)
+            #Rearrange('b c (h w) -> b c h w', h = 1), 
+            #Rearrange('b c h w -> b (c h) w')  # (B,1,d)
         )
         #assert opt['image_dim'] % self.dim == 0
         self.to_image_embeds = nn.Sequential(
@@ -398,26 +409,37 @@ class DenoiseTransformer(nn.Module):
             Rearrange('b (n d) -> b n d', n = self.num_image_embeds)
         )
         self.to_pose_embeds = nn.Sequential(
-            #PositionalEncoding(self.dim),
-            # nn.Linear(self.dim, self.dim * 2),
-            # Swish(),
-            # nn.Linear(self.dim * 2, self.dim),
-            nn.Linear(self.input_dim, self.dim),
-            Rearrange('b c (h w) -> b c h w', h = 1), 
-            Rearrange('b c h w -> b (c h) w')  # (B,34,d)
+            PositionalEncoding(self.dim, use_coord_type_embeds=self.use_coord_type_embeds, coord_type_embeds=self.coord_type_embeds.weight),
+            nn.Linear(self.dim, self.dim * 2),
+            Swish(),
+            nn.Linear(self.dim * 2, self.dim),
+            # AddEmbeds(self.cur_preds_type_embed.weight) if self.use_cur_preds_type_embed else nn.Identity(),
+            # AddEmbeds(self.kp_type_embeds.weight) if self.use_kp_type_embeds else nn.Identity(),
+            #nn.Linear(self.input_dim, self.dim),
+            #Rearrange('b c (h w) -> b c h w', h = 1), 
+            #Rearrange('b c h w -> b (c h) w')  # (B,34,d)
         )
         self.to_res_embeds = nn.Sequential(
-            # PositionalEncoding(self.dim),
-            # nn.Linear(self.dim, self.dim * 2),
-            # Swish(),
-            # nn.Linear(self.dim * 2, self.dim),
-            nn.Linear(self.input_dim, self.dim),
-            Rearrange('b c (h w) -> b c h w', h = 1), 
-            Rearrange('b c h w -> b (c h) w')  # (B,34,d)
+            PositionalEncoding(self.dim, use_coord_type_embeds=self.use_coord_type_embeds, coord_type_embeds=self.coord_type_embeds.weight),
+            nn.Linear(self.dim, self.dim * 2),
+            Swish(),
+            nn.Linear(self.dim * 2, self.dim),
+            # AddEmbeds(self.noisy_res_type_embed.weight) if self.use_noisy_res_type_embed else nn.Identity(),
+            # AddEmbeds(self.kp_type_embeds.weight) if self.use_kp_type_embeds else nn.Identity(),
+            #nn.Linear(self.input_dim, self.dim),
+            #Rearrange('b c (h w) -> b c h w', h = 1), 
+            #Rearrange('b c h w -> b (c h) w')  # (B,34,d)
         )
 
-        self.learned_query = nn.Parameter(torch.randn(self.dim))
-        self.transformer = CausalTransformer(dim = self.dim, pose_dim=self.num_keypoints*2, **opt['transformer'])
+        #self.learned_query = nn.Parameter(torch.randn(self.dim))
+        self.learned_query = nn.Embedding(self.num_keypoints, self.dim)
+        #self.transformer = CausalTransformer(dim = self.dim, pose_dim=self.num_keypoints*2, **opt['transformer'])
+        self.transformer = CausalTransformer(dim = self.dim, pose_dim=2, **opt['transformer'])
+
+        #self.sigma_ratio = nn.Embedding(1,1)
+        self.sigma_linear = nn.Linear(1,1)
+        torch.nn.init.constant_(self.sigma_linear.weight, 1.)
+        torch.nn.init.constant_(self.sigma_linear.bias, 0.)
 
     def forward(
         self,
@@ -427,17 +449,25 @@ class DenoiseTransformer(nn.Module):
         cur_preds=None,  # current pose predictions from the regressor (B,n_kp)
         ):               # output: the denoised residual values
 
-        #batch, dim, device, dtype = *image_embed.shape, image_embed.device, image_embed.dtype
-
-        # if self.raw_predictor == "openpose":
-        #     image_embed = image_embeds_maxpool(image_embeds=image_embed)
         image_embed = self.to_image_embeds(image_embed)  #  (B,num_image_embeds,dim)
+        b = image_embed.shape[0]
         time_embed = self.to_time_embeds(time)           #  (B,num_time_embeds,dim)
         if cur_preds is not None:
             pose_embed = self.to_pose_embeds(cur_preds)  #  (B,num_pose_embeds,dim)
-        noisy_res_embed = self.to_res_embeds(x)         #  (B,num_pose_embeds,dim)
+            if self.use_cur_preds_type_embed:
+                pose_embed = pose_embed + self.cur_preds_type_embed.weight.unsqueeze(0).expand(b, self.num_keypoints, -1)
+            if self.use_kp_type_embeds:
+                pose_embed = pose_embed + self.kp_type_embeds.weight.unsqueeze(0).expand(b, -1, -1)
 
-        learned_queries = repeat(self.learned_query, 'd -> b 1 d', b = image_embed.shape[0])
+        noisy_res_embed = self.to_res_embeds(x)          #  (B,num_pose_embeds,dim)
+        if self.use_noisy_res_type_embed:
+            noisy_res_embed = noisy_res_embed + self.noisy_res_type_embed.weight.unsqueeze(0).expand(b, self.num_keypoints, -1)
+        if self.use_kp_type_embeds:
+            noisy_res_embed = noisy_res_embed + self.kp_type_embeds.weight.unsqueeze(0).expand(b, -1, -1)
+
+        #learned_queries = repeat(self.learned_query, 'd -> b 1 d', b = image_embed.shape[0])
+        learned_queries = self.learned_query.weight                                          # (n_kps, dim)
+        learned_queries = learned_queries.unsqueeze(0).expand(b, -1, -1)  # (b, n_kps, dim)
 
         # all condition tokens
         if cur_preds is not None:
@@ -459,5 +489,6 @@ class DenoiseTransformer(nn.Module):
         # attention
         # get learned query, which should predict the denoised pose
         pred_res = self.transformer(tokens)  # pred_pose should be the same size as input x
+        pred_res = pred_res[..., -self.num_keypoints:, :].reshape(b, -1)
 
         return pred_res

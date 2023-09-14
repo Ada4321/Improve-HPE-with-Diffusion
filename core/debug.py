@@ -57,7 +57,7 @@ def val_pred(model, img):
     preds = raw_preds + ret['res']
     return {'raw_preds': raw_preds, 'preds': preds}
 
-def show_skeleton(kpts, img, color=(0,0,255)):
+def show_skeleton(kpts, img, color=(255,0,0)):
     img = img.permute(1,2,0).cpu().numpy()
     img = np.ascontiguousarray((img+0.5) * 255, dtype=np.uint8)
     kpts = kpts.reshape(-1,2)
@@ -66,7 +66,7 @@ def show_skeleton(kpts, img, color=(0,0,255)):
     for i in range(NUM_KPTS):
         pos = (int(kpts[i][0]),int(kpts[i][1]))
         if pos[0] > 0 and pos[1] > 0:
-            cv2.circle(img, pos, 1, (0,0,255), -1) #为肢体点画红色实心圆
+            cv2.circle(img, pos, 1, (225,0,255), -1) #为肢体点画红色实心圆
     return img
 
 def horizon_concate(inp0, inp1):
@@ -84,19 +84,27 @@ def horizon_concate(inp0, inp1):
 
 def vis(train_preds, val_preds, imgs, color=(255,128,128)):
     for i, img in enumerate(imgs):
-        train_img_raw = show_skeleton(train_preds['raw_preds'][i], img, color)
-        val_img_raw = show_skeleton(val_preds['raw_preds'][i], img, color)
+        # train_img_raw = show_skeleton(train_preds['raw_preds'][i], img, color)
+        # val_img_raw = show_skeleton(val_preds['raw_preds'][i], img, color)
+
+        # if not os.path.exists(SAVE_ROOT):
+        #     os.makedirs(SAVE_ROOT)
+        # save_path_raw = os.path.join(SAVE_ROOT, 'res_{}_raw.jpg'.format(i))
+        # imwrite(save_path_raw, horizon_concate(train_img_raw, val_img_raw))
+
+        # if 'preds' in val_preds:
+        #     train_img = show_skeleton(train_preds['preds'][i], img, color)
+        #     val_img = show_skeleton(val_preds['preds'][i], img, color)
+        #     save_path = os.path.join(SAVE_ROOT, 'res_{}.jpg'.format(i))
+        #     imwrite(save_path, horizon_concate(train_img, val_img))
+
+        train_img_raw = show_skeleton(train_preds[i], img, color)
+        val_img_raw = show_skeleton(val_preds[i], img, color)
 
         if not os.path.exists(SAVE_ROOT):
             os.makedirs(SAVE_ROOT)
-        save_path_raw = os.path.join(SAVE_ROOT, 'res_{}_raw.jpg'.format(i))
+        save_path_raw = os.path.join(SAVE_ROOT, '{}.jpg'.format(i))
         imwrite(save_path_raw, horizon_concate(train_img_raw, val_img_raw))
-
-        if 'preds' in val_preds:
-            train_img = show_skeleton(train_preds['preds'][i], img, color)
-            val_img = show_skeleton(val_preds['preds'][i], img, color)
-            save_path = os.path.join(SAVE_ROOT, 'res_{}.jpg'.format(i))
-            imwrite(save_path, horizon_concate(train_img, val_img))
 
 
 if __name__ == '__main__':
@@ -124,17 +132,20 @@ if __name__ == '__main__':
     for _, (inps, labels, img_ids, bboxes) in enumerate(train_loader):
         inps = inps.to(DEVICE)
         gt = labels['target_uv'].to(DEVICE)
-        print(labels.keys())
+        #print(labels.keys())
         #labels = {k:v.to(DEVICE) for k,v in labels.items()}
-        with torch.no_grad():
-            model.set_new_noise_schedule(
-                        opt['model']['beta_schedule']['train'], schedule_phase='train')
-            train_preds = train_pred(model, inps, gt)
-            model.set_new_noise_schedule(
-                        opt['model']['beta_schedule']['val'], schedule_phase='val')
-            val_preds = val_pred(model, inps)
-            print(img_ids)
+        # with torch.no_grad():
+        #     model.set_new_noise_schedule(
+        #                 opt['model']['beta_schedule']['train'], schedule_phase='train')
+        #     train_preds = train_pred(model, inps, gt)
+        #     model.set_new_noise_schedule(
+        #                 opt['model']['beta_schedule']['val'], schedule_phase='val')
+        #     val_preds = val_pred(model, inps)
+        #     print(img_ids)
+        preds, im_feats = model.netG.regress(images=inps)
+        pred_jts = preds['raw_pred_jts']
+        vis(gt, pred_jts, inps)
         break
 
     
-    vis(train_preds, val_preds, inps)
+    #vis(train_preds, val_preds, inps)

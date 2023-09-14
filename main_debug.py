@@ -188,7 +188,7 @@ def main_worker(gpu, opt, args):
 
                     diffusion.set_new_noise_schedule(
                         opt['model']['beta_schedule']['val'], schedule_phase='val')
-                    #diffusion.validate(json_path, heatmap_to_coord, test_data, opt)
+                    #diffusion.validate(json_path, heatmap_to_coord, test_loader, opt)
                     #diffusion.validate_gt(json_path_gt, heatmap_to_coord, val_data, opt)
                     diffusion.validate_gt(json_path_gt, heatmap_to_coord, val_loader, opt)
 
@@ -232,7 +232,7 @@ def main_worker(gpu, opt, args):
 
         diffusion.set_new_noise_schedule(
             opt['model']['beta_schedule']['val'], schedule_phase='val')
-        #diffusion.validate(json_path, heatmap_to_coord, test_loader, opt)
+        diffusion.validate(json_path, heatmap_to_coord, test_loader, opt)
         # for inps, labels, img_ids, bboxes in train_loader:
         #     val_data = (inps, labels, img_ids, bboxes)
         #     diffusion.validate_gt(json_path_gt, heatmap_to_coord, val_data, opt)

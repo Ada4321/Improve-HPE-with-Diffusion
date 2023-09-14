@@ -2,7 +2,7 @@
     "name": "fixed_res_and_diff",
     "phase": "train", // train or val
     "gpu_ids": [
-        0
+        1
     ],
     "path": { //set the path
         "log": "logs",
@@ -59,6 +59,10 @@
             "input_dim": 2,
             "num_keypoints": 17,
             "num_image_embeds": 1,
+            "use_coord_type_embeds": false,
+            "use_kp_type_embeds": false,
+            "use_cur_preds_type_embed": false,
+            "use_noisy_res_type_embed": false,
             "transformer": {
                 "depth": 8,
                 "dim_head": 64,
@@ -100,7 +104,8 @@
         //     "diff": true
         // },
         "regress": "L1Loss",
-        "diffusion": "L2LossBatchAvg"
+        "diffusion": "L1LossBatchAvg",
+        "rle_loss": false
     },
     "train": {
         "batch_size": 128,
@@ -151,7 +156,7 @@
     },
     "wandb": {
         "project_name": "DiffHPE",
-        "run_name": "debug_with_valset_768_8_8"
+        "run_name": "mod_denoiser_768_8_8_trainset_l1_lr5e-5"
     },
     "world_size": 1,
     "seed": 123123

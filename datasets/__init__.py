@@ -47,7 +47,7 @@ def build_datasets(dataset_cfg, preset_cfg):
     return train_dataset, val_dataset, test_dataset
 
 def build_datasets_debug(dataset_cfg, preset_cfg):
-    train_name = dataset_cfg['val']['type']
+    train_name = dataset_cfg['train']['type']
     val_name = dataset_cfg['val']['type']
     test_name = dataset_cfg['test']['type']
     # for phase in ['train', 'val', 'test']:

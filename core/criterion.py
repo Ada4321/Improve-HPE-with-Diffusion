@@ -1,4 +1,7 @@
+import math
+import torch
 import torch.nn as nn
+
 import sys
 sys.path.append('/root/Improve-HPE-with-Diffusion')
 from core.registry import Registry
@@ -22,6 +25,18 @@ class L1LossBatchAvg(nn.Module):
         self.loss_fn = nn.L1Loss(reduction='sum').to(dev)
     def forward(self, pred, tgt):
         return self.loss_fn(pred, tgt) / len(pred)
+    
+@LOSS_REGISTRY.register()
+class L1LossBatchAvgVaraibleStd(nn.Module):
+    def __init__(self, dev) -> None:
+        super().__init__()
+        self.amp = 1 / math.sqrt(2 * math.pi)
+    def forward(self, pred, tgt, sigma):
+        b = len(pred)
+        loss = torch.log(sigma / self.amp) + torch.abs(tgt - pred) / (math.sqrt(2) * sigma + 1e-9)
+        loss = loss.sum() / b
+        return loss
+
 
 @LOSS_REGISTRY.register()
 class L2Loss(nn.Module):
@@ -60,9 +75,15 @@ class FixedResDiff(nn.Module):
         reg_loss = self.reg_loss_fn(kwargs['res_recon'], kwargs['gt_res'])
         # diff loss
         if kwargs['predict_x_start']:
-            diff_loss = self.diff_loss_fn(kwargs['res_recon'], kwargs['gt_res'])
+            if not kwargs['rle_loss']:
+                diff_loss = self.diff_loss_fn(kwargs['res_recon'], kwargs['gt_res'])
+            else:
+                diff_loss = self.diff_loss_fn(kwargs['res_recon'], kwargs['gt_res'], kwargs['sigma'])
         else:
-            diff_loss = self.diff_loss_fn(kwargs['pred_noise'], kwargs['gt_noise'])
+            if not kwargs['rle_loss']:
+                diff_loss = self.diff_loss_fn(kwargs['pred_noise'], kwargs['gt_noise'])
+            else:
+                diff_loss = self.diff_loss_fn(kwargs['pred_noise'], kwargs['gt_noise'], kwargs['sigma'])
 
         return {'reg_loss': reg_loss, 'diff_loss': diff_loss}
 
