@@ -1,134 +1,179 @@
 import torch
 import torch.nn as nn
+from functools import partial
+from einops import rearrange
 
 import sys
 sys.path.append('/root/Improve-HPE-with-Diffusion')
 sys.path.append('/root/Improve-HPE-with-Diffusion/model/regression_modules')
-from Resnet import ResNet
+
 from core.registry import Registry
 MODEL_REGISTRY = Registry('model')
 
+from mixste.blocks import MixSTEBlock
 
-class Linear(nn.Module):
-    def __init__(self, in_channel, out_channel, bias=True, norm=True):
-        super(Linear, self).__init__()
-        self.bias = bias
-        self.norm = norm
-        self.linear = nn.Linear(in_channel, out_channel, bias)
-        nn.init.xavier_uniform_(self.linear.weight, gain=0.01)  # initialize weights of self.linear
-
-    def forward(self, x):
-        y = x.matmul(self.linear.weight.t())
-
-        if self.norm:
-            x_norm = torch.norm(x, dim=1, keepdim=True)
-            y = y / x_norm
-
-        if self.bias:
-            y = y + self.linear.bias
-        return y
     
 @MODEL_REGISTRY.register()
-class Regressor(nn.Module):
+class ConvRegressor(nn.Module):
     def __init__(
             self,
-            opt
+            backbone,
+            neck
             ):
-        super(Regressor, self).__init__()
-        #self.opt = opt
-        # self.fc_dim = opt['NUM_FC_FILTERS']
-        self.preset_opt = opt['preset']
-        self.norm_layer = nn.BatchNorm2d
-        self.num_joints = self.preset_opt['num_joints']
-        self.height_dim = self.preset_opt['image_size'][0]
-        self.width_dim = self.preset_opt['image_size'][1]
-        self.pretrained_path = opt['pretrained_path']
-        self.is_rle = opt['is_rle']
-
-        # ResNet layers
-        assert opt['num_layers'] in [18, 34, 50, 101, 152]
-        self.preact = ResNet(f"resnet{opt['num_layers']}")
-        self.feature_channel = {
-            18: 512,
-            34: 512,
-            50: 2048,
-            101: 2048,
-            152: 2048
-        }[opt['num_layers']] 
-
-        # fc layer: global feature => key points
-        self.fc_layer = Linear(self.feature_channel, self.num_joints * 2)
-        if self.is_rle:
-            self.fc_sigma_layer = Linear(self.feature_channel, self.num_joints * 2, norm=False)
-
-        if self.pretrained_path is None:
-            # Imagenet pretrain model
-            import torchvision.models as tm  # noqa: F401,F403
-            x = eval(f"tm.resnet{opt['num_layers']}(pretrained=True)") 
-
-            model_state = self.preact.state_dict()
-            state = {k: v for k, v in x.state_dict().items()
-                    if k in self.preact.state_dict() and v.size() == self.preact.state_dict()[k].size()}
-            model_state.update(state)
-            self.preact.load_state_dict(model_state)
-        else:
-            self.load_pretrained()
-
-        # average pooling layer
-        self.avg_pool = nn.AdaptiveAvgPool2d(1)
+        super(ConvRegressor, self).__init__()
+        self.backbone = backbone
+        self.neck = neck
 
     def forward(self, x):
         BATCH_SIZE = x.shape[0]
-
-        # obtain global image features
-        feat = self.preact(x)
-
-        _, _, f_h, f_w = feat.shape  # (B,C,H,W)
-        feat = self.avg_pool(feat).reshape(BATCH_SIZE, -1) # global ResNet feature (B,C,1,1) => (B,C)
-
-        output = {}
-        # regress key points from global features
-        pred_jts = self.fc_layer(feat).reshape(BATCH_SIZE, self.num_joints, -1)
-        assert pred_jts.shape[-1] == 2
-        pred_jts = pred_jts.reshape(BATCH_SIZE, -1)  # produce mu
-        assert pred_jts.shape[-1] == self.num_joints * 2
-        output['raw_pred_jts'] = pred_jts
-
-        if self.is_rle:
-            # regress sigma per joint from global features
-            pred_sigmas = self.fc_sigma_layer(feat).reshape(BATCH_SIZE, self.num_joints, -1).sigmoid()
-            assert pred_sigmas.shape[-1] == 2
-            scores = 1. - pred_sigmas
-            scores = torch.mean(scores, dim=-1, keepdim=True)
-            
-            pred_sigmas = pred_sigmas.reshape(BATCH_SIZE, -1)  # produce sigma
-            scores = scores.reshape(BATCH_SIZE, -1)
-            output['pred_sigmas'] = pred_sigmas
-            output['pred_scores'] = scores
-
+        feat = self.backbone(x)
+        output, feat = self.neck(BATCH_SIZE, feat)
         return output, feat
-    
-    # load pretrained regressor
-    def load_pretrained(self):
-        assert self.pretrained_path is not None
 
-        pretrained_model = torch.load(self.pretrained_path)
-        if not self.is_rle:
-            preact_weights = {'.'.join(k.split('.')[2:]):v for (k,v) in pretrained_model.items() if 'regressor.preact' in k}
-            fc_weights = {'.'.join(k.split('.')[2:]):v for (k,v) in pretrained_model.items() if 'regressor.fc_layer' in k}
-        else:
-            preact_weights = {'.'.join(k.split('.')[1:]):v for (k,v) in pretrained_model.items() if 'preact' in k}
-            fc_weights = {'.'.join(k.split('.')[1:]):v for (k,v) in pretrained_model.items() if 'fc_coord' in k}
-            fc_sigma_weights = {'.'.join(k.split('.')[1:]):v for (k,v) in pretrained_model.items() if 'fc_sigma' in k}
-            self.fc_sigma_layer.load_state_dict(fc_sigma_weights, strict=True)
-
-        self.preact.load_state_dict(preact_weights, strict=True)
-        self.fc_layer.load_state_dict(fc_weights, strict=True)
 
 @MODEL_REGISTRY.register()
-class Regressor3D(nn.Module):
-    def __init__(self) -> None:
+class MixSTE2(nn.Module):
+    def __init__(self, num_frame=9, num_joints=17, in_chans=2, embed_dim_ratio=32, depth=4,
+                 num_heads=8, mlp_ratio=2., qkv_bias=True, qk_scale=None,
+                 drop_rate=0., attn_drop_rate=0., drop_path_rate=0.2,  norm_layer=None, **kwargs):
+        """    ##########hybrid_backbone=None, representation_size=None,
+        Args:
+            num_frame (int, tuple): input frame number
+            num_joints (int, tuple): joints number
+            in_chans (int): number of input channels, 2D joints have 2 channels: (x,y)
+            embed_dim_ratio (int): embedding dimension ratio
+            depth (int): depth of transformer
+            num_heads (int): number of attention heads
+            mlp_ratio (int): ratio of mlp hidden dim to embedding dim
+            qkv_bias (bool): enable bias for qkv if True
+            qk_scale (float): override default qk scale of head_dim ** -0.5 if set
+            drop_rate (float): dropout rate
+            attn_drop_rate (float): attention dropout rate
+            drop_path_rate (float): stochastic depth rate
+            norm_layer: (nn.Module): normalization layer
+        """
         super().__init__()
 
-    def forward():
-        pass
+        norm_layer = norm_layer or partial(nn.LayerNorm, eps=1e-6)
+        embed_dim = embed_dim_ratio   #### temporal embed_dim is num_joints * spatial embedding dim ratio
+        out_dim = 3     #### output dimension is num_joints * 3
+
+        ### spatial patch embedding
+        self.Spatial_patch_to_embedding = nn.Linear(int(in_chans), embed_dim_ratio)
+        self.Spatial_pos_embed = nn.Parameter(torch.zeros(1, num_joints, embed_dim_ratio))
+        self.Temporal_pos_embed = nn.Parameter(torch.zeros(1, num_frame, embed_dim))
+        self.pos_drop = nn.Dropout(p=drop_rate)
+
+        dpr = [x.item() for x in torch.linspace(0, drop_path_rate, depth)]  # stochastic depth decay rule
+        self.block_depth = depth
+
+        self.STEblocks = nn.ModuleList([
+            # Block: Attention Block
+            MixSTEBlock(
+                dim=embed_dim_ratio, num_heads=num_heads, mlp_ratio=mlp_ratio, qkv_bias=qkv_bias, qk_scale=qk_scale,
+                drop=drop_rate, attn_drop=attn_drop_rate, drop_path=dpr[i], norm_layer=norm_layer)
+            for i in range(depth)])
+
+        self.TTEblocks = nn.ModuleList([
+            MixSTEBlock(
+                dim=embed_dim, num_heads=num_heads, mlp_ratio=mlp_ratio, qkv_bias=qkv_bias, qk_scale=qk_scale,
+                drop=drop_rate, attn_drop=attn_drop_rate, drop_path=dpr[i], norm_layer=norm_layer, comb=False, changedim=False, currentdim=i+1, depth=depth)
+            for i in range(depth)])
+
+        self.Spatial_norm = norm_layer(embed_dim_ratio)
+        self.Temporal_norm = norm_layer(embed_dim)
+
+        ####### A easy way to implement weighted mean
+        # self.weighted_mean = torch.nn.Conv1d(in_channels=num_frame, out_channels=num_frame, kernel_size=1)
+
+        self.head = nn.Sequential(
+            nn.LayerNorm(embed_dim),
+            nn.Linear(embed_dim , out_dim),
+        )
+
+        self.head_sigma = nn.Sequential(
+            nn.LayerNorm(embed_dim),
+            nn.Linear(embed_dim, out_dim),
+        )
+
+    def STE_forward(self, x):
+        b, f, n, c = x.shape  ##### b is batch size, f is number of frames, n is number of joints, c is channel size
+        x = rearrange(x, 'b f n c  -> (b f) n c', )
+        ### now x is [batch_size*receptive frames, joint_num, 2 channels]
+        x = self.Spatial_patch_to_embedding(x)
+        x += self.Spatial_pos_embed
+        x = self.pos_drop(x)
+
+        blk = self.STEblocks[0]
+        x = blk(x)
+
+        x = self.Spatial_norm(x)
+        x = rearrange(x, '(b f) n cw -> (b n) f cw', f=f)
+        return x
+
+    def TTE_foward(self, x):
+        assert len(x.shape) == 3, "shape is equal to 3"
+        b, f, _  = x.shape
+        x += self.Temporal_pos_embed
+        x = self.pos_drop(x)
+        blk = self.TTEblocks[0]
+        x = blk(x)
+
+        x = self.Temporal_norm(x)
+        return x
+
+    def ST_foward(self, x):
+        assert len(x.shape)==4, "shape is equal to 4"
+        b, f, n, cw = x.shape
+        for i in range(1, self.block_depth):
+            x = rearrange(x, 'b f n cw -> (b f) n cw')
+            steblock = self.STEblocks[i]
+            tteblock = self.TTEblocks[i]
+            
+            x = steblock(x)
+            x = self.Spatial_norm(x)
+            x = rearrange(x, '(b f) n cw -> (b n) f cw', f=f)
+
+            x = tteblock(x)
+            x = self.Temporal_norm(x)
+            x = rearrange(x, '(b n) f cw -> b f n cw', n=n)
+        
+        return x
+
+    def forward(self, x):
+        """return st-features and predicted 3d pose sequence
+            st_feats: spatial-temporal features of pose sequence, (b,f,n,cw=512)
+            x: predicted 3d pose sequence, (b,f,n,3)
+        """
+        b, f, n, c = x.shape
+        ### now x is [batch_size, receptive frames, joint_num, 2 channels]
+        # x shape:(b f n c)
+        x = self.STE_forward(x)
+        # now x shape is (b n) f cw
+        x = self.TTE_foward(x)
+        # now x shape is (b n) f cw
+        x = rearrange(x, '(b n) f cw -> b f n cw', n=n)
+        x = self.ST_foward(x)
+        # now x shape is (b f n cw)
+        st_feats = x
+        mu = self.head(st_feats)
+        #sigma = self.head_sigma(st_feats).sigmoid() + 0.5
+        sigma = self.head_sigma(st_feats).sigmoid()
+        # now x shape is (b f n 3)
+        st_feats = st_feats.view(b, f, n, -1)
+        mu = mu.view(b, f, n, -1)
+        sigma = sigma.view(b, f, n, -1)
+
+        return mu, sigma, st_feats
+    
+@MODEL_REGISTRY.register()
+class STMO(nn.Module):
+    pass
+
+@MODEL_REGISTRY.register()
+class DSTFormer(nn.Module):
+    pass
+
+@MODEL_REGISTRY.register()
+class SRNet(nn.Module):
+    pass

@@ -9,19 +9,21 @@ import numpy as np
 import os
 import json
 import pickle as pk
+from tqdm import tqdm
 
 import sys
 sys.path.append('/root/Improve-HPE-with-Diffusion')
 
 import model.networks as networks
 from .base_model import BaseModel
-from core.metrics import evaluate_mAP
+from core.metrics import *
 from core.nms import oks_pose_nms
 logger = logging.getLogger('base')
 
 from core.dist import is_primary
 from core.optimize import build_scheduler
 from core.optimize import MyExponentialLR
+from data.utils import eval_data_prepare
 
 
 class DDPM(BaseModel):
@@ -29,7 +31,6 @@ class DDPM(BaseModel):
         super(DDPM, self).__init__(opt)
         # define network and load pretrained models
         self.netG = networks.define_G(opt)
-        # self.netG = self.set_device(self.netG, gpu)
         self.schedule_phase = None
 
         # set loss and load resume state
@@ -42,106 +43,75 @@ class DDPM(BaseModel):
             self.netG.train()
             # optimizer
             if not isinstance(self.netG, DDP):
-                self.opt_reg = self.set_optimizer(
-                    self.netG.regressor.parameters(), 
-                    lr=opt['train']['lr']['reg'], 
-                    opt_type=opt['train']['optimizer']['reg'])
-                self.opt_diff = self.set_optimizer(
-                    self.netG.denoise_fn.parameters(), 
-                    lr=opt['train']['lr']['diff'], 
-                    opt_type=opt['train']['optimizer']['diff'])
+                self.optimizer = self.set_optimizer(
+                    self.netG.parameters(), 
+                    lr=opt['train']['lr'], 
+                    opt_type=opt['train']['optimizer'])
             else:
-                self.opt_reg = self.set_optimizer(
-                    self.netG.module.regressor.parameters(), 
-                    lr=opt['train']['lr']['reg'], 
-                    opt_type=opt['train']['optimizer']['reg'])
-                self.opt_diff = self.set_optimizer(
-                    self.netG.module.denoise_fn.parameters(), 
-                    lr=opt['train']['lr']['diff'], 
-                    opt_type=opt['train']['optimizer']['diff'])
+                self.optimizer = self.set_optimizer(
+                    self.netG.module.parameters(), 
+                    lr=opt['train']['lr'], 
+                    opt_type=opt['train']['optimizer'])
             # log dict
             self.log_dict = OrderedDict()
         self.eval_dict = OrderedDict()
         self.load_network()
         if self.opt['phase'] == 'train':
             # scheduler
-            opt['train']['scheduler']['reg']['last_epoch'] = self.begin_epoch * 140 - 1
-            opt['train']['scheduler']['diff']['last_epoch']= self.begin_epoch * 140 - 1  # num of iters
-            self.lr_scheduler_reg = self.set_scheduler(
-                sche_type=opt['train']['scheduler_type']['reg'],
-                optimizer=self.opt_reg, 
-                **opt['train']['scheduler']['reg']
+            opt['train']['scheduler']['last_epoch'] = self.begin_epoch - 1  # num of iters
+            self.lr_scheduler = self.set_scheduler(
+                sche_type=opt['train']['scheduler_type'],
+                optimizer=self.optimizer, 
+                **opt['train']['scheduler']
             )
-            self.lr_scheduler_diff = self.set_scheduler(
-                sche_type=opt['train']['scheduler_type']['diff'],
-                optimizer=self.opt_diff, 
-                **opt['train']['scheduler']['diff']
-            ) 
-            # self.lr_scheduler_reg = MyExponentialLR(
-            #     self.opt_reg, decay_epochs=opt['train']['decay_epochs'], gamma=opt['train']['lr_factor'], last_epoch=self.begin_epoch-1
-            # )
-            # self.lr_scheduler_diff = MyExponentialLR(
-            #     self.opt_diff, decay_epochs=opt['train']['decay_epochs'], gamma=opt['train']['lr_factor'], last_epoch=self.begin_epoch-1
-            # )
         self.print_network()
 
     def feed_data(self, data):
-        """
-        data -- a dict
-        {
-            'images': images to detect kps
-            'gt_kps': ground truth key points
+        """data {
+            'cam_params': cam, 'cam_id': cam_id,
+            'gt_3d': gt_3D, 'gt_2d_pixel': None,
+            'action': action, 'cano_action': cano_action,
+            'subject': subject, 
+            'image': image,
+            'scale': scale, 'bb_box': bb_box
         }
         """
-        # self.data = self.set_device(data)
-        self.data = {}
-        if isinstance(data, tuple):
-            inps, labels = data
-            inps = self.set_device(inps)
-            for k, _ in labels.items():
-                if k == 'type':
-                    continue
-                labels[k] = self.set_device(labels[k])
+        self.data = self.set_device(data)
 
-            self.data['images'] = inps
-            self.data['gt_kps'] = labels['target_uv']
-        else:
-            data = self.set_device(data)
-            self.data['images'] = data
+    def optimize_parameters(self, inputs_2d, inputs_3d):
+        self.optimizer.zero_grad()
 
+        losses = self.netG(inputs_2d, inputs_3d)
+        assert "loss" in losses
 
-    def optimize_parameters(self):
-        self.opt_reg.zero_grad()
-        self.opt_diff.zero_grad()
-
-        losses = self.netG(self.data['images'], self.data['gt_kps'])
-        
-        if 'reg_loss' in losses:
-            losses['reg_loss'].backward()
-            self.opt_reg.step()  
-        if 'diff_loss' in losses:
-            losses['diff_loss'].backward()
-            self.opt_diff.step()
-        #dist.barrier()
+        losses["loss"].backward()
+        self.optimizer.step()
 
         # set log
         for k,v in losses.items():
             losses[k] = v.item()
         self.log_dict = losses
 
-    def test(self):
+    def sample(self, inputs_2d):
         self.netG.eval()
         with torch.no_grad():
             if isinstance(self.netG, DDP):
-                ret = self.netG.module.sample(self.data['images'])
+                ret = self.netG.module.sample(inputs_2d)
             else:
-                ret = self.netG.sample(self.data['images'])
-            self.results = {'preds': ret['preds']}
-            self.results['preds']['pred_jts'] = ret['preds']['raw_pred_jts']
+                ret = self.netG.sample(inputs_2d)
+            results = {'preds': {'pred_jts': ret['preds']}}
+            #results = {'preds': ret['preds']}
+            #results['preds']['pred_jts'] = ret['preds']
+            # results['preds']['pred_jts'] = ret['preds']['raw_pred_jts']
             if 'res' in ret.keys():
-                self.results['res'] = ret['res']
-                self.results['preds']['pred_jts'] += ret['res']
+                results['res'] = ret['res']
+                if self.opt['model']['diffusion']['norm_res']:
+                    assert 'pred_sigmas' in results['preds']
+                    results['preds']['pred_jts'] = results['preds']['pred_jts'] + results['res'] * results['preds']['pred_sigmas']
+                else:
+                    results['preds']['pred_jts'] = results['preds']['pred_jts'] + results['res']
         self.netG.train()
+        return results
 
     def set_loss(self):
         if isinstance(self.netG, DDP):
@@ -187,15 +157,11 @@ class DDPM(BaseModel):
             'Network G structure: {}, with parameters: {:,d}'.format(net_struc_str, n))
         logger.info(s)
 
-    def save_network(self, epoch, iter_step):
-        # gen_path = os.path.join(
-        #     self.opt['path']['checkpoint'], 'I{}_E{}_gen.pth'.format(iter_step, epoch))
-        # opt_path = os.path.join(
-        #     self.opt['path']['checkpoint'], 'I{}_E{}_opt.pth'.format(iter_step, epoch))
+    def save_network(self, epoch, iter_step, random_state):
         gen_path = os.path.join(
-            self.opt['path']['checkpoint'], 'last_gen.pth')
+            self.opt['path']['checkpoint'], 'best_gen.pth')
         opt_path = os.path.join(
-            self.opt['path']['checkpoint'], 'last_opt.pth')
+            self.opt['path']['checkpoint'], 'best_opt.pth')
         # gen
         network = self.netG
         if isinstance(self.netG, DDP):
@@ -206,9 +172,8 @@ class DDPM(BaseModel):
         torch.save(state_dict, gen_path)
         # opt
         opt_state = {'epoch': epoch, 'iter': iter_step,
-                     'scheduler': None, 'optimizer': None}
-        opt_state['optimizer_reg'] = self.opt_reg.state_dict()
-        opt_state['optimizer_diff'] = self.opt_diff.state_dict()
+                     'scheduler': None, 'optimizer': None, "random_state": random_state}
+        opt_state['optimizer'] = self.optimizer.state_dict()
         torch.save(opt_state, opt_path)
 
         logger.info(
@@ -216,150 +181,73 @@ class DDPM(BaseModel):
 
     def load_network(self):
         load_path = self.opt['path']['resume_state']
+        self.random_state = None
         if load_path is not None:
             logger.info(
                 'Loading pretrained model for G [{:s}] ...'.format(load_path))
-            gen_path = os.path.join(load_path, 'last_gen.pth')
-            opt_path = os.path.join(load_path, 'last_opt.pth')
+            gen_path = os.path.join(load_path, 'best_gen.pth')
+            opt_path = os.path.join(load_path, 'best_opt.pth')
             # gen
             network = self.netG
             if isinstance(self.netG, DDP):
                 network = network.module
             network.load_state_dict(torch.load(
-                gen_path), strict=(not self.opt['model']['finetune_norm']))
-            # network.load_state_dict(torch.load(
-            #     gen_path), strict=False)
+                gen_path), strict=True)
             if self.opt['phase'] == 'train':
                 # optimizer
-                opt = torch.load(opt_path)
-                self.opt_reg.load_state_dict(opt['optimizer_reg'])
-                self.opt_diff.load_state_dict(opt['optimizer_diff'])
-                self.begin_step = opt['iter']
-                self.begin_epoch = opt['epoch']
-
-    def validate(self, json_path, heatmap_to_coord, val_loader, opt):
-        kpt_json = []
-
-        for inps, crop_bboxes, bboxes, img_ids, scores, _, _ in val_loader:
-            self.feed_data(inps)
-            self.test()
-            
-            # compute metrics
-            for i in range(inps.shape[0]):
-                bbox = crop_bboxes[i].tolist()
-                raw_preds = {k:v.reshape(inps.shape[0], opt['data_preset']['num_joints'], -1) for k,v in self.results['preds'].items()}
-                pose_coords, pose_scores = heatmap_to_coord(raw_preds, bbox, idx=i)
-                if pose_scores is None:
-                    pose_scores = np.zeros((pose_coords.shape[0], pose_coords.shape[1], 1))    
-                
-                keypoints = np.concatenate((pose_coords[0], pose_scores[0]), axis=1)
-                keypoints = keypoints.reshape(-1).tolist()
-
-                data = dict()
-                data['bbox'] = bboxes[i, 0].tolist()
-                data['image_id'] = int(img_ids[i])
-                data['score'] = float(scores[i] + np.mean(pose_scores) + np.max(pose_scores))
-                #data['score'] = float(scores[i])
-                data['category_id'] = 1
-                data['keypoints'] = keypoints
-                data['area'] = float((crop_bboxes[i][2] - crop_bboxes[i][0]) * (crop_bboxes[i][3] - crop_bboxes[i][1]))
-
-                kpt_json.append(data)
-            #break
-
-        if isinstance(self.netG, DDP):
-            with open(os.path.join(json_path, 'test_kpt_rank_{}.pkl'.format(opt['current_id'] if opt['current_id'] is not None else 0)), 'wb') as fid:
-                pk.dump(kpt_json, fid, pk.HIGHEST_PROTOCOL)
-
-            dist.barrier()  # Make sure all JSON files are saved
-
-            if is_primary():
-                kpt_json_all = []
-                for r in range(opt['world_size']):
-                    with open(os.path.join(json_path, f'test_kpt_rank_{r}.pkl'), 'rb') as fid:
-                        kpt_pred = pk.load(fid)
-
-                    os.remove(os.path.join(json_path, f'test_kpt_rank_{r}.pkl'))
-                    kpt_json_all += kpt_pred
-
-                kpt_json_all = oks_pose_nms(kpt_json_all)
-
-                with open(os.path.join(json_path, 'result.json'), 'w') as fid:
-                    json.dump(kpt_json_all, fid)
-        else:
-            with open(os.path.join(json_path, 'result.json'), 'w') as fid:
-                json.dump(kpt_json, fid)
-
-        res = evaluate_mAP(os.path.join(json_path, 'result.json'), ann_type='keypoints')
-        self.eval_dict['det_AP'] = res['AP']
-        self.eval_dict['det_AP50'] = res['Ap .5']
-        self.eval_dict['det_AP75'] = res['AP .75']
-
+                optim = torch.load(opt_path)
+                self.optimizer.load_state_dict(optim['optimizer'])
+                self.begin_step = optim['iter']
+                self.begin_epoch = optim['epoch']
+                if "random_state" in optim:
+                    self.random_state = optim["random_state"]
     
-    def validate_gt(self, json_path, heatmap_to_coord, val_loader, opt):
-        kpt_json = []
-        val_losses_all = []
-        
-        for inps, labels, img_ids, bboxes in val_loader:
-            self.feed_data((inps, labels))
-            self.test()
-            with torch.no_grad():
-                # val losses
-                val_losses = {
-                    'val_reg_loss': torch.nn.L1Loss(reduction='sum')(self.results['preds']['pred_jts'], self.data['gt_kps']).item(),
-                }
-                if 'res' in self.results.keys():
-                    val_losses['val_diff_loss'] = torch.nn.MSELoss(reduction='sum')(self.results['res'], self.data['gt_kps']-self.results['preds']['raw_pred_jts']).item() / inps.shape[0]
-                val_losses_all.append(val_losses)
+    def validate(self, kps_left, kps_right, joints_left, joints_right, receptive_field, val_generator, all_actions):
+        action_error_sum = define_error_list(all_actions)
+        for _, cano_action, batch, batch_2d in tqdm(val_generator.next_epoch()):
+            inputs_3d = torch.from_numpy(batch.astype('float32'))
+            inputs_2d = torch.from_numpy(batch_2d.astype('float32'))
+            ##### apply test-time-augmentation (following Videopose3d)
+            inputs_2d_flip = inputs_2d.clone()
+            inputs_2d_flip[:, :, :, 0] *= -1
+            inputs_2d_flip[:, :, kps_left + kps_right, :] = inputs_2d_flip[:, :, kps_right + kps_left, :]
+            ##### convert size
+            inputs_3d_p = inputs_3d
+            inputs_2d, inputs_3d = eval_data_prepare(receptive_field, inputs_2d, inputs_3d_p)
+            inputs_2d_flip, _ = eval_data_prepare(receptive_field, inputs_2d_flip, inputs_3d_p)
+
+            if torch.cuda.is_available():
+                inputs_3d = inputs_3d.cuda()
+                inputs_2d = inputs_2d.cuda()
+                inputs_2d_flip = inputs_2d_flip.cuda()
+            inputs_3d[:, :, 0] = 0
+
+            results = self.sample(inputs_2d)
+            results_flip = self.sample(inputs_2d_flip)
+            results_flip['preds']['pred_jts'][:, :, :, 0] *= -1
+            results_flip['preds']['pred_jts'][:, :, joints_left + joints_right, :] = results_flip['preds']['pred_jts'][:, :, joints_right + joints_left, :]
+            for i in range(results["preds"]["pred_jts"].shape[0]):
+                results["preds"]["pred_jts"][i] = (results["preds"]["pred_jts"][i] + results_flip["preds"]["pred_jts"][i]) / 2
+
             # compute metrics
-            for i in range(inps.shape[0]):
-                bbox = bboxes[i].tolist()
-                raw_preds = {k:v.reshape(inps.shape[0], opt['data_preset']['num_joints'], -1) for k,v in self.results['preds'].items()}
-                pose_coords, pose_scores = heatmap_to_coord(raw_preds, bbox, idx=i)
-                if pose_scores is None:
-                    pose_scores = np.ones((pose_coords.shape[0], pose_coords.shape[1], 1))
-
-                keypoints = np.concatenate((pose_coords[0], pose_scores[0]), axis=1)
-                keypoints = keypoints.reshape(-1).tolist()
-
-                data = dict()
-                data['bbox'] = bboxes[i].tolist()
-                data['image_id'] = int(img_ids[i])
-                data['score'] = float(np.mean(pose_scores) + np.max(pose_scores))
-                data['category_id'] = 1
-                data['keypoints'] = keypoints
-
-                kpt_json.append(data)
-            #break
-        val_losses_dict = {}
-        for val_losses in val_losses_all:
-            for k in val_losses:
-                val_losses_dict[k] = val_losses_dict[k] + val_losses[k] if k in val_losses_dict else val_losses[k]
-        val_losses_dict = {k:v/len(val_losses_all) for k,v in val_losses_dict.items()}
-
-        if isinstance(self.netG, DDP):
-            with open(os.path.join(json_path, 'test_gt_kpt_rank_{}.pkl'.format(opt['current_id'] if opt['current_id'] is not None else 0)), 'wb') as fid:
-                pk.dump(kpt_json, fid, pk.HIGHEST_PROTOCOL)
-
-            dist.barrier()  # Make sure all JSON files are saved
-
-            if is_primary():
-                kpt_json_all = []
-                for r in range(opt['world_size']):
-                    with open(os.path.join(json_path, f'test_gt_kpt_rank_{r}.pkl'), 'rb') as fid:
-                        kpt_pred = pk.load(fid)
-
-                    os.remove(os.path.join(json_path, f'test_gt_kpt_rank_{r}.pkl'))
-                    kpt_json_all += kpt_pred
-                
-                with open(os.path.join(json_path, 'result.json'), 'w') as fid:
-                    json.dump(kpt_json_all, fid)
-        else:
-            with open(os.path.join(json_path, 'result.json'), 'w') as fid:
-                json.dump(kpt_json, fid)
-
-        res = evaluate_mAP(os.path.join(json_path, 'result.json'), ann_type='keypoints')
-        self.eval_dict['GT_AP'] = res['AP']
-        self.eval_dict['GT_AP50'] = res['Ap .5']
-        self.eval_dict['GT_AP75'] = res['AP .75']
-        self.eval_dict.update(val_losses_dict)
+            action_error_sum = mpjpe_by_action(results['preds']['pred_jts'], 
+                                               inputs_3d, 
+                                               cano_action, 
+                                               action_error_sum)
+        # average across actions
+        action_error_sum.update({
+            "Average": {
+                "p1": AccumLoss(),
+                "p2": AccumLoss()
+            }
+        })
+        for k, v in action_error_sum.items():
+            if k == "Average":
+                continue
+            else:
+                action_error_sum["Average"]["p1"].update(v["p1"].avg, 1)
+                action_error_sum["Average"]["p2"].update(v["p2"].avg, 1)
+        # log eval metrics
+        for k, v in action_error_sum.items():
+            self.eval_dict[k+"_p1"] = action_error_sum[k]["p1"].avg * 1000
+            self.eval_dict[k+"_p2"] = action_error_sum[k]["p2"].avg * 1000

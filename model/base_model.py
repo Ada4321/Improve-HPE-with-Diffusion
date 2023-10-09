@@ -1,4 +1,5 @@
 import os
+import numpy as np
 import torch
 import torch.nn as nn
 from torch.nn.parallel import DistributedDataParallel as DDP
@@ -34,11 +35,13 @@ class BaseModel():
         if isinstance(x, dict):
             for key, item in x.items():
                 if item is not None:
-                    x[key] = item.to(self.device)
+                    if isinstance(item, torch.Tensor) or isinstance(item, np.ndarray):
+                        x[key] = item.to(self.device)
         elif isinstance(x, list):
             for item in x:
                 if item is not None:
-                    item = item.to(self.device)
+                    if isinstance(item, torch.Tensor) or isinstance(item, np.ndarray):
+                        item = item.to(self.device)
         else:
             x = x.to(self.device)
         return x

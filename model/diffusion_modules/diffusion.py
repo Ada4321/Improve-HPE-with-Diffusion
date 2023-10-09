@@ -79,11 +79,10 @@ class GaussianDiffusion(nn.Module):
         self.loss_opt = loss_opt
         self.condition_on_preds = diff_opt['condition_on_preds']
         self.is_ddim = diff_opt.get('is_ddim', True)
+        self.norm_res = diff_opt.get('norm_res', False)
         self.clip_denoised = diff_opt.get('clip_denoised', False)
         self.predict_x_start = diff_opt.get('predict_x_start', False)
-        # if schedule_opt is not None:
-        #     pass
-            # self.set_new_noise_schedule(schedule_opt)
+        self.diff_on = diff_opt.get('diff_on', False)
 
     def set_loss(self, device):
         self.loss_fn = build_criterion(self.loss_opt, device)
@@ -202,9 +201,9 @@ class GaussianDiffusion(nn.Module):
             x_recon = self.predict_start_from_noise(x, t=t, noise=pred_noise)     # X_0
         else:
             if not self.condition_on_preds:
-                x_recon = self.denoise_fn(x.reshape(batch_size,-1,2), image_embed, noise_level)
+                x_recon = self.denoise_fn(x.reshape(batch_size,-1,3), image_embed, noise_level)
             else:
-                x_recon = self.denoise_fn(x.reshape(batch_size,-1,2), image_embed, noise_level, cur_preds=cur_preds.reshape(batch_size,-1,2))
+                x_recon = self.denoise_fn(x.reshape(batch_size,-1,3), image_embed, noise_level, cur_preds=cur_preds.reshape(batch_size,-1,2))
             pred_noise = self.predict_noise_from_start(x, t=t, x_start=x_recon)  # noise
 
         if self.clip_denoised:
@@ -239,7 +238,7 @@ class GaussianDiffusion(nn.Module):
 
     @torch.no_grad()
     def p_sample_loop_ddpm(self, x_in):
-        image_embed = x_in['im_feats']
+        image_embed = x_in['st_feats']
         cur_preds = x_in['cur_preds']
 
         device = cur_preds.device
@@ -254,7 +253,7 @@ class GaussianDiffusion(nn.Module):
 
     @torch.no_grad()
     def p_sample_loop_ddim(self, x_in):
-        image_embed = x_in['im_feats']
+        image_embed = x_in['st_feats']
         cur_preds = x_in['cur_preds']
 
         shape, device, alphas = cur_preds.shape, cur_preds.device, self.alphas_cumprod_prev
@@ -284,45 +283,34 @@ class GaussianDiffusion(nn.Module):
 
     @torch.no_grad()
     def sample(self, images):
-        preds, imfeats = self.regressor(images)
-        if self.loss_opt['type'] == 'sanity_check':
+        preds, sigmas, imfeats = self.regressor(images)
+        if not self.diff_on:
             return {'preds': preds}
-            #pred_jts = preds['raw_pred_jts']
-            #return pred_jts + torch.ones_like(pred_jts) * 0.
         else:
             x_in = {
-                'im_feats': imfeats,
+                'st_feats': imfeats,
                 'cur_preds': preds['raw_pred_jts']
             }
             res = self.p_sample_loop(x_in)
 
             return {'preds': preds, 'res': res}
-            #return preds + res
-            #return preds
 
     def q_sample(self, x_start, continuous_sqrt_alpha_cumprod, noise=None):  # sample X_t from X_0
         noise = default(noise, lambda: torch.randn_like(x_start))
 
-        # random gamma
         return (
             continuous_sqrt_alpha_cumprod * x_start +
             (1 - continuous_sqrt_alpha_cumprod**2).sqrt() * noise
         )
 
-    def regress(self, images):
-        return self.regressor(images)
-        # preds, imfeats = self.regressor(images)
-        # if self.training:
-        #     return preds, imfeats, self.reg_loss_func(preds, gt)
-        # else:
-        #     return preds, imfeats
+    def regress(self, inputs_2d):
+        return self.regressor(inputs_2d)
     
     def diffuse(self, x_in, noise=None):
         x_start = x_in['gt_res']        # x_start should be gt_res, the goal of diffusion 
-        image_embed = x_in['im_feats']
+        image_embed = x_in['st_feats']
         cur_preds = x_in['cur_preds']
         
-        # [b, c, h, w] = x_start.shape
         b, num_kp_coords = x_start.shape
         t = np.random.randint(1, self.num_timesteps + 1)  # sample a 't' value -- total diffusion step T
         continuous_sqrt_alpha_cumprod = torch.FloatTensor( # sample one alpha value for each sample in the batch
@@ -339,7 +327,7 @@ class GaussianDiffusion(nn.Module):
             x_start=x_start, continuous_sqrt_alpha_cumprod=continuous_sqrt_alpha_cumprod, noise=noise)
 
         if not self.condition_on_preds:
-            x_recon = self.denoise_fn(x_noisy.reshape(b,-1,2), image_embed, continuous_sqrt_alpha_cumprod) # x_recon -- reconstructed noise
+            x_recon = self.denoise_fn(x_noisy.reshape(b,-1,3), image_embed, continuous_sqrt_alpha_cumprod) # x_recon -- reconstructed noise
         else:
             x_recon = self.denoise_fn(
                 x_noisy.reshape(b,-1,2), image_embed, continuous_sqrt_alpha_cumprod, cur_preds.reshape(b,-1,2))
@@ -350,25 +338,24 @@ class GaussianDiffusion(nn.Module):
         else:
             return x_recon
 
-    # def forward(self, x, *args, **kwargs):
-    def forward(self, images, gt):
-        # preds, im_feats, l_reg = self.regress(images=images, gt=gt)
-        if self.loss_opt['type'] == 'fixed_res_and_diff':
-            with torch.no_grad():
-                preds, im_feats = self.regress(images=images)
-        else:
-            preds, im_feats = self.regress(images=images)
+    def forward(self, inputs_2d, gt):
+        preds, sigmas, st_feats = self.regress(inputs_2d=inputs_2d)
 
+        if not self.diff_on:
+            #return self.loss_fn(preds=pred_jts, pred_sigmas=pred_sigmas, gt=gt)
+            return self.loss_fn(preds=preds, sigmas=sigmas, gt=gt)
+        
         pred_jts = preds['raw_pred_jts']
         pred_sigmas = preds['pred_sigmas'] if 'pred_sigmas' in preds else None
-        pred_sigmas = self.denoise_fn.sigma_linear(pred_sigmas.unsqueeze(-1)).squeeze(-1)
-        # gt_res = torch.abs(pred_jts - gt)
+        gt = gt.reshape(gt.shape[0], pred_jts.shape[-1])
         gt_res = gt - pred_jts
-        # pred_jts = pred_jts.reshape(images.shape[0],-1,2)
-        # gt_res = gt_res.reshape(images.shape[0],-1,2)
+        if self.norm_res:
+            assert pred_sigmas is not None
+            gt_res = gt_res / pred_sigmas
+        
         x_in = {
-            'im_feats': im_feats.detach(), 
-            'gt_res': gt_res.detach(), 
+            'st_feats': st_feats.detach(), 
+            'gt_res': gt_res, 
             'cur_preds': pred_jts.detach()
         }
 
@@ -381,7 +368,6 @@ class GaussianDiffusion(nn.Module):
                 gt_noise=gt_noise, 
                 res=res_recon,
                 predict_x_start=self.predict_x_start,
-                rle_loss=self.loss_opt['rle_loss'],
                 sigma=pred_sigmas
                 )
         else:
@@ -392,7 +378,6 @@ class GaussianDiffusion(nn.Module):
                 res_recon=res_recon,
                 gt_res=gt_res,
                 predict_x_start=self.predict_x_start,
-                rle_loss=self.loss_opt['rle_loss'],
                 sigma=pred_sigmas
                 )
 

@@ -97,7 +97,7 @@ def define_G(opt):
     regressor = build_regressor(model_opt['regressor'])
 
     # init denoiser
-    model_opt['denoise_transformer']['image_dim'] = regressor.feature_channel
+    model_opt['denoise_transformer']['image_dim'] = model_opt["regressor"]["embed_dim_ratio"]
     denoiser = DenoiseTransformer(model_opt['denoise_transformer'])
 
     # init diffusion
