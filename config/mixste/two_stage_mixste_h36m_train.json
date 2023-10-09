@@ -1,0 +1,129 @@
+{
+    "name": "single_frame_h36m",
+    "phase": "train", // train or val
+    "gpu_ids": [
+        1
+    ],
+    "path": { //set the path
+        "log": "logs",
+        "checkpoint": "checkpoint",
+        "resume_state": null
+        //"resume_state": "/root/Improve-HPE-with-Diffusion/experiments/single_frame_h36m_231008_232830/checkpoint" //pretrain model or training state,
+    },
+    "datasets": {
+        "type": "H36M",
+        "root": "/root/autodl-tmp/human3.6m",
+        "keypoints_type_2d": "cpn_ft_h36m_dbb",
+        "remove_static_joints": true,
+        "batch_size": 1024,
+        "train_downsample": 1,
+        "val_downsample": 1,
+        "augmentation": true,
+        "test_augmentation": false,
+        "pad": 0,
+        "action_filter": true,
+        "num_frames": 243,
+        "num_joints": 17
+    },
+    "model": {
+        "regressor": {
+            "name": "MixSTE2",
+            "num_frame": 243,
+            "num_joints": 17,
+            "in_chans": 2.0,
+            "embed_dim_ratio": 512,
+            "depth": 8,
+            "num_heads": 8,
+            "mlp_ratio": 2,
+            "qkv_bias": true,
+            "drop_rate": 0.1
+        },
+        "denoise_transformer": {
+            "dim": 512,
+            "input_dim": 3,
+            "num_keypoints": 17,
+            "num_image_embeds": 1,
+            "use_coord_type_embeds": false,
+            "use_kp_type_embeds": false,
+            "use_cur_preds_type_embed": false,
+            "use_noisy_res_type_embed": false,
+            "transformer": {
+                "depth": 8,
+                "dim_head": 64,
+                "heads": 8,
+                "ff_mult": 4,
+                "norm_out": true,
+                "attn_dropout": 0.05,
+                "ff_dropout": 0.05,
+                "final_proj": true,
+                "normformer": true
+            }
+        },
+        "diffusion": {
+            "diff_on": false,
+            "is_ddim": true,
+            "norm_res": false,
+            "clip_denoised": true,
+            "predict_x_start": true,
+            "condition_on_preds": false // condition on current preds from the regressor
+        },
+        "beta_schedule": { // use munual beta_schedule for acceleration
+            "train": {
+                "schedule": "linear",
+                "n_timestep": 1000,
+                "linear_start": 1e-6,
+                "linear_end": 1e-2
+            },
+            "val": {
+                "schedule": "linear",
+                "n_timestep": 1000,
+                "sample_step": 64,
+                "linear_start": 1e-6,
+                "linear_end": 1e-2
+            }
+        }
+    },
+    "loss": {
+        "type": "MixSTELossWithSigmaL2",
+        "regress": "L2LossBatchAvg",
+        "diffusion": "L2LossBatchAvg",
+        "reg_weight": 1.0,
+        "diff_weight":  0.0,
+        "weights_joints": [1, 1, 2.5, 2.5, 1, 2.5, 2.5, 1, 1, 1, 1.5, 1.5, 4, 4, 1.5, 4, 4],
+        "w_dif": 0.5,
+        "w_vel": 2.0
+    },
+    "train": {
+        "end_epoch": 160,
+        "optimizer": "adam",
+        "lr": 4e-5,
+        "scheduler_type": "exponential",
+        "scheduler":{
+            // "reg": {
+            //     "milestones": [0],
+            //     "gamma": 1.0
+            // },
+            // "diff": {
+            //     "milestones": [2000, 10000, 50000],
+            //     "gamma": 0.1
+            // }
+            "decay_epochs": 1,
+            "gamma": 0.99
+        },
+        "lr_factor": 0.1,
+        "val_freq": 2000,    
+        "save_checkpoint_freq": 2e5,
+        "print_freq": 10,  
+        "ema_scheduler": {  // not used now
+            "step_start_ema": 5000,
+            "update_ema_every": 1,
+            "ema_decay": 0.9999
+        }
+    },
+    "wandb": {
+        "project_name": "DiffHPE_3D",
+        "run_name": "mixsteloss_sigma_sigmoid_bz1024_lr4e-5"
+    },
+    "world_size": 1,
+    "seed": 123123
+}

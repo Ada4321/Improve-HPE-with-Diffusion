@@ -70,7 +70,7 @@ class Registry():
 
 
 #DATASET_REGISTRY = Registry('dataset')
-ARCH_REGISTRY = Registry('arch')
+#ARCH_REGISTRY = Registry('arch')
 #MODEL_REGISTRY = Registry('model')
 #LOSS_REGISTRY = Registry('loss')
 #METRIC_REGISTRY = Registry('metric')

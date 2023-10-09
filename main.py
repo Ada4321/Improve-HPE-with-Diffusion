@@ -23,6 +23,9 @@ import sys
 sys.path.append('/root/Improve-HPE-with-Diffusion')
 from core.dist import *
 
+# sweep search
+from config.sweep_config import *
+
 # num_gpu = torch.cuda.device_count()
 
 
@@ -65,9 +68,15 @@ def main_worker(gpu, opt, args):
 
     if is_primary():
         # init wandb
-        project_name = opt['wandb']['project_name']
-        run_name = opt['wandb']['run_name']
-        wandb.init(project=project_name, config=args, name=run_name)
+        if not args.sweep:
+            project_name = opt['wandb']['project_name']
+            run_name = opt['wandb']['run_name']
+            wandb.init(project=project_name, config=args, name=run_name)
+        else:
+            wandb.init(project="sweep-coco-subset")
+            sweep_cfg = wandb.config
+            print(sweep_cfg)
+            opt = merge_opt(opt=opt, sweep_config=sweep_cfg)
 
         # logging
         torch.backends.cudnn.enabled = True
@@ -79,31 +88,27 @@ def main_worker(gpu, opt, args):
         logger.info(Logger.dict2str(opt))
 
     # dataset
-    train_dataset, val_dataset, test_dataset = build_datasets(opt['datasets'], opt['data_preset'])
+    train_dataset, val_dataset = build_datasets(opt['datasets'])
     if is_primary():
         logger.info('Initial Dataset Finished')
+    train_generator = train_dataset.get_generator()
+    val_generator = val_dataset.get_generator()
 
-    # dataloder
-    if not opt['distributed']:
-        train_loader = DataLoader(
-            train_dataset, batch_size=opt['train']['batch_size'], shuffle=True)
-        val_loader = DataLoader(
-            val_dataset, batch_size=opt['test']['batch_size'], shuffle=False)
-        test_loader = DataLoader(
-            test_dataset, batch_size=opt['test']['batch_size'], shuffle=False)
-    else:
-        train_sampler = DistributedSampler(
-            train_dataset, num_replicas=opt['world_size'], rank=get_rank())
-        train_loader = DataLoader(
-            train_dataset, batch_size=opt['train']['batch_size'], shuffle=(train_sampler is None), num_workers=0, sampler=train_sampler, worker_init_fn=_init_fn)
-        val_sampler = DistributedSampler(
-            val_dataset, num_replicas=opt['world_size'], rank=get_rank())
-        val_loader = DataLoader(
-            val_dataset, batch_size=opt['test']['batch_size'], shuffle=False, num_workers=0, sampler=val_sampler, drop_last=False)
-        test_sampler = DistributedSampler(
-            test_dataset, num_replicas=opt['world_size'], rank=get_rank())
-        test_loader = DataLoader(
-            test_dataset, batch_size=opt['test']['batch_size'], shuffle=False, num_workers=0, sampler=test_sampler, drop_last=False)
+    # # dataloder
+    # if not opt['distributed']:
+    #     train_loader = DataLoader(
+    #         train_dataset, batch_size=opt['datasets']['batch_size'], shuffle=True)
+    #     val_loader = DataLoader(
+    #         val_dataset, batch_size=opt['datasets']['batch_size'], shuffle=False)
+    # else:
+    #     train_sampler = DistributedSampler(
+    #         train_dataset, num_replicas=opt['world_size'], rank=get_rank())
+    #     train_loader = DataLoader(
+    #         train_dataset, batch_size=opt['datasets']['batch_size'], shuffle=(train_sampler is None), num_workers=0, sampler=train_sampler, worker_init_fn=_init_fn)
+    #     val_sampler = DistributedSampler(
+    #         val_dataset, num_replicas=opt['world_size'], rank=get_rank())
+    #     val_loader = DataLoader(
+    #         val_dataset, batch_size=opt['datasets']['batch_size'], shuffle=False, num_workers=0, sampler=val_sampler, drop_last=False)
     
     # model
     if opt['distributed']:
@@ -112,17 +117,11 @@ def main_worker(gpu, opt, args):
     if is_primary():
         logger.info('Initial Model Finished')
 
-    # eval tools
-    output_3d = opt['data_preset'].get('out_3d', False)
-    heatmap_to_coord = get_coord(opt, opt['data_preset']['heatmap_size'], output_3d)
-    json_path = opt['path']['json_dt']
-    json_path_gt = opt['path']['json_gt']
-
     diffusion.set_new_noise_schedule(
         opt['model']['beta_schedule'][opt['phase']], schedule_phase=opt['phase'])
     
     if opt['phase'] == 'train':
-        # Train
+        #Train
         num_of_epochs = opt['train']['end_epoch']
         current_step = diffusion.begin_step
         current_epoch = diffusion.begin_epoch
@@ -131,92 +130,93 @@ def main_worker(gpu, opt, args):
             if opt['path']['resume_state']:
                 logger.info('Resuming training from epoch: {}, iter: {}.'.format(
                     current_epoch, current_step))
+                if diffusion.random_state is not None:
+                    train_generator.set_random_state(diffusion.random_state)
             else:
                 logger.info('Starting training from epoch: 0, iter: 0.')
-            
+
+        all_actions = train_dataset.get_actions()
+        all_actions_val = val_dataset.get_actions()
+        best_val = 1e9
 
         while current_epoch < num_of_epochs:
-            if opt['distributed']:
-                train_sampler.set_epoch(current_epoch)
-            for _, (inps, labels, _, _) in enumerate(train_loader):
-                train_data = (inps, labels)             
-                
+            # if opt['distributed']:
+            #     train_sampler.set_epoch(current_epoch)
+            # for train_data in train_loader:             
+            for cameras_train, _, batch_3d, batch_2d in train_generator.next_epoch():
                 # forward pass
-                diffusion.feed_data(train_data)
-                diffusion.optimize_parameters()
-                # lr stepping
-                if opt['train']['scheduler_type']['reg'] != 'plateau':
-                    diffusion.lr_scheduler_reg.step()
-                if opt['train']['scheduler_type']['diff'] != 'plateau':
-                    diffusion.lr_scheduler_diff.step()
+                # diffusion.feed_data(train_data)
+                if cameras_train is not None:
+                    cameras_train = torch.from_numpy(cameras_train.astype('float32'))
+                inputs_3d = torch.from_numpy(batch_3d.astype('float32'))
+                inputs_2d = torch.from_numpy(batch_2d.astype('float32'))
+                if torch.cuda.is_available():
+                    inputs_3d = inputs_3d.cuda()
+                    inputs_2d = inputs_2d.cuda()
+                    if cameras_train is not None:
+                        cameras_train = cameras_train.cuda()
+                inputs_3d[:, :, 0] = 0
 
-                if args.debug:
-                    print('lr', diffusion.opt_diff.param_groups[0]['lr'])
-                    diffusion.opt_diff.param_groups[0]['lr'] = diffusion.opt_diff.param_groups[0]['lr'] * 2
+                diffusion.optimize_parameters(inputs_2d, inputs_3d)
+
+                # lr stepping
+                # if opt['train']['scheduler_type'] != 'plateau':
+                #     diffusion.lr_scheduler.step()
 
                 # log
                 if current_step % opt['train']['print_freq'] == 0 and is_primary():
                     logs = diffusion.get_current_log()
-                    message = '<epoch:{:3d}, iter:{:8,d}>\n '.format(
-                        current_epoch, current_step)
+                    message = '<epoch:{:3d}, iter:{:8,d}>\n '.format(current_epoch, current_step)
                     for k, v in logs.items():
                         message += '{:s}: {:.4e} '.format(k, v)
                         #tb_logger.add_scalar(k, v, current_step)
                     logger.info(message)
                     wandb.log(logs, step=current_step, commit=False)
-                    wandb.log({'lr_reg': diffusion.opt_reg.param_groups[0]['lr'],
-                               'lr_diff': diffusion.opt_diff.param_groups[0]['lr']}, step=current_step, commit=False)
-
-                # validation
-                #if current_step != 0 and current_step % opt['train']['val_freq'] == 0:
-                if current_step % opt['train']['val_freq'] == 0 and current_step != 0:
-
-                    diffusion.set_new_noise_schedule(
-                        opt['model']['beta_schedule']['val'], schedule_phase='val')
-                    diffusion.validate(json_path, heatmap_to_coord, test_loader, opt)
-                    diffusion.validate_gt(json_path_gt, heatmap_to_coord, val_loader, opt)
-                    
-                    # log
-                    if is_primary():
-                        eval_logs = diffusion.get_current_metrics()
-                        message = 'Evaluation at <epoch:{:3d}, iter:{:8,d}\n> '.format(
-                            current_epoch, current_step)
-                        for k, v in eval_logs.items():
-                            message += '{:s}: {:.4e} '.format(k, v)
-                        logger.info(message)
-                        wandb.log(eval_logs, step=current_step)
-                        if opt['train']['scheduler_type']['reg'] == 'plateau':
-                            diffusion.lr_scheduler_reg.step(eval_logs['val_reg_loss'])
-                        if opt['train']['scheduler_type']['diff'] == 'plateau':
-                            diffusion.lr_scheduler_diff.step(eval_logs['val_diff_loss'])
-
-                    diffusion.set_new_noise_schedule(
-                        opt['model']['beta_schedule']['train'], schedule_phase='train')
-
-                #if current_step % opt['train']['save_checkpoint_freq'] == 0 and is_primary():
-                if current_step % opt['train']['save_checkpoint_freq'] == 0 and is_primary() and current_step != 0:
-                    logger.info('Saving models and training states.')
-                    diffusion.save_network(current_epoch, current_step)
+                    wandb.log({'lr': diffusion.optimizer.param_groups[0]['lr']}, step=current_step, commit=False)
 
                 current_step += 1
+                #break
             # end of epoch ===================================================================
 
+            # end of epoch evaluation
+            diffusion.set_new_noise_schedule(
+                opt['model']['beta_schedule']['val'], schedule_phase='val')
+            diffusion.validate(val_dataset.kps_left, val_dataset.kps_right, val_dataset.joints_left, val_dataset.joints_right, opt["datasets"]["num_frames"], val_generator, all_actions_val)
+
+            # log
+            if is_primary():
+                eval_logs = diffusion.get_current_metrics()
+                message = 'Evaluation at <epoch:{:3d}, iter:{:8,d}\n> '.format(current_epoch, current_step)
+                for k, v in eval_logs.items():
+                    message += '{:s}: {:.4e} '.format(k, v)
+                logger.info(message)
+                wandb.log(eval_logs, step=current_step)
+                diffusion.lr_scheduler.step()
+                # if opt['train']['scheduler_type'] == 'plateau':
+                #     diffusion.lr_scheduler.step(eval_logs['val_reg_loss'])
+
+            diffusion.set_new_noise_schedule(
+                opt['model']['beta_schedule']['train'], schedule_phase='train')
+
+            if eval_logs["Average_p1"] < best_val and is_primary():
+                logger.info('Saving models and training states.')
+                diffusion.save_network(current_epoch, current_step, train_generator.random_state())
+            
             if opt['distributed']:
                 dist.barrier()  # Sync
 
             current_epoch += 1
 
-        # save model
+        # end of training
         if is_primary():
             logger.info('End of training.')
     else:
         if is_primary():
             logger.info('Begin Model Evaluation.')
-
+        all_actions = val_dataset.get_actions()
         diffusion.set_new_noise_schedule(
             opt['model']['beta_schedule']['val'], schedule_phase='val')
-        diffusion.validate(json_path, heatmap_to_coord, test_loader, opt)
-        diffusion.validate_gt(json_path_gt, heatmap_to_coord, val_loader, opt)
+        diffusion.validate(val_dataset.kps_left, val_dataset.kps_right, val_dataset.joints_left, val_dataset.joints_right, opt["datasets"]["num_frames"], val_generator, all_actions)
 
         # log
         if is_primary():
@@ -235,17 +235,17 @@ def main(opt, args):
         main_worker(None, opt, args)
     else:
         mp.spawn(main_worker, nprocs=opt['world_size'], args=(opt, args))
-    
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('-c', '--config', type=str, default='/root/Improve-HPE-with-Diffusion/config/sanitycheck_val.json',
+    parser.add_argument('-c', '--config', type=str, default='/root/Improve-HPE-with-Diffusion/config/mixste/two_stage_mixste_h36m_train.json',
                         help='JSON file for configuration')
     parser.add_argument('-p', '--phase', type=str, choices=['train', 'val'],
-                         help='Run either train(training) or val(generation)', default='val')
-    parser.add_argument('-gpu', '--gpu_ids', type=str, default=None)
+                         help='Run either train(training) or val(generation)', default='train')
+    parser.add_argument('-gpu', '--gpu_ids', type=str, default="0")
     parser.add_argument('--debug', action='store_true')
+    parser.add_argument('--sweep', action='store_true')
 
     # parse configs
     args = parser.parse_args()
@@ -253,4 +253,13 @@ if __name__ == "__main__":
     # Convert to NoneDict, which return None for missing key.
     opt = Logger.dict_to_nonedict(opt)
 
-    main(opt, args)
+    # search hyperparams with wandb sweep
+    if not args.sweep:
+        main(opt, args)
+    else:
+        sweep_config = build_sweep_config()
+        #opt = merge_opt(opt, sweep_config)
+        sweep_fn = lambda opt=opt, args=args: main(opt, args)
+        sweep_id = wandb.sweep(sweep_config)
+        #wandb.init()
+        wandb.agent(sweep_id=sweep_id, function=sweep_fn, count=64)

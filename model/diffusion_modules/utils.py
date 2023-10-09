@@ -32,9 +32,6 @@ class PositionalEncoding(nn.Module):
         self.dim = dim
         self.use_coord_type_embeds = use_coord_type_embeds
         self.coord_type_embeds = coord_type_embeds
-        # self.use_coord_dim_embeds = use_coord_dim_embeds
-        # self.coord_dim = coord_dim
-        # self.coord_dim_embeds = nn.Embedding(self.coord_dim, self.dim)
 
     def forward(self, noise_level):
         count = self.dim // 2
@@ -45,14 +42,31 @@ class PositionalEncoding(nn.Module):
         if noise_level.ndim == 2:
             noise_level = noise_level.unsqueeze(-1)
         step = step.unsqueeze(0).expand(noise_level.shape[-1], -1)
-        if self.use_coord_type_embeds:
-            assert self.coord_type_embeds is not None
-            step = step + self.coord_type_embeds
         # encoding = noise_level * torch.exp(-math.log(1e4) * step)  # (B,n,1) * (1,N) => (B,n,N)
         encoding = torch.matmul(noise_level, torch.exp(-math.log(1e4) * step))  # (B,n,1) * (1,N) => (B,n,N)
         encoding = torch.cat(
             [torch.sin(encoding), torch.cos(encoding)], dim=-1)    # (B,n,2N)
-        # print('encoding', encoding.size())
+        if self.use_coord_type_embeds:
+            assert self.coord_type_embeds is not None
+            encoding[...,-1:] += self.coord_type_embeds[0].expand(encoding.shape[0], -1, -1)
+            encoding[...,:-1] += self.coord_type_embeds[1].expand(encoding.shape[0], encoding.shape[1], -1)
+
+        return encoding
+    
+class LearnedPositionalEncoding(nn.Module):
+    def __init__(self, dim):
+        super().__init__()
+        self.dim = dim
+
+    def forward(self, inputs):
+        count = self.dim // 2
+        step = torch.arange(count, dtype=inputs.dtype,
+                            device=inputs.device) / count  #(count,)
+        # inputs -- (b,num_kps,num_dim)
+        step = step.unsqueeze(0).expand(inputs.shape[-1], -1)  # (num_dim,count)
+        encoding = torch.matmul(inputs, torch.exp(-math.log(1e4) * step))  # (b,num_kps,count)
+        encoding = torch.cat(
+            [torch.sin(encoding), torch.cos(encoding)], dim=-1)    # (B,n,2N)
 
         return encoding
 
