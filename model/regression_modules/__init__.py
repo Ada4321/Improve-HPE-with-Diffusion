@@ -2,8 +2,8 @@ import sys
 sys.path.append('/root/Improve-HPE-with-Diffusion')
 sys.path.append('/root/Improve-HPE-with-Diffusion/model/regression_modules')
 #from core.registry import Registry
-from backbone import BACKBONE_REGISTRY
-from neck import NECK_REGISTRY
+# from backbone import BACKBONE_REGISTRY
+# from neck import NECK_REGISTRY
 from regressor import MODEL_REGISTRY
 
 
