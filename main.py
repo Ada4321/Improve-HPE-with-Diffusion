@@ -201,6 +201,7 @@ def main_worker(gpu, opt, args):
             if eval_logs["Average_p1"] < best_val and is_primary():
                 logger.info('Saving models and training states.')
                 diffusion.save_network(current_epoch, current_step, train_generator.random_state())
+                best_val = eval_logs["Average_p1"]
             
             if opt['distributed']:
                 dist.barrier()  # Sync
