@@ -46,7 +46,8 @@ class L2LossBatchAvgVaraibleStd(nn.Module):
     def forward(self, preds, sigmas, tgt):
         # b = len(pred)
         #loss = torch.log(sigmas / self.amp) + torch.square(tgt - preds) / (2 * torch.square(sigmas) + 1e-9)
-        loss = 0.5*torch.log(sigmas/self.amp + 1e-9) + torch.abs(tgt - preds) / (math.sqrt(2) * sigmas + 1e-9)
+        #loss = 0.5*torch.log(sigmas/self.amp + 1e-9) + torch.abs(tgt - preds) / (math.sqrt(2) * sigmas + 1e-9)
+        loss = torch.log(sigmas + 1e-9) + torch.abs(tgt - preds) / (math.sqrt(2) * sigmas + 1e-9)
         assert loss.ndim == 4
         loss = torch.mean(torch.sum(loss, dim=-1))
         return loss
