@@ -380,14 +380,14 @@ class DenoiseTransformer(nn.Module):
         self.use_noisy_res_type_embed = opt['use_noisy_res_type_embed']
 
         self.num_keypoints = opt['num_keypoints']
-        # self.num_image_embeds = opt['num_image_embeds']
+        self.num_image_embeds = opt['num_image_embeds']
 
         # self.coord_type_embeds = nn.Embedding(self.input_dim, int(self.dim // 2))
         self.kp_type_embeds = nn.Embedding(self.num_keypoints, self.dim)
-        # self.cur_preds_type_embed = nn.Embedding(1, self.dim)
-        # self.noisy_res_type_embed = nn.Embedding(1, self.dim)
-        # self.z_embed = nn.Embedding(1, self.dim)
-        # self.not_z_embed = nn.Embedding(1, self.dim)
+        self.cur_preds_type_embed = nn.Embedding(1, self.dim)
+        self.noisy_res_type_embed = nn.Embedding(1, self.dim)
+        self.z_embed = nn.Embedding(1, self.dim)
+        self.not_z_embed = nn.Embedding(1, self.dim)
 
         self.to_time_embeds = nn.Sequential(
             PositionalEncoding(self.dim),

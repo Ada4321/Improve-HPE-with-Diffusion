@@ -36,7 +36,7 @@
             "num_heads": 8,
             "mlp_ratio": 2,
             "qkv_bias": true,
-            "drop_rate": 0.1
+            "drop_path_rate": 0.1
         },
         "denoise_transformer": {
             "dim": 512,
@@ -84,7 +84,7 @@
         }
     },
     "loss": {
-        "type": "MixSTELossWithSigmaL2",
+        "type": "MixSTELoss",
         "regress": "L2LossBatchAvg",
         "diffusion": "L2LossBatchAvg",
         "reg_weight": 1.0,
@@ -95,7 +95,7 @@
     },
     "train": {
         "end_epoch": 160,
-        "optimizer": "adam",
+        "optimizer": "adamw",
         "lr": 4e-5,
         "scheduler_type": "exponential",
         "scheduler":{
@@ -122,7 +122,7 @@
     },
     "wandb": {
         "project_name": "DiffHPE_3D",
-        "run_name": "mixsteloss_sigma_sigmoid_bz1024_lr4e-5"
+        "run_name": "mixsteloss_bz1024_lr4e-5_noseed_adamw_fixed"
     },
     "world_size": 1,
     "seed": 123123

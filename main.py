@@ -62,9 +62,9 @@ def main_worker(gpu, opt, args):
     if opt['distributed']:
         ddp_setup(gpu, opt['world_size'])
 
-    # set up seed
-    if opt['seed'] is not None:
-        setup_seed(opt['seed'])
+    # # set up seed
+    # if opt['seed'] is not None:
+    #     setup_seed(opt['seed'])
 
     if is_primary():
         # init wandb
@@ -201,6 +201,7 @@ def main_worker(gpu, opt, args):
             if eval_logs["Average_p1"] < best_val and is_primary():
                 logger.info('Saving models and training states.')
                 diffusion.save_network(current_epoch, current_step, train_generator.random_state())
+                best_val = eval_logs["Average_p1"]
             
             if opt['distributed']:
                 dist.barrier()  # Sync
@@ -230,8 +231,8 @@ def main_worker(gpu, opt, args):
 def main(opt, args):
     # launch main_worker
     if opt['world_size'] == 1:
-        if opt['seed'] is not None:
-            setup_seed(opt['seed'])
+        # if opt['seed'] is not None:
+        #     setup_seed(opt['seed'])
         main_worker(None, opt, args)
     else:
         mp.spawn(main_worker, nprocs=opt['world_size'], args=(opt, args))
