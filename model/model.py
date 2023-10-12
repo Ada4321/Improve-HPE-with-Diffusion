@@ -122,6 +122,8 @@ class DDPM(BaseModel):
     def set_optimizer(self, optim_params, lr, opt_type='adam'):
         if opt_type == 'adam':
             return torch.optim.Adam(list(optim_params), lr=lr)
+        elif opt_type == "adamw":
+            return torch.optim.AdamW(list(optim_params), lr=lr, weight_decay=0.1)
         elif opt_type == 'sgd':
             return torch.optim.SGD(list(optim_params), lr=lr, momentum=0.9, weight_decay=0.0001)
         else:
