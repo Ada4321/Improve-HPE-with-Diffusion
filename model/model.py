@@ -110,6 +110,8 @@ class DDPM(BaseModel):
                     results['final_preds'] = results['preds'] + results['residual'] * ret['sigmas']
                 else:
                     results['final_preds'] = results['preds'] + results['residual']
+            else:
+                results['final_preds'] = results['preds']
         self.netG.train()
         return results
 

@@ -243,7 +243,7 @@ if __name__ == "__main__":
     parser.add_argument('-c', '--config', type=str, default='/root/Improve-HPE-with-Diffusion/config/mixste/two_stage_mixste_h36m_train.json',
                         help='JSON file for configuration')
     parser.add_argument('-p', '--phase', type=str, choices=['train', 'val'],
-                         help='Run either train(training) or val(generation)', default='train')
+                         help='Run either train(training) or val(generation)', default='val')
     parser.add_argument('-gpu', '--gpu_ids', type=str, default="0")
     parser.add_argument('--debug', action='store_true')
     parser.add_argument('--sweep', action='store_true')
