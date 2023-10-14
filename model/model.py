@@ -82,9 +82,12 @@ class DDPM(BaseModel):
         self.optimizer.zero_grad()
 
         losses = self.netG(inputs_2d, inputs_3d)
-        assert "loss" in losses
-
+        if isinstance(losses, dict):
+            assert "loss" in losses
+        else:
+            losses = {"loss": losses}
         losses["loss"].backward()
+
         self.optimizer.step()
 
         # set log
@@ -99,17 +102,14 @@ class DDPM(BaseModel):
                 ret = self.netG.module.sample(inputs_2d)
             else:
                 ret = self.netG.sample(inputs_2d)
-            results = {'preds': {'pred_jts': ret['preds']}}
-            #results = {'preds': ret['preds']}
-            #results['preds']['pred_jts'] = ret['preds']
-            # results['preds']['pred_jts'] = ret['preds']['raw_pred_jts']
-            if 'res' in ret.keys():
-                results['res'] = ret['res']
+            results = {'preds': ret['preds']}
+            if 'residual' in ret.keys():
+                results['residual'] = ret['residual']
                 if self.opt['model']['diffusion']['norm_res']:
-                    assert 'pred_sigmas' in results['preds']
-                    results['preds']['pred_jts'] = results['preds']['pred_jts'] + results['res'] * results['preds']['pred_sigmas']
+                    assert 'sigmas' in ret
+                    results['final_preds'] = results['preds'] + results['residual'] * ret['sigmas']
                 else:
-                    results['preds']['pred_jts'] = results['preds']['pred_jts'] + results['res']
+                    results['final_preds'] = results['preds'] + results['residual']
         self.netG.train()
         return results
 
@@ -206,6 +206,7 @@ class DDPM(BaseModel):
     
     def validate(self, kps_left, kps_right, joints_left, joints_right, receptive_field, val_generator, all_actions):
         action_error_sum = define_error_list(all_actions)
+        action_error_sum_diff = define_error_list(all_actions)
         for _, cano_action, batch, batch_2d in tqdm(val_generator.next_epoch()):
             inputs_3d = torch.from_numpy(batch.astype('float32'))
             inputs_2d = torch.from_numpy(batch_2d.astype('float32'))
@@ -226,16 +227,20 @@ class DDPM(BaseModel):
 
             results = self.sample(inputs_2d)
             results_flip = self.sample(inputs_2d_flip)
-            results_flip['preds']['pred_jts'][:, :, :, 0] *= -1
-            results_flip['preds']['pred_jts'][:, :, joints_left + joints_right, :] = results_flip['preds']['pred_jts'][:, :, joints_right + joints_left, :]
-            for i in range(results["preds"]["pred_jts"].shape[0]):
-                results["preds"]["pred_jts"][i] = (results["preds"]["pred_jts"][i] + results_flip["preds"]["pred_jts"][i]) / 2
+            results_flip['preds'][:, :, :, 0] *= -1
+            results_flip['preds'][:, :, joints_left + joints_right, :] = results_flip['preds'][:, :, joints_right + joints_left, :]
+            for i in range(results["preds"].shape[0]):
+                results["preds"][i] = (results["preds"][i] + results_flip["preds"][i]) / 2
 
             # compute metrics
-            action_error_sum = mpjpe_by_action(results['preds']['pred_jts'], 
+            action_error_sum = mpjpe_by_action(results['preds'], 
                                                inputs_3d, 
                                                cano_action, 
                                                action_error_sum)
+            action_error_sum_diff = mpjpe_by_action(results['final_preds'], 
+                                               inputs_3d, 
+                                               cano_action, 
+                                               action_error_sum_diff)
         # average across actions
         action_error_sum.update({
             "Average": {
@@ -243,13 +248,29 @@ class DDPM(BaseModel):
                 "p2": AccumLoss()
             }
         })
+        action_error_sum_diff.update({
+            "Average": {
+                "p1": AccumLoss(),
+                "p2": AccumLoss()
+            }
+        })
+
         for k, v in action_error_sum.items():
             if k == "Average":
                 continue
             else:
                 action_error_sum["Average"]["p1"].update(v["p1"].avg, 1)
                 action_error_sum["Average"]["p2"].update(v["p2"].avg, 1)
+        for k, v in action_error_sum_diff.items():
+            if k == "Average":
+                continue
+            else:
+                action_error_sum_diff["Average"]["p1"].update(v["p1"].avg, 1)
+                action_error_sum_diff["Average"]["p2"].update(v["p2"].avg, 1)        
+
         # log eval metrics
-        for k, v in action_error_sum.items():
+        for k in action_error_sum.keys():
             self.eval_dict[k+"_p1"] = action_error_sum[k]["p1"].avg * 1000
             self.eval_dict[k+"_p2"] = action_error_sum[k]["p2"].avg * 1000
+            self.eval_dict[k+"_diff_p1"] = action_error_sum_diff[k]["p1"].avg * 1000
+            self.eval_dict[k+"_diff_p2"] = action_error_sum_diff[k]["p2"].avg * 1000

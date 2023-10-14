@@ -360,11 +360,11 @@ class SimpleTransformer(nn.Module):
 
         for attn, ff in self.layers:  # transformer encoder layers
             x = attn(x) + x  # self-attention layer
-            x = ff(x) + x                           # ff layer
+            x = ff(x) + x    # ff layer
 
         out = self.norm(x)
         return self.project_out(out[..., -1, :])
-
+    
 class DenoiseTransformer(nn.Module):
     def __init__(
         self,
@@ -372,22 +372,14 @@ class DenoiseTransformer(nn.Module):
     ):
         super().__init__()
 
-        self.dim = opt['dim']  # dim = dim of image channels
-        self.input_dim = opt['input_dim']
-        self.use_coord_type_embeds = opt['use_coord_type_embeds']
+        self.dim = opt['dim']              # dim = dim of the model
+        self.input_dim = opt['input_dim']  # dim of input coords(==3)
+        self.st_dim = opt["st_dim"]        # dim of st-feats
+        self.kps_dim = opt["kps_dim"]
         self.use_kp_type_embeds = opt['use_kp_type_embeds']
-        self.use_cur_preds_type_embed = opt['use_cur_preds_type_embed']
-        self.use_noisy_res_type_embed = opt['use_noisy_res_type_embed']
-
         self.num_keypoints = opt['num_keypoints']
-        self.num_image_embeds = opt['num_image_embeds']
 
-        # self.coord_type_embeds = nn.Embedding(self.input_dim, int(self.dim // 2))
         self.kp_type_embeds = nn.Embedding(self.num_keypoints, self.dim)
-        self.cur_preds_type_embed = nn.Embedding(1, self.dim)
-        self.noisy_res_type_embed = nn.Embedding(1, self.dim)
-        self.z_embed = nn.Embedding(1, self.dim)
-        self.not_z_embed = nn.Embedding(1, self.dim)
 
         self.to_time_embeds = nn.Sequential(
             PositionalEncoding(self.dim),
@@ -395,82 +387,63 @@ class DenoiseTransformer(nn.Module):
             Swish(),
             nn.Linear(self.dim * 2, self.dim),
         )
-        self.to_image_embeds = nn.Sequential(
-            nn.Linear(opt['image_dim'], self.num_image_embeds * self.dim),
-            Rearrange('b (n d) -> b n d', n = self.num_image_embeds)
-        )
-        self.to_pose_embeds = nn.Sequential(
-            PositionalEncoding(self.dim, 
-                               use_coord_type_embeds=self.use_coord_type_embeds, 
-                               coord_type_embeds=[self.z_embed.weight, self.not_z_embed.weight]),
-            nn.Linear(self.dim, self.dim * 2),
-            Swish(),
-            nn.Linear(self.dim * 2, self.dim),
-        )
-        self.to_res_embeds = nn.Sequential(
-            PositionalEncoding(self.dim, 
-                               use_coord_type_embeds=self.use_coord_type_embeds,
-                                coord_type_embeds=[self.z_embed.weight, self.not_z_embed.weight]),
-            nn.Linear(self.dim, self.dim * 2),
-            Swish(),
-            nn.Linear(self.dim * 2, self.dim),
-        )
+
+        self.to_res_embeds = nn.Linear(3, self.dim)
+        self.to_kps_embeds_3d = nn.Linear(3, self.kps_dim)  # in case using current preds from the regressor
+        self.to_kps_embeds_2d = nn.Linear(2, self.kps_dim)  # in case using 2d keypoint inputs
+        self.to_condition_embeds = nn.Linear(self.st_dim, self.dim) if not self.st_dim == self.dim else nn.Identity()
 
         self.learned_query = nn.Embedding(self.num_keypoints, self.dim)
         self.transformer = CausalTransformer(dim = self.dim, pose_dim=self.input_dim, **opt['transformer'])
 
-        # torch.nn.init.constant_(self.sigma_linear.weight, 1.)
-        # torch.nn.init.constant_(self.sigma_linear.bias, 0.)
-
     def forward(
         self,
-        x,               # noisy resisual values (B,n_kp)
-        image_embed,     # image embedding extracted from regressor (B,dim_img)
+        x,               # noisy resisual values (B, num_kps, 3)
+        st_feats,        # spatial-temporal features extracted from regressor (B, num_kps, st_dim)
         time,            # noise level (B,1)
-        cur_preds=None,  # current pose predictions from the regressor (B,n_kp)
+        cur_preds=None,  # current pose predictions from the regressor (B, n_kp, 3)
+        kps_2d=None,     # 2d pose inputs (B, n_kp, 2)
         ):               # output: the denoised residual values
 
-        image_embed = self.to_image_embeds(image_embed)  #  (B,num_image_embeds,dim)
-        b = image_embed.shape[0]
-        time_embed = self.to_time_embeds(time)           #  (B,num_time_embeds,dim)
-        if cur_preds is not None:
-            pose_embed = self.to_pose_embeds(cur_preds)  #  (B,num_pose_embeds,dim)
-            if self.use_cur_preds_type_embed:
-                pose_embed = pose_embed + self.cur_preds_type_embed.weight.unsqueeze(0).expand(b, self.num_keypoints, -1)
-            if self.use_kp_type_embeds:
-                pose_embed = pose_embed + self.kp_type_embeds.weight.unsqueeze(0).expand(b, -1, -1)
+        b = st_feats.shape[0]
+        time_embed = self.to_time_embeds(time)   # (B, 1, dim)
+        noisy_res_embed = self.to_res_embeds(x)  # (B, num_kps, dim)
 
-        noisy_res_embed = self.to_res_embeds(x)          #  (B,num_pose_embeds,dim)
-        if self.use_noisy_res_type_embed:
-            noisy_res_embed = noisy_res_embed + self.noisy_res_type_embed.weight.unsqueeze(0).expand(b, self.num_keypoints, -1)
+        if cur_preds is not None and kps_2d is not None:
+            assert self.kps_dim * 2 == self.st_dim
+            kps_embed_3d = self.to_kps_embeds_3d(cur_preds)
+            kps_embed_2d = self.to_kps_embeds_2d(kps_2d)
+            final_conditions = st_feats + torch.cat([kps_embed_3d, kps_embed_2d], dim=-1)
+        elif cur_preds is not None:
+            assert self.kps_dim == self.st_dim
+            kps_embed_3d = self.to_kps_embeds_3d(cur_preds)
+            final_conditions = st_feats + kps_embed_3d
+        elif kps_2d is not None:
+            assert self.kps_dim == self.st_dim
+            kps_embed_2d = self.to_kps_embeds_2d(kps_2d)
+            final_conditions = st_feats + kps_embed_2d
+        else:
+            final_conditions = st_feats
+
+        final_conditions = self.to_condition_embeds(final_conditions)
+
         if self.use_kp_type_embeds:
             noisy_res_embed = noisy_res_embed + self.kp_type_embeds.weight.unsqueeze(0).expand(b, -1, -1)
+            final_conditions = final_conditions + self.kp_type_embeds.weight.unsqueeze(0).expand(b, -1, -1)
 
-        learned_queries = self.learned_query.weight                                          # (n_kps, dim)
+        learned_queries = self.learned_query.weight                       # (n_kps, dim)
         learned_queries = learned_queries.unsqueeze(0).expand(b, -1, -1)  # (b, n_kps, dim)
-        if self.use_kp_type_embeds:
-            learned_queries = learned_queries + self.kp_type_embeds.weight.unsqueeze(0).expand(b, -1, -1)
 
         # all condition tokens
-        if cur_preds is not None:
-            tokens = torch.cat((
-                image_embed,
-                time_embed,
-                pose_embed,
-                noisy_res_embed,
-                learned_queries
-            ), dim = -2)
-        else:
-            tokens = torch.cat((
-                image_embed,
-                time_embed,
-                noisy_res_embed,
-                learned_queries
-            ), dim = -2)
+        tokens = torch.cat((
+            time_embed,
+            final_conditions,
+            noisy_res_embed,
+            learned_queries
+        ), dim = -2)
 
         # attention
         # get learned query, which should predict the denoised pose
-        pred_res = self.transformer(tokens)  # pred_pose should be the same size as input x
-        pred_res = pred_res[..., -self.num_keypoints:, :].reshape(b, -1)
+        pred_res = self.transformer(tokens)  # (b, n_kps, dim)
 
         return pred_res
