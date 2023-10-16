@@ -63,8 +63,8 @@ def main_worker(gpu, opt, args):
         ddp_setup(gpu, opt['world_size'])
 
     # # set up seed
-    # if opt['seed'] is not None:
-    #     setup_seed(opt['seed'])
+    if opt['seed'] is not None:
+        setup_seed(opt['seed'])
 
     if is_primary():
         # init wandb
@@ -238,8 +238,8 @@ def main_worker(gpu, opt, args):
 def main(opt, args):
     # launch main_worker
     if opt['world_size'] == 1:
-        # if opt['seed'] is not None:
-        #     setup_seed(opt['seed'])
+        if opt['seed'] is not None:
+            setup_seed(opt['seed'])
         main_worker(None, opt, args)
     else:
         mp.spawn(main_worker, nprocs=opt['world_size'], args=(opt, args))
