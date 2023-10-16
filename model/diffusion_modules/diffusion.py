@@ -84,6 +84,8 @@ class GaussianDiffusion(nn.Module):
         self.clip_denoised = diff_opt.get('clip_denoised', False)
         self.predict_x_start = diff_opt.get('predict_x_start', False)
         self.diff_on = diff_opt.get('diff_on', False)
+        self.cond_drop_prob = diff_opt.get("cond_drop_prob", 0.)
+        self.cond_scale = diff_opt.get("cond_scale", 1.)
 
     def set_loss(self, device):
         self.loss_fn = build_criterion(self.loss_opt, device)
@@ -195,10 +197,20 @@ class GaussianDiffusion(nn.Module):
             [self.sqrt_alphas_cumprod_prev[t+1]]).repeat(batch_size, 1).to(x.device)
         
         if not self.predict_x_start:
-            pred_noise = self.denoise_fn(x, st_feats, noise_level, cur_preds=cur_preds, kps_2d=inputs_2d)
+            pred_noise = self.denoise_fn.forward_with_cond_scale(x, 
+                                                                 st_feats, 
+                                                                 noise_level, 
+                                                                 cond_scale=self.cond_scale,
+                                                                 cur_preds=cur_preds, 
+                                                                 kps_2d=inputs_2d)
             x_recon = self.predict_start_from_noise(x, t=t, noise=pred_noise)     # X_0
         else:
-            x_recon = self.denoise_fn(x, st_feats, noise_level, cur_preds=cur_preds, kps_2d=inputs_2d)
+            x_recon = self.denoise_fn.forward_with_cond_scale(x, 
+                                                              st_feats, 
+                                                              noise_level,
+                                                              cond_scale=self.cond_scale, 
+                                                              cur_preds=cur_preds,
+                                                              kps_2d=inputs_2d)
             pred_noise = self.predict_noise_from_start(x, t=t, x_start=x_recon)   # noise
 
         if self.clip_denoised:
@@ -252,9 +264,11 @@ class GaussianDiffusion(nn.Module):
         cur_preds = x_in['cur_preds']
         inputs_2d = x_in["inputs_2d"]
 
-        shape, device, alphas = cur_preds.shape, cur_preds.device, self.alphas_cumprod_prev
+        shape = st_feats.shape
+        device = st_feats.device
+        alphas = self.alphas_cumprod_prev
 
-        res = torch.randn(shape, device=device)  # initialize residual as noise
+        res = torch.randn((*shape[:-1],3), device=device)  # initialize residual as noise
 
         times = torch.linspace(-1., self.num_timesteps, steps = self.sample_steps + 1)[:-1]
         times = list(reversed(times.int().tolist()))
@@ -279,6 +293,7 @@ class GaussianDiffusion(nn.Module):
 
     @torch.no_grad()
     def sample(self, inputs_2d):
+        #during_warm_up = self.loss_opt["warm_up"] and epoch <= self.loss_opt["warm_up_phase1_epochs"]
         preds, sigmas, st_feats = self.regressor(inputs_2d)
         if not self.diff_on:
             return {'preds': preds, "sigmas": sigmas}
@@ -287,14 +302,20 @@ class GaussianDiffusion(nn.Module):
             st_feats = st_feats.reshape(b*f, n, -1)
             preds = preds.reshape(b*f, n, -1)
             inputs_2d = inputs_2d.reshape(b*f, n, -1)
+
+            x_in_3d = preds if self.condition_on_preds else None
+            x_in_2d = inputs_2d if self.condition_on_2d else None
+
             x_in = {
                 'st_feats': st_feats,
-                'cur_preds': preds,
-                "inputs_2d": inputs_2d
+                'cur_preds': x_in_3d,
+                "inputs_2d": x_in_2d
             }
             res = self.p_sample_loop(x_in)
 
-            return {'preds': preds, "sigmas": sigmas, 'residual': res}
+            return {'preds': preds.reshape(b,f,n,-1), 
+                    "sigmas": sigmas.reshape(b,f,n,-1), 
+                    'residual': res.reshape(b,f,n,-1)}
 
     def q_sample(self, x_start, continuous_sqrt_alpha_cumprod, noise=None):  # sample X_t from X_0
         noise = default(noise, lambda: torch.randn_like(x_start))
@@ -322,7 +343,8 @@ class GaussianDiffusion(nn.Module):
                 size=b
             )
         ).to(x_start.device)
-        continuous_sqrt_alpha_cumprod = continuous_sqrt_alpha_cumprod.view(b, -1)
+        continuous_sqrt_alpha_cumprod = \
+            continuous_sqrt_alpha_cumprod.unsqueeze(-1).repeat(1, num_kps).unsqueeze(-1)
 
         noise = default(noise, lambda: torch.randn_like(x_start)) # sample a noise from N(0,1)
         x_noisy = self.q_sample(                                  # sample X_t
@@ -334,7 +356,8 @@ class GaussianDiffusion(nn.Module):
         x_recon = self.denoise_fn(
             x_noisy, 
             st_feats, 
-            continuous_sqrt_alpha_cumprod, 
+            continuous_sqrt_alpha_cumprod,
+            cond_drop_prob=self.cond_drop_prob, 
             cur_preds=cur_preds,
             kps_2d=inputs_2d)
             
@@ -347,7 +370,7 @@ class GaussianDiffusion(nn.Module):
         else:
             return x_recon
 
-    def forward(self, inputs_2d, gt):
+    def forward(self, inputs_2d, gt, epoch):
         b, f, n, _ = gt.shape
         preds, sigmas, st_feats = self.regress(inputs_2d=inputs_2d)
 
@@ -369,32 +392,34 @@ class GaussianDiffusion(nn.Module):
         x_in = {
             'st_feats': st_feats.detach(), 
             'gt_res': gt_res, 
-            'cur_preds': x_in_3d.detach(),
+            'cur_preds': x_in_3d,
             "inputs_2d": x_in_2d
         }
 
         if not self.predict_x_start:
             pred_noise, gt_noise, res_recon = self.diffuse(x_in=x_in)
             losses = self.loss_fn(
-                preds=preds, 
-                sigma=sigmas,
-                gt=gt, 
-                pred_noise=pred_noise, 
-                gt_noise=gt_noise, 
-                res_recon=res_recon,
+                preds=preds.reshape(b,f,n,-1), 
+                sigmas=sigmas.reshape(b,f,n,-1),
+                gt=gt.reshape(b,f,n,-1), 
+                pred_noise=pred_noise.reshape(b,f,n,-1), 
+                gt_noise=gt_noise.reshape(b,f,n,-1), 
+                res_recon=res_recon.reshape(b,f,n,-1),
                 predict_x_start=self.predict_x_start,
-                norm_res=self.norm_res
+                norm_res=self.norm_res,
+                epoch=epoch
                 )
         else:
             res_recon = self.diffuse(x_in=x_in)
             losses = self.loss_fn(
-                preds=preds,
-                sigma=sigmas, 
-                gt=gt,  
-                res_recon=res_recon,
-                gt_res=gt_res,
+                preds=preds.reshape(b,f,n,-1),
+                sigmas=sigmas.reshape(b,f,n,-1), 
+                gt=gt.reshape(b,f,n,-1),  
+                res_recon=res_recon.reshape(b,f,n,-1),
+                gt_res=gt_res.reshape(b,f,n,-1),
                 predict_x_start=self.predict_x_start,
-                norm_res=self.norm_res
+                norm_res=self.norm_res,
+                epoch=epoch
                 )
 
         return losses

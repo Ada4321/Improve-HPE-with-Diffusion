@@ -157,7 +157,7 @@ def main_worker(gpu, opt, args):
                         cameras_train = cameras_train.cuda()
                 inputs_3d[:, :, 0] = 0
 
-                diffusion.optimize_parameters(inputs_2d, inputs_3d)
+                diffusion.optimize_parameters(inputs_2d, inputs_3d, epoch=current_epoch)
 
                 # lr stepping
                 # if opt['train']['scheduler_type'] != 'plateau':
@@ -179,33 +179,38 @@ def main_worker(gpu, opt, args):
             # end of epoch ===================================================================
 
             # end of epoch evaluation
-            diffusion.set_new_noise_schedule(
-                opt['model']['beta_schedule']['val'], schedule_phase='val')
-            diffusion.validate(val_dataset.kps_left, val_dataset.kps_right, val_dataset.joints_left, val_dataset.joints_right, opt["datasets"]["num_frames"], val_generator, all_actions_val)
+            #if current_epoch % 5 == 0 and current_epoch != 0:
+            if current_epoch % 5 == 0:
+                diffusion.set_new_noise_schedule(
+                    opt['model']['beta_schedule']['val'], schedule_phase='val')
+                diffusion.validate(val_dataset.kps_left, val_dataset.kps_right, val_dataset.joints_left, val_dataset.joints_right, opt["datasets"]["num_frames"], val_generator, all_actions_val)
+                # log
+                if is_primary():
+                    eval_logs = diffusion.get_current_metrics()
+                    message = 'Evaluation at <epoch:{:3d}, iter:{:8,d}\n> '.format(current_epoch, current_step)
+                    for k, v in eval_logs.items():
+                        message += '{:s}: {:.4e} '.format(k, v)
+                    logger.info(message)
+                    wandb.log(eval_logs, step=current_step)
 
-            # log
-            if is_primary():
-                eval_logs = diffusion.get_current_metrics()
-                message = 'Evaluation at <epoch:{:3d}, iter:{:8,d}\n> '.format(current_epoch, current_step)
-                for k, v in eval_logs.items():
-                    message += '{:s}: {:.4e} '.format(k, v)
-                logger.info(message)
-                wandb.log(eval_logs, step=current_step)
-                diffusion.lr_scheduler.step()
-                # if opt['train']['scheduler_type'] == 'plateau':
-                #     diffusion.lr_scheduler.step(eval_logs['val_reg_loss'])
+                diffusion.set_new_noise_schedule(
+                    opt['model']['beta_schedule']['train'], schedule_phase='train')
 
-            diffusion.set_new_noise_schedule(
-                opt['model']['beta_schedule']['train'], schedule_phase='train')
-
-            if eval_logs["Average_p1"] < best_val and is_primary():
-                logger.info('Saving models and training states.')
-                diffusion.save_network(current_epoch, current_step, train_generator.random_state())
-                best_val = eval_logs["Average_p1"]
+                # save best model
+                during_warm_up = opt["loss"]["warm_up"] and current_epoch <= opt["loss"]["warm_up_phase1_epochs"]
+                if not opt["model"]["diffusion"]["diff_on"] or during_warm_up:
+                    current_val = eval_logs["Average_p1"]
+                else:
+                    current_val = eval_logs["Average_diff_p1"]
+                if current_val < best_val and is_primary():
+                    logger.info('Saving models and training states.')
+                    diffusion.save_network(current_epoch, current_step, train_generator.random_state())
+                    best_val = current_val
             
             if opt['distributed']:
                 dist.barrier()  # Sync
 
+            diffusion.lr_scheduler.step()
             current_epoch += 1
 
         # end of training
@@ -226,7 +231,9 @@ def main_worker(gpu, opt, args):
             for k, v in eval_logs.items():
                 message += '{:s}: {:.4e} '.format(k, v)
             logger.info(message)
-
+            # avp1 = eval_logs["Average_p1"]
+            # avp1_diff = eval_logs["Average_diff_p1"]
+            # a=1
 
 def main(opt, args):
     # launch main_worker
@@ -240,7 +247,7 @@ def main(opt, args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('-c', '--config', type=str, default='/root/Improve-HPE-with-Diffusion/config/mixste/two_stage_mixste_h36m_train.json',
+    parser.add_argument('-c', '--config', type=str, default='/root/Improve-HPE-with-Diffusion/config/mixste/two_stage_mixste_h36m_train_diff_u.json',
                         help='JSON file for configuration')
     parser.add_argument('-p', '--phase', type=str, choices=['train', 'val'],
                          help='Run either train(training) or val(generation)', default='val')

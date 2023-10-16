@@ -14,6 +14,14 @@ from utils import *
 def l2norm(t):
     return F.normalize(t, dim = -1)
 
+def prob_mask_like(shape, prob, device):
+    if prob == 1:
+        return torch.ones(shape, device = device, dtype = torch.bool)
+    elif prob == 0:
+        return torch.zeros(shape, device = device, dtype = torch.bool)
+    else:
+        return torch.zeros(shape, device = device).float().uniform_(0, 1) < prob
+
 # layer norm
 class LayerNorm(nn.Module):
     def __init__(self, dim, eps = 1e-5, fp16_eps = 1e-3, stable = False):
@@ -145,9 +153,9 @@ class Attention(nn.Module):
 
         # add null key / value for classifier free guidance in prior net
 
-        # nk, nv = map(lambda t: repeat(t, 'd -> b 1 d', b = b), self.null_kv.unbind(dim = -2))
-        # k = torch.cat((nk, k), dim = -2)  # k,v -- (b,n+1,d)
-        # v = torch.cat((nv, v), dim = -2)
+        nk, nv = map(lambda t: repeat(t, 'd -> b 1 d', b = b), self.null_kv.unbind(dim = -2))
+        k = torch.cat((nk, k), dim = -2)  # k,v -- (b,n+1,d)
+        v = torch.cat((nv, v), dim = -2)
 
         # whether to use cosine sim
 
@@ -233,8 +241,8 @@ class CausalTransformer(nn.Module):
 
         x = self.init_norm(x)
 
-        #attn_bias = self.rel_pos_bias(n, n + 1, device = device)
-        attn_bias = self.rel_pos_bias(n, n, device = device)
+        attn_bias = self.rel_pos_bias(n, n + 1, device = device)
+        #attn_bias = self.rel_pos_bias(n, n, device = device)
 
         for attn, ff in self.layers:  # transformer encoder layers
             x = attn(x, attn_bias = attn_bias) + x  # self-attention layer
@@ -381,6 +389,9 @@ class DenoiseTransformer(nn.Module):
 
         self.kp_type_embeds = nn.Embedding(self.num_keypoints, self.dim)
 
+        self.null_condition_embeds = nn.Embedding(1, self.dim)
+        self.null_noisy_res_embeds = nn.Embedding(1, self.dim)
+
         self.to_time_embeds = nn.Sequential(
             PositionalEncoding(self.dim),
             nn.Linear(self.dim, self.dim * 2),
@@ -398,17 +409,18 @@ class DenoiseTransformer(nn.Module):
 
     def forward(
         self,
-        x,               # noisy resisual values (B, num_kps, 3)
-        st_feats,        # spatial-temporal features extracted from regressor (B, num_kps, st_dim)
-        time,            # noise level (B,1)
-        cur_preds=None,  # current pose predictions from the regressor (B, n_kp, 3)
-        kps_2d=None,     # 2d pose inputs (B, n_kp, 2)
-        ):               # output: the denoised residual values
+        x,                 # noisy resisual values (B, num_kps, 3)
+        st_feats,          # spatial-temporal features extracted from regressor (B, num_kps, st_dim)
+        time,              # noise level (B,1)
+        cond_drop_prob,     # condition drop probability for cf guidance
+        cur_preds=None,    # current pose predictions from the regressor (B, n_kp, 3)
+        kps_2d=None,       # 2d pose inputs (B, n_kp, 2)
+        ):                 # output: the denoised residual values
 
         b = st_feats.shape[0]
         time_embed = self.to_time_embeds(time)   # (B, 1, dim)
         noisy_res_embed = self.to_res_embeds(x)  # (B, num_kps, dim)
-
+        
         if cur_preds is not None and kps_2d is not None:
             assert self.kps_dim * 2 == self.st_dim
             kps_embed_3d = self.to_kps_embeds_3d(cur_preds)
@@ -428,22 +440,51 @@ class DenoiseTransformer(nn.Module):
         final_conditions = self.to_condition_embeds(final_conditions)
 
         if self.use_kp_type_embeds:
-            noisy_res_embed = noisy_res_embed + self.kp_type_embeds.weight.unsqueeze(0).expand(b, -1, -1)
             final_conditions = final_conditions + self.kp_type_embeds.weight.unsqueeze(0).expand(b, -1, -1)
+            noisy_res_embed = noisy_res_embed + self.kp_type_embeds.weight.unsqueeze(0).expand(b, -1, -1)
+
+        # stachastic condition dropping for cf-guidance
+        condition_keep_mask = prob_mask_like((b,self.num_keypoints,1), 1-cond_drop_prob, device=st_feats.device)
+        noisy_res_keep_mask = prob_mask_like((b,self.num_keypoints,1), 1-cond_drop_prob, device=st_feats.device)
+        
+        null_condition_embeds = self.null_condition_embeds.weight.to(final_conditions.dtype)
+        null_noisy_res_embeds = self.null_noisy_res_embeds.weight.to(noisy_res_embed.dtype)
+        final_conditions = torch.where(
+            condition_keep_mask, 
+            final_conditions,
+            null_condition_embeds
+        )
+        noisy_res_embed = torch.where(
+            noisy_res_keep_mask,
+            noisy_res_embed,
+            null_noisy_res_embeds
+        )
 
         learned_queries = self.learned_query.weight                       # (n_kps, dim)
         learned_queries = learned_queries.unsqueeze(0).expand(b, -1, -1)  # (b, n_kps, dim)
 
-        # all condition tokens
+        # concat all tokens
         tokens = torch.cat((
-            time_embed,
             final_conditions,
+            time_embed,
             noisy_res_embed,
             learned_queries
         ), dim = -2)
 
         # attention
         # get learned query, which should predict the denoised pose
-        pred_res = self.transformer(tokens)  # (b, n_kps, dim)
+        pred_res = self.transformer(tokens)[...,-self.num_keypoints:,:]  # (b, n_kps, dim)
 
         return pred_res
+    
+    def forward_with_cond_scale(
+        self,
+        *args,
+        cond_scale=1.,
+        **kwargs
+    ):
+        logits = self.forward(*args, cond_drop_prob=0., **kwargs)
+        if cond_scale == 1:
+            return logits
+        null_logits = self.forward(*args, cond_drop_prob=1., **kwargs)
+        return null_logits + (logits - null_logits) * cond_scale

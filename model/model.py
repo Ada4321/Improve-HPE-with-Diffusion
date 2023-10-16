@@ -78,10 +78,10 @@ class DDPM(BaseModel):
         """
         self.data = self.set_device(data)
 
-    def optimize_parameters(self, inputs_2d, inputs_3d):
+    def optimize_parameters(self, inputs_2d, inputs_3d, epoch):
         self.optimizer.zero_grad()
 
-        losses = self.netG(inputs_2d, inputs_3d)
+        losses = self.netG(inputs_2d, inputs_3d, epoch)
         if isinstance(losses, dict):
             assert "loss" in losses
         else:
@@ -92,7 +92,7 @@ class DDPM(BaseModel):
 
         # set log
         for k,v in losses.items():
-            losses[k] = v.item()
+            losses[k] = v if isinstance(v, float) else v.item()
         self.log_dict = losses
 
     def sample(self, inputs_2d):
@@ -229,10 +229,17 @@ class DDPM(BaseModel):
 
             results = self.sample(inputs_2d)
             results_flip = self.sample(inputs_2d_flip)
+
+            # ensemble raw predictions
             results_flip['preds'][:, :, :, 0] *= -1
             results_flip['preds'][:, :, joints_left + joints_right, :] = results_flip['preds'][:, :, joints_right + joints_left, :]
             for i in range(results["preds"].shape[0]):
                 results["preds"][i] = (results["preds"][i] + results_flip["preds"][i]) / 2
+            # ensemble final predictions
+            results_flip['final_preds'][:, :, :, 0] *= -1
+            results_flip['final_preds'][:, :, joints_left + joints_right, :] = results_flip['final_preds'][:, :, joints_right + joints_left, :]
+            for i in range(results["final_preds"].shape[0]):
+                results["final_preds"][i] = (results["final_preds"][i] + results_flip["final_preds"][i]) / 2
 
             # compute metrics
             action_error_sum = mpjpe_by_action(results['preds'], 
@@ -276,3 +283,5 @@ class DDPM(BaseModel):
             self.eval_dict[k+"_p2"] = action_error_sum[k]["p2"].avg * 1000
             self.eval_dict[k+"_diff_p1"] = action_error_sum_diff[k]["p1"].avg * 1000
             self.eval_dict[k+"_diff_p2"] = action_error_sum_diff[k]["p2"].avg * 1000
+
+        return

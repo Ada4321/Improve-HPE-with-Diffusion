@@ -152,6 +152,9 @@ class ResDiff(nn.Module):
         self.diff_loss_fn = kwargs['diff_fn']
         self.reg_weight = kwargs['reg_weight']
         self.diff_weight = kwargs['diff_weight']
+        self.warm_up = kwargs["warm_up"]
+        self.warm_up_phase1_epochs = kwargs["warm_up_phase1_epochs"]
+        self.warm_up_phase2_epochs = kwargs["warm_up_phase2_epochs"]
     def forward(self, **kwargs):
         # res loss
         # preds, gt -- (b,f,n,d)
@@ -159,17 +162,26 @@ class ResDiff(nn.Module):
         reg_loss = reg_losses.pop("loss")
         # diff loss
         if kwargs['predict_x_start']:
-            diff_loss = self.diff_loss_fn(kwargs['res_recon'], kwargs['gt_res'])
+            diff_loss = self.diff_loss_fn(kwargs['res_recon'], None, kwargs['gt_res'])
         else:
-            diff_loss = self.diff_loss_fn(kwargs['pred_noise'], kwargs['gt_noise'])
+            diff_loss = self.diff_loss_fn(kwargs['pred_noise'], None, kwargs['gt_noise'])
         if kwargs["norm_res"]:
             train_mpjpe = mpjpe(kwargs["preds"]+kwargs["res_recon"]*kwargs["sigmas"], kwargs["gt"])
         else:
             train_mpjpe = mpjpe(kwargs["preds"]+kwargs["res_recon"], kwargs["gt"])
 
+        epoch = kwargs["epoch"]
+        if self.warm_up:
+            if epoch < self.warm_up_phase1_epochs:
+                self.diff_weight = 0.
+            elif epoch < self.warm_up_phase2_epochs:
+                self.diff_weight = \
+                    self.diff_weight * (epoch - self.warm_up_phase1_epochs) / (self.warm_up_phase2_epochs - self.warm_up_phase1_epochs)
+        
         losses = {
             'reg_loss': reg_loss,
             'diff_loss': diff_loss,
+            "diff_weight": self.diff_weight,
             'loss': reg_loss * self.reg_weight + diff_loss * self.diff_weight,
             "train_mpjpe": train_mpjpe
         }
@@ -182,10 +194,10 @@ class ResDiff(nn.Module):
 def build_criterion(loss_opt, device):
     # losses = {}
     if not loss_opt['regress'] is None:
-        reg_loss_fn = LOSS_REGISTRY.get(loss_opt['regress'])(dev=device)
+        reg_loss_fn = LOSS_REGISTRY.get(loss_opt['regress'])(dev=device, **loss_opt)
         loss_opt['reg_fn'] = reg_loss_fn
     if not loss_opt['diffusion'] is None:
-        diff_loss_fn = LOSS_REGISTRY.get(loss_opt['diffusion'])(dev=device)
+        diff_loss_fn = LOSS_REGISTRY.get(loss_opt['diffusion'])(dev=device, **loss_opt)
         loss_opt['diff_fn'] = diff_loss_fn
     loss_fn = LOSS_REGISTRY.get(loss_opt['type'])(**loss_opt)
     return loss_fn
