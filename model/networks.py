@@ -91,13 +91,9 @@ def define_G(opt):
     model_opt = opt['model']
 
     #init regressor
-    model_opt['regressor']['preset'] = opt['data_preset']
-    model_opt['regressor']['pretrained_path'] = opt['path']['pretrained_regressor']
-    #regressor = Regressor(model_opt['regressor'])
     regressor = build_regressor(model_opt['regressor'])
 
     # init denoiser
-    model_opt['denoise_transformer']['image_dim'] = model_opt["regressor"]["embed_dim_ratio"]
     denoiser = DenoiseTransformer(model_opt['denoise_transformer'])
 
     # init diffusion

@@ -78,11 +78,14 @@ class GaussianDiffusion(nn.Module):
         self.denoise_fn = denoise_fn
         self.loss_opt = loss_opt
         self.condition_on_preds = diff_opt['condition_on_preds']
+        self.condition_on_2d = diff_opt['condition_on_2d']
         self.is_ddim = diff_opt.get('is_ddim', True)
         self.norm_res = diff_opt.get('norm_res', False)
         self.clip_denoised = diff_opt.get('clip_denoised', False)
         self.predict_x_start = diff_opt.get('predict_x_start', False)
         self.diff_on = diff_opt.get('diff_on', False)
+        self.cond_drop_prob = diff_opt.get("cond_drop_prob", 0.)
+        self.cond_scale = diff_opt.get("cond_scale", 1.)
 
     def set_loss(self, device):
         self.loss_fn = build_criterion(self.loss_opt, device)
@@ -161,7 +164,7 @@ class GaussianDiffusion(nn.Module):
         posterior_log_variance_clipped = self.posterior_log_variance_clipped[t]  # estimated sigma_{t-1}
         return posterior_mean, posterior_log_variance_clipped
 
-    def p_mean_variance_ddpm(self, x, t,  image_embed, cur_preds):
+    def p_mean_variance_ddpm(self, x, t,  st_feats, cur_preds):
         batch_size = x.shape[0]
 
         noise_level = torch.FloatTensor(  # repeat noise_level for each batch
@@ -170,15 +173,15 @@ class GaussianDiffusion(nn.Module):
         if not self.predict_x_start:
             if not self.condition_on_preds:
                 x_recon = self.predict_start_from_noise(
-                    x, t=t, noise=self.denoise_fn(x, image_embed, noise_level))  # X_0
+                    x, t=t, noise=self.denoise_fn(x, st_feats, noise_level))  # X_0
             else:
                 x_recon = self.predict_start_from_noise(
-                    x, t=t, noise=self.denoise_fn(x, image_embed, noise_level, cur_preds=cur_preds))
+                    x, t=t, noise=self.denoise_fn(x, st_feats, noise_level, cur_preds=cur_preds))
         else:
             if not self.condition_on_preds:
-                x_recon = self.denoise_fn(x, image_embed, noise_level)          # X_0
+                x_recon = self.denoise_fn(x, st_feats, noise_level)          # X_0
             else:
-                x_recon = self.denoise_fn(x, image_embed, noise_level, cur_preds=cur_preds)
+                x_recon = self.denoise_fn(x, st_feats, noise_level, cur_preds=cur_preds)
 
         if self.clip_denoised:
             x_recon.clamp_(-1., 1.)
@@ -187,24 +190,28 @@ class GaussianDiffusion(nn.Module):
             x_start=x_recon, x_t=x, t=t)
         return model_mean, posterior_log_variance
 
-    def p_mean_variance_ddim(self, x, t, alpha, alpha_next, image_embed, cur_preds):
+    def p_mean_variance_ddim(self, x, t, alpha, alpha_next, st_feats, cur_preds, inputs_2d):
         batch_size = x.shape[0]
 
         noise_level = torch.FloatTensor(  # repeat noise_level for each batch
             [self.sqrt_alphas_cumprod_prev[t+1]]).repeat(batch_size, 1).to(x.device)
         
         if not self.predict_x_start:
-            if not self.condition_on_preds:
-                pred_noise = self.denoise_fn(x, image_embed, noise_level)
-            else:
-                pred_noise = self.denoise_fn(x, image_embed, noise_level, cur_preds=cur_preds)
+            pred_noise = self.denoise_fn.forward_with_cond_scale(x, 
+                                                                 st_feats, 
+                                                                 noise_level, 
+                                                                 cond_scale=self.cond_scale,
+                                                                 cur_preds=cur_preds, 
+                                                                 kps_2d=inputs_2d)
             x_recon = self.predict_start_from_noise(x, t=t, noise=pred_noise)     # X_0
         else:
-            if not self.condition_on_preds:
-                x_recon = self.denoise_fn(x.reshape(batch_size,-1,3), image_embed, noise_level)
-            else:
-                x_recon = self.denoise_fn(x.reshape(batch_size,-1,3), image_embed, noise_level, cur_preds=cur_preds.reshape(batch_size,-1,2))
-            pred_noise = self.predict_noise_from_start(x, t=t, x_start=x_recon)  # noise
+            x_recon = self.denoise_fn.forward_with_cond_scale(x, 
+                                                              st_feats, 
+                                                              noise_level,
+                                                              cond_scale=self.cond_scale, 
+                                                              cur_preds=cur_preds,
+                                                              kps_2d=inputs_2d)
+            pred_noise = self.predict_noise_from_start(x, t=t, x_start=x_recon)   # noise
 
         if self.clip_denoised:
             x_recon.clamp_(-1., 1.)
@@ -216,16 +223,16 @@ class GaussianDiffusion(nn.Module):
 
 
     @torch.no_grad()
-    def p_sample_ddpm(self, x, t, image_embed, cur_preds):
+    def p_sample_ddpm(self, x, t, st_feats, cur_preds):
         model_mean, model_log_variance = self.p_mean_variance_ddpm(
-            x=x, t=t, image_embed=image_embed, cur_preds=cur_preds)
+            x=x, t=t, st_feats=st_feats, cur_preds=cur_preds)
         noise = torch.randn_like(x) if t > 0 else torch.zeros_like(x)
         return model_mean + noise * (0.5 * model_log_variance).exp()  # return X_{t-1}
     
     @torch.no_grad()
-    def p_sample_ddim(self, x, t, t_next, alpha, alpha_next, image_embed, cur_preds):
+    def p_sample_ddim(self, x, t, t_next, alpha, alpha_next, st_feats, cur_preds, inputs_2d):
         x_recon, pred_noise, c, model_variance = self.p_mean_variance_ddim(
-            x=x, t=t, alpha=alpha, alpha_next=alpha_next, image_embed=image_embed, cur_preds=cur_preds)
+            x=x, t=t, alpha=alpha, alpha_next=alpha_next, st_feats=st_feats, cur_preds=cur_preds, inputs_2d=inputs_2d)
         
         if t_next < 0:
             return x_recon
@@ -238,7 +245,7 @@ class GaussianDiffusion(nn.Module):
 
     @torch.no_grad()
     def p_sample_loop_ddpm(self, x_in):
-        image_embed = x_in['st_feats']
+        st_feats = x_in['st_feats']
         cur_preds = x_in['cur_preds']
 
         device = cur_preds.device
@@ -247,18 +254,21 @@ class GaussianDiffusion(nn.Module):
         res = torch.randn(shape, device=device)  # initialize residual as noise
 
         for i in tqdm(reversed(range(0, self.num_timesteps)), desc='sampling loop time step', total=self.num_timesteps):
-            res = self.p_sample_ddpm(res, i, image_embed, cur_preds)
+            res = self.p_sample_ddpm(res, i, st_feats, cur_preds)
             
         return res  # the final predicted residual
 
     @torch.no_grad()
     def p_sample_loop_ddim(self, x_in):
-        image_embed = x_in['st_feats']
+        st_feats = x_in['st_feats']
         cur_preds = x_in['cur_preds']
+        inputs_2d = x_in["inputs_2d"]
 
-        shape, device, alphas = cur_preds.shape, cur_preds.device, self.alphas_cumprod_prev
+        shape = st_feats.shape
+        device = st_feats.device
+        alphas = self.alphas_cumprod_prev
 
-        res = torch.randn(shape, device=device)  # initialize residual as noise
+        res = torch.randn((*shape[:-1],3), device=device)  # initialize residual as noise
 
         times = torch.linspace(-1., self.num_timesteps, steps = self.sample_steps + 1)[:-1]
         times = list(reversed(times.int().tolist()))
@@ -268,7 +278,7 @@ class GaussianDiffusion(nn.Module):
             alpha = alphas[time+1]
             alpha_next = alphas[time_next+1]
 
-            res = self.p_sample_ddim(res, time, time_next, alpha, alpha_next, image_embed, cur_preds)
+            res = self.p_sample_ddim(res, time, time_next, alpha, alpha_next, st_feats, cur_preds, inputs_2d)
 
         return res
     
@@ -282,18 +292,30 @@ class GaussianDiffusion(nn.Module):
         return res
 
     @torch.no_grad()
-    def sample(self, images):
-        preds, sigmas, imfeats = self.regressor(images)
+    def sample(self, inputs_2d):
+        #during_warm_up = self.loss_opt["warm_up"] and epoch <= self.loss_opt["warm_up_phase1_epochs"]
+        preds, sigmas, st_feats = self.regressor(inputs_2d)
         if not self.diff_on:
-            return {'preds': preds}
+            return {'preds': preds, "sigmas": sigmas}
         else:
+            b, f, n, _ = inputs_2d.shape
+            st_feats = st_feats.reshape(b*f, n, -1)
+            preds = preds.reshape(b*f, n, -1)
+            inputs_2d = inputs_2d.reshape(b*f, n, -1)
+
+            x_in_3d = preds if self.condition_on_preds else None
+            x_in_2d = inputs_2d if self.condition_on_2d else None
+
             x_in = {
-                'st_feats': imfeats,
-                'cur_preds': preds['raw_pred_jts']
+                'st_feats': st_feats,
+                'cur_preds': x_in_3d,
+                "inputs_2d": x_in_2d
             }
             res = self.p_sample_loop(x_in)
 
-            return {'preds': preds, 'res': res}
+            return {'preds': preds.reshape(b,f,n,-1), 
+                    "sigmas": sigmas.reshape(b,f,n,-1), 
+                    'residual': res.reshape(b,f,n,-1)}
 
     def q_sample(self, x_start, continuous_sqrt_alpha_cumprod, noise=None):  # sample X_t from X_0
         noise = default(noise, lambda: torch.randn_like(x_start))
@@ -308,10 +330,11 @@ class GaussianDiffusion(nn.Module):
     
     def diffuse(self, x_in, noise=None):
         x_start = x_in['gt_res']        # x_start should be gt_res, the goal of diffusion 
-        image_embed = x_in['st_feats']
+        st_feats = x_in['st_feats']
         cur_preds = x_in['cur_preds']
+        inputs_2d = x_in["inputs_2d"]
         
-        b, num_kp_coords = x_start.shape
+        b, num_kps, _ = x_start.shape
         t = np.random.randint(1, self.num_timesteps + 1)  # sample a 't' value -- total diffusion step T
         continuous_sqrt_alpha_cumprod = torch.FloatTensor( # sample one alpha value for each sample in the batch
             np.random.uniform(
@@ -320,65 +343,83 @@ class GaussianDiffusion(nn.Module):
                 size=b
             )
         ).to(x_start.device)
-        continuous_sqrt_alpha_cumprod = continuous_sqrt_alpha_cumprod.view(b, -1)
+        continuous_sqrt_alpha_cumprod = \
+            continuous_sqrt_alpha_cumprod.unsqueeze(-1).repeat(1, num_kps).unsqueeze(-1)
 
         noise = default(noise, lambda: torch.randn_like(x_start)) # sample a noise from N(0,1)
         x_noisy = self.q_sample(                                  # sample X_t
-            x_start=x_start, continuous_sqrt_alpha_cumprod=continuous_sqrt_alpha_cumprod, noise=noise)
+            x_start=x_start, 
+            continuous_sqrt_alpha_cumprod=continuous_sqrt_alpha_cumprod, 
+            noise=noise)
 
-        if not self.condition_on_preds:
-            x_recon = self.denoise_fn(x_noisy.reshape(b,-1,3), image_embed, continuous_sqrt_alpha_cumprod) # x_recon -- reconstructed noise
-        else:
-            x_recon = self.denoise_fn(
-                x_noisy.reshape(b,-1,2), image_embed, continuous_sqrt_alpha_cumprod, cur_preds.reshape(b,-1,2))
+        # x_recon -- reconstructed noise
+        x_recon = self.denoise_fn(
+            x_noisy, 
+            st_feats, 
+            continuous_sqrt_alpha_cumprod,
+            cond_drop_prob=self.cond_drop_prob, 
+            cur_preds=cur_preds,
+            kps_2d=inputs_2d)
             
         if not self.predict_x_start:    
             res_recon = self.predict_start_from_noise_continuous(x_noisy, continuous_sqrt_alpha_cumprod.view(-1)[0], x_recon)
+            # x_recon -- reconstructed noise
+            # noise -- gt noise
+            # res_recon -- reconstructed residual
             return x_recon, noise, res_recon
         else:
             return x_recon
 
-    def forward(self, inputs_2d, gt):
+    def forward(self, inputs_2d, gt, epoch):
+        b, f, n, _ = gt.shape
         preds, sigmas, st_feats = self.regress(inputs_2d=inputs_2d)
 
         if not self.diff_on:
             #return self.loss_fn(preds=pred_jts, pred_sigmas=pred_sigmas, gt=gt)
             return self.loss_fn(preds=preds, sigmas=sigmas, gt=gt)
         
-        pred_jts = preds['raw_pred_jts']
-        pred_sigmas = preds['pred_sigmas'] if 'pred_sigmas' in preds else None
-        gt = gt.reshape(gt.shape[0], pred_jts.shape[-1])
-        gt_res = gt - pred_jts
-        if self.norm_res:
-            assert pred_sigmas is not None
-            gt_res = gt_res / pred_sigmas
+        preds = preds.reshape(b*f, n, -1)
+        sigmas = sigmas.reshape(b*f, n, -1)
+        st_feats = st_feats.reshape(b*f, n, -1)
+        gt = gt.reshape(b*f, n, -1)
         
+        gt_res = gt - preds
+        if self.norm_res:
+            gt_res = gt_res / (math.sqrt(2) * sigmas)
+        
+        x_in_3d = preds.detach() if self.condition_on_preds else None
+        x_in_2d = inputs_2d if self.condition_on_2d else None
         x_in = {
             'st_feats': st_feats.detach(), 
             'gt_res': gt_res, 
-            'cur_preds': pred_jts.detach()
+            'cur_preds': x_in_3d,
+            "inputs_2d": x_in_2d
         }
 
         if not self.predict_x_start:
             pred_noise, gt_noise, res_recon = self.diffuse(x_in=x_in)
             losses = self.loss_fn(
-                preds=pred_jts, 
-                gt=gt, 
-                pred_noise=pred_noise, 
-                gt_noise=gt_noise, 
-                res=res_recon,
+                preds=preds.reshape(b,f,n,-1), 
+                sigmas=sigmas.reshape(b,f,n,-1),
+                gt=gt.reshape(b,f,n,-1), 
+                pred_noise=pred_noise.reshape(b,f,n,-1), 
+                gt_noise=gt_noise.reshape(b,f,n,-1), 
+                res_recon=res_recon.reshape(b,f,n,-1),
                 predict_x_start=self.predict_x_start,
-                sigma=pred_sigmas
+                norm_res=self.norm_res,
+                epoch=epoch
                 )
         else:
             res_recon = self.diffuse(x_in=x_in)
             losses = self.loss_fn(
-                preds=pred_jts, 
-                gt=gt,  
-                res_recon=res_recon,
-                gt_res=gt_res,
+                preds=preds.reshape(b,f,n,-1),
+                sigmas=sigmas.reshape(b,f,n,-1), 
+                gt=gt.reshape(b,f,n,-1),  
+                res_recon=res_recon.reshape(b,f,n,-1),
+                gt_res=gt_res.reshape(b,f,n,-1),
                 predict_x_start=self.predict_x_start,
-                sigma=pred_sigmas
+                norm_res=self.norm_res,
+                epoch=epoch
                 )
 
         return losses
