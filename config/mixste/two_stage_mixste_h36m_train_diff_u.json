@@ -117,7 +117,7 @@
         }
     },
     "wandb": {
-        "project_name": "DiffHPE_3D",
+        "project_name": "DiffHPE_3D_with_pretrained",
         "run_name": "mixste+l2normdiff_xstart_bz1024_lr4e-5_u"
     },
     "world_size": 1,

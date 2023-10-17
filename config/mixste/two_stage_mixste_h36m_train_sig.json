@@ -84,7 +84,7 @@
         }
     },
     "loss": {
-        "type": "L1LossBatchAvgMLE",
+        "type": "L2NormBatchAvgMLE",
         "regress": "L2LossBatchAvg",
         "diffusion": "L2LossBatchAvg",
         "reg_weight": 1.0,
@@ -114,7 +114,7 @@
     },
     "wandb": {
         "project_name": "DiffHPE_3D",
-        "run_name": "l1mle_bz1024_lr4e-5"
+        "run_name": "l2normmle_bz1024_lr4e-5"
     },
     "world_size": 1,
     "seed": 123123
