@@ -188,6 +188,31 @@ class ResDiff(nn.Module):
         losses.update(reg_losses)
 
         return  losses
+    
+@LOSS_REGISTRY.register()
+class FixedResDiff(nn.Module):
+    def __init__(self, **kwargs) -> None:
+        super().__init__()
+        self.diff_loss_fn = kwargs['diff_fn']
+    def forward(self, **kwargs):
+        # preds, gt -- (b,f,n,d)
+        # diff loss
+        if kwargs['predict_x_start']:
+            diff_loss = self.diff_loss_fn(kwargs['res_recon'], None, kwargs['gt_res'])
+        else:
+            diff_loss = self.diff_loss_fn(kwargs['pred_noise'], None, kwargs['gt_noise'])
+        if kwargs["norm_res"]:
+            train_mpjpe = mpjpe(kwargs["res_recon"]*kwargs["sigmas"], kwargs["gt_res"]*kwargs["sigmas"])
+        else:
+            train_mpjpe = mpjpe(kwargs["res_recon"], kwargs["gt_res"])
+        
+        losses = {
+            'diff_loss': diff_loss,
+            'loss': diff_loss,
+            "train_mpjpe": train_mpjpe
+        }
+
+        return  losses
 
 
 

@@ -10,6 +10,7 @@ import os
 import json
 import pickle as pk
 from tqdm import tqdm
+import time
 
 import sys
 sys.path.append('/root/Improve-HPE-with-Diffusion')
@@ -86,7 +87,11 @@ class DDPM(BaseModel):
             assert "loss" in losses
         else:
             losses = {"loss": losses}
+
+        s9 = time.time()
         losses["loss"].backward()
+        s10 = time.time()
+        # print("loss backward: ", (s10-s9)*1000)
 
         self.optimizer.step()
 

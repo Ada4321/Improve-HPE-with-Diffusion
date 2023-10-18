@@ -1,4 +1,5 @@
 import math
+import time
 import torch
 from torch import device, nn, einsum
 import torch.nn.functional as F
@@ -274,7 +275,8 @@ class GaussianDiffusion(nn.Module):
         times = list(reversed(times.int().tolist()))
         time_pairs = list(zip(times[:-1], times[1:]))
 
-        for time, time_next in tqdm(time_pairs, desc = 'sampling loop time step'):
+        #for time, time_next in tqdm(time_pairs, desc = 'sampling loop time step'):
+        for time, time_next in time_pairs:
             alpha = alphas[time+1]
             alpha_next = alphas[time_next+1]
 
@@ -294,9 +296,10 @@ class GaussianDiffusion(nn.Module):
     @torch.no_grad()
     def sample(self, inputs_2d):
         #during_warm_up = self.loss_opt["warm_up"] and epoch <= self.loss_opt["warm_up_phase1_epochs"]
-        preds, sigmas, st_feats = self.regressor(inputs_2d)
+        #preds, sigmas, st_feats = self.regressor(inputs_2d)
+        preds, st_feats = self.regressor(inputs_2d)
         if not self.diff_on:
-            return {'preds': preds, "sigmas": sigmas}
+            return {'preds': preds, "sigmas": None}
         else:
             b, f, n, _ = inputs_2d.shape
             st_feats = st_feats.reshape(b*f, n, -1)
@@ -314,7 +317,7 @@ class GaussianDiffusion(nn.Module):
             res = self.p_sample_loop(x_in)
 
             return {'preds': preds.reshape(b,f,n,-1), 
-                    "sigmas": sigmas.reshape(b,f,n,-1), 
+                    "sigmas": None, 
                     'residual': res.reshape(b,f,n,-1)}
 
     def q_sample(self, x_start, continuous_sqrt_alpha_cumprod, noise=None):  # sample X_t from X_0
@@ -326,6 +329,7 @@ class GaussianDiffusion(nn.Module):
         )
 
     def regress(self, inputs_2d):
+        # self.regressor.eval()
         return self.regressor(inputs_2d)
     
     def diffuse(self, x_in, noise=None):
@@ -372,15 +376,25 @@ class GaussianDiffusion(nn.Module):
 
     def forward(self, inputs_2d, gt, epoch):
         b, f, n, _ = gt.shape
-        preds, sigmas, st_feats = self.regress(inputs_2d=inputs_2d)
+        s1 = time.time()
+        with torch.no_grad():
+            # preds, sigmas, st_feats = self.regress(inputs_2d=inputs_2d)
+            preds, st_feats = self.regress(inputs_2d=inputs_2d)
+        s2 = time.time()
+        # print("regress: ", (s2-s1)*1000)
 
         if not self.diff_on:
             #return self.loss_fn(preds=pred_jts, pred_sigmas=pred_sigmas, gt=gt)
             return self.loss_fn(preds=preds, sigmas=sigmas, gt=gt)
         
+        # tmp ===========================
+        sigmas = None
+        
+        s3 = time.time()
         preds = preds.reshape(b*f, n, -1)
-        sigmas = sigmas.reshape(b*f, n, -1)
+        #sigmas = sigmas.reshape(b*f, n, -1)
         st_feats = st_feats.reshape(b*f, n, -1)
+        inputs_2d = inputs_2d.reshape(b*f, n, -1)
         gt = gt.reshape(b*f, n, -1)
         
         gt_res = gt - preds
@@ -391,10 +405,12 @@ class GaussianDiffusion(nn.Module):
         x_in_2d = inputs_2d if self.condition_on_2d else None
         x_in = {
             'st_feats': st_feats.detach(), 
-            'gt_res': gt_res, 
+            'gt_res': gt_res.detach(), 
             'cur_preds': x_in_3d,
             "inputs_2d": x_in_2d
         }
+        s4 = time.time()
+        # print("compute res: ", (s4-s3)*1000)
 
         if not self.predict_x_start:
             pred_noise, gt_noise, res_recon = self.diffuse(x_in=x_in)
@@ -405,21 +421,25 @@ class GaussianDiffusion(nn.Module):
                 pred_noise=pred_noise.reshape(b,f,n,-1), 
                 gt_noise=gt_noise.reshape(b,f,n,-1), 
                 res_recon=res_recon.reshape(b,f,n,-1),
+                gt_res=gt_res.reshape(b,f,n,-1),
                 predict_x_start=self.predict_x_start,
                 norm_res=self.norm_res,
-                epoch=epoch
                 )
         else:
+            s5 = time.time()
             res_recon = self.diffuse(x_in=x_in)
+            s6 = time.time()
+            # print("diffuse: ", (s6-s5)*1000)
+            s7 = time.time()
             losses = self.loss_fn(
-                preds=preds.reshape(b,f,n,-1),
-                sigmas=sigmas.reshape(b,f,n,-1), 
+                #sigmas=sigmas.reshape(b,f,n,-1), 
                 gt=gt.reshape(b,f,n,-1),  
                 res_recon=res_recon.reshape(b,f,n,-1),
                 gt_res=gt_res.reshape(b,f,n,-1),
                 predict_x_start=self.predict_x_start,
                 norm_res=self.norm_res,
-                epoch=epoch
                 )
+            s8 = time.time()
+            # print("compute loss: ", (s8-s7)*1000)
 
         return losses

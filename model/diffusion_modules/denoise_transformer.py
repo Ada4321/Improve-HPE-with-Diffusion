@@ -442,7 +442,7 @@ class DenoiseTransformer(nn.Module):
         if self.use_kp_type_embeds:
             final_conditions = final_conditions + self.kp_type_embeds.weight.unsqueeze(0).expand(b, -1, -1)
             noisy_res_embed = noisy_res_embed + self.kp_type_embeds.weight.unsqueeze(0).expand(b, -1, -1)
-
+        
         # stachastic condition dropping for cf-guidance
         condition_keep_mask = prob_mask_like((b,self.num_keypoints,1), 1-cond_drop_prob, device=st_feats.device)
         noisy_res_keep_mask = prob_mask_like((b,self.num_keypoints,1), 1-cond_drop_prob, device=st_feats.device)
@@ -462,6 +462,8 @@ class DenoiseTransformer(nn.Module):
 
         learned_queries = self.learned_query.weight                       # (n_kps, dim)
         learned_queries = learned_queries.unsqueeze(0).expand(b, -1, -1)  # (b, n_kps, dim)
+        if self.use_kp_type_embeds:
+            learned_queries = learned_queries + self.kp_type_embeds.weight.unsqueeze(0).expand(b, -1, -1)
 
         # concat all tokens
         tokens = torch.cat((
