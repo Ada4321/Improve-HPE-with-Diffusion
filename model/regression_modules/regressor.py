@@ -91,10 +91,10 @@ class MixSTE2(nn.Module):
             nn.Linear(embed_dim , out_dim),
         )
 
-        self.head_sigma = nn.Sequential(
-            nn.LayerNorm(embed_dim),
-            nn.Linear(embed_dim, out_dim),
-        )
+        # self.head_sigma = nn.Sequential(
+        #     nn.LayerNorm(embed_dim),
+        #     nn.Linear(embed_dim, out_dim),
+        # )
 
     def STE_forward(self, x):
         b, f, n, c = x.shape  ##### b is batch size, f is number of frames, n is number of joints, c is channel size
@@ -158,13 +158,14 @@ class MixSTE2(nn.Module):
         st_feats = x
         mu = self.head(st_feats)
         #sigma = self.head_sigma(st_feats).sigmoid() + 0.5
-        sigma = self.head_sigma(st_feats).sigmoid()
+        # sigma = self.head_sigma(st_feats).sigmoid()
         # now x shape is (b f n 3)
         st_feats = st_feats.view(b, f, n, -1)
         mu = mu.view(b, f, n, -1)
-        sigma = sigma.view(b, f, n, -1)
+        # sigma = sigma.view(b, f, n, -1)
 
-        return mu, sigma, st_feats
+        # return mu, sigma, st_feats
+        return mu, st_feats
     
 @MODEL_REGISTRY.register()
 class STMO(nn.Module):

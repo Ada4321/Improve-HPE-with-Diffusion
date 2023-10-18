@@ -93,22 +93,6 @@ def main_worker(gpu, opt, args):
         logger.info('Initial Dataset Finished')
     train_generator = train_dataset.get_generator()
     val_generator = val_dataset.get_generator()
-
-    # # dataloder
-    # if not opt['distributed']:
-    #     train_loader = DataLoader(
-    #         train_dataset, batch_size=opt['datasets']['batch_size'], shuffle=True)
-    #     val_loader = DataLoader(
-    #         val_dataset, batch_size=opt['datasets']['batch_size'], shuffle=False)
-    # else:
-    #     train_sampler = DistributedSampler(
-    #         train_dataset, num_replicas=opt['world_size'], rank=get_rank())
-    #     train_loader = DataLoader(
-    #         train_dataset, batch_size=opt['datasets']['batch_size'], shuffle=(train_sampler is None), num_workers=0, sampler=train_sampler, worker_init_fn=_init_fn)
-    #     val_sampler = DistributedSampler(
-    #         val_dataset, num_replicas=opt['world_size'], rank=get_rank())
-    #     val_loader = DataLoader(
-    #         val_dataset, batch_size=opt['datasets']['batch_size'], shuffle=False, num_workers=0, sampler=val_sampler, drop_last=False)
     
     # model
     if opt['distributed']:
@@ -170,7 +154,7 @@ def main_worker(gpu, opt, args):
                     for k, v in logs.items():
                         message += '{:s}: {:.4e} '.format(k, v)
                         #tb_logger.add_scalar(k, v, current_step)
-                    logger.info(message)
+                    # logger.info(message)
                     wandb.log(logs, step=current_step, commit=False)
                     wandb.log({'lr': diffusion.optimizer.param_groups[0]['lr']}, step=current_step, commit=False)
 
@@ -231,6 +215,7 @@ def main_worker(gpu, opt, args):
             for k, v in eval_logs.items():
                 message += '{:s}: {:.4e} '.format(k, v)
             logger.info(message)
+            wandb.log(eval_logs)
             # avp1 = eval_logs["Average_p1"]
             # avp1_diff = eval_logs["Average_diff_p1"]
             # a=1

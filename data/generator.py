@@ -2,6 +2,11 @@ import numpy as np
 import cv2
 from random import random
 from itertools import zip_longest
+import torch
+
+import sys
+sys.path.append("/root/Improve-HPE-with-Diffusion")
+from data.utils import eval_data_prepare
 
 PIXEL_MEAN = [0.406, 0.457, 0.480]
 PIXEL_STD = [0.225, 0.224, 0.229]
@@ -241,3 +246,102 @@ class UnchunkedGenerator:
                 batch_2d[1, :, self.kps_left + self.kps_right] = batch_2d[1, :, self.kps_right + self.kps_left]
             
             yield batch_cam, batch_action, batch_3d, batch_2d
+
+
+class PreparedGenerator:
+    def __init__(self, train, generator, model, batch_size, shuffle=False, random_seed=1234,
+                 kps_left=None, kps_right=None, joints_left=None, joints_right=None, receptive_field=243) -> None:
+        self.train = train
+        self.batch_size = batch_size
+        self.random = np.random.RandomState(random_seed)
+        if self.train:
+            self.shuffle = shuffle
+            self.pairs = self.gen_train(generator, model)
+        else:
+            self.shuffle = False
+            self.pairs = self.gen_val(generator, model, kps_left=kps_left, kps_right=kps_right, joints_left=joints_left, joints_right=joints_right, receptive_field=receptive_field)
+        print("Pretrained features and residuals prepared.")
+    
+    def random_state(self):
+        return self.random
+
+    def set_random_state(self, random):
+        self.random = random
+
+    def num_seqs(self):
+        return (len(self.pairs))
+
+    def gen_train(self, generator, model):
+        pairs = []
+        assert self.generator.shuffle == False
+        for _, _, batch_3d, batch_2d in enumerate(generator.next_epoch()):
+            inputs_3d = torch.from_numpy(batch_3d.astype('float32'))
+            inputs_2d = torch.from_numpy(batch_2d.astype('float32'))
+            if torch.cuda.is_available():
+                inputs_3d = inputs_3d.cuda()
+                inputs_2d = inputs_2d.cuda()
+            inputs_3d[:, :, 0] = 0
+
+            with torch.no_grad():
+                predicted_3d, feats = model(inputs_2d)
+            residual = inputs_3d - predicted_3d
+
+            assert feats.ndim == 4 and residual.ndim == 4 and inputs_2d.ndim == 4
+            assert feats.shape[:-1] == residual.shape[:-1] and feats.shape[:-1] == inputs_2d.shape[:-1]
+
+            for i in feats.shape[0]:  # b
+                self.pairs.append((residual[i].detach().cpu().numpy(),
+                                feats[i].detach().cpu().numpy(),
+                                inputs_2d[i].detach().cpu().numpy()))
+        return pairs
+    
+    def gen_val(self, generator, model, kps_left, kps_right, joints_left, joints_right, receptive_field):
+        for _, cano_action, batch, batch_2d in enumerate(generator.next_epoch()):
+            inputs_3d = torch.from_numpy(batch.astype('float32'))
+            inputs_2d = torch.from_numpy(batch_2d.astype('float32'))
+            ##### apply test-time-augmentation (following Videopose3d)
+            inputs_2d_flip = inputs_2d.clone()
+            inputs_2d_flip[:, :, :, 0] *= -1
+            inputs_2d_flip[:, :, kps_left + kps_right, :] = inputs_2d_flip[:, :, kps_right + kps_left, :]
+            ##### convert size
+            inputs_3d_p = inputs_3d
+            inputs_2d, inputs_3d = eval_data_prepare(receptive_field, inputs_2d, inputs_3d_p)
+            inputs_2d_flip, _ = eval_data_prepare(receptive_field, inputs_2d_flip, inputs_3d_p)
+
+            if torch.cuda.is_available():
+                inputs_3d = inputs_3d.cuda()
+                inputs_2d = inputs_2d.cuda()
+                inputs_2d_flip = inputs_2d_flip.cuda()
+            inputs_3d[:, :, 0] = 0
+
+            with torch.no_grad():
+                predicted_3d, feats = model(inputs_2d)
+                predicted_3d_flip, feats_flip = model(inputs_2d_flip)
+            residual = inputs_3d - predicted_3d
+            predicted_3d_flip[:, :, :, 0] *= -1
+            predicted_3d_flip[:, :, joints_left + joints_right, :] = predicted_3d_flip[:, :, joints_right + joints_left, :]
+            residual_flip = inputs_3d - predicted_3d_flip
+
+            output["residual"][2*i] = residual.detach().cpu().numpy()
+            output["feature"][2*i] = feats.detach().cpu().numpy()
+            output["keypoints_2d"][2*i] = inputs_2d.detach().cpu().numpy()
+            output["action"][2*i] = cano_action
+            output["residual"][2*i+1] = residual_flip.detach().cpu().numpy()
+            output["feature"][2*i+1] = feats_flip.detach().cpu().numpy()
+            output["keypoints_2d"][2*i+1] = inputs_2d_flip.detach().cpu().numpy()
+            output["action"][2*i+1] = cano_action
+
+    def next_epoch(self):
+        if self.train:
+            if self.shuffle:
+                pairs = self.random.permutation(self.pairs)
+            assert self.num_seqs() % self.batch_size == 0
+            for b_i in range(int(self.num_seqs() // self.batch_size)):  # batch_id
+                chunks = pairs[b_i*self.batch_size: (b_i+1)*self.batch_size]
+                batch_res = np.stack([x[0] for x in chunks], axis=0)
+                batch_feats = np.stack([x[1] for x in chunks], axis=0)
+                batch_2d = np.stack([x[2] for x in chunks], axis=0)
+                yield batch_res, batch_feats, batch_2d
+        else:
+            pass
+        

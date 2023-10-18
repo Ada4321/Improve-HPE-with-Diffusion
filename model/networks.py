@@ -92,6 +92,7 @@ def define_G(opt):
 
     #init regressor
     regressor = build_regressor(model_opt['regressor'])
+    regressor.eval()
 
     # init denoiser
     denoiser = DenoiseTransformer(model_opt['denoise_transformer'])

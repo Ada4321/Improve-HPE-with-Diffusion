@@ -11,6 +11,39 @@ from data.h36m_dataset import Human36mDataset
 from core.registry import Registry
 DATASET_REGISTRY = Registry('dataset')
 
+
+@DATASET_REGISTRY.register()
+class LazyDataset(Dataset):
+    """
+    Directly loading batched backbone features, residuals and 2d keypoints,
+    used for faster training.
+    """
+    def __init__(self, data_root, train) -> None:
+        super().__init__()
+        self.train = train
+        self.all_data = np.load(data_root, allow_pickle=True)["pretrained_items"].item()
+        
+    def fetch(self):
+        self._data = self.fetch()
+        for i in range(len(self.all_data["feature"])):
+            if self.train:
+                b = self.all_data["feature"][i].shape[0]
+                for j in range(b):  
+                    self._data.append((self.all_data["feature"][i][j], 
+                                    self.all_data["residual"][i][j], 
+                                    self.all_data["keypoints_2d"][i][j]))
+            else:
+                self._data.append((self.all_data["feature"][i], 
+                                self.all_data["residual"][i], 
+                                self.all_data["keypoints_2d"][i],
+                                self.all_data["action"][i]))
+
+    def __len__(self):
+        return len(self._data)
+
+    def __getitem__(self, idx):
+        return self._data[idx]
+
 @DATASET_REGISTRY.register()
 class H36M(Dataset):
     def __init__(self, opt, train=True) -> None:
