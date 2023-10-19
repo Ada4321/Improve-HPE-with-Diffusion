@@ -26,7 +26,7 @@ class L1LossBatchAvg(nn.Module):
         self.loss_fn = nn.L1Loss(reduction='sum').to(dev)
     def forward(self, preds, sigmas, gt):
         assert preds.ndim == 4
-        return self.loss_fn(preds, gt) / (preds.shape[0] * preds.shape[1])
+        return self.loss_fn(preds, gt) / (preds.shape[0] * preds.shape[1] * preds.shape[2])
 
 @LOSS_REGISTRY.register()
 class L1LossBatchAvgMLE(nn.Module):
@@ -62,8 +62,8 @@ class L2Norm(nn.Module):
         super().__init__()
     def forward(self, preds, sigmas, gt):
         assert preds.ndim == 4
-        return torch.sum(torch.norm(preds - gt, dim=-1)) / (preds.shape[0] * preds.shape[1])
-        #return torch.mean(torch.norm(preds - gt, dim=-1))
+        #return torch.sum(torch.norm(preds - gt, dim=-1)) / (preds.shape[0] * preds.shape[1])
+        return torch.mean(torch.norm(preds - gt, dim=-1))
 
 @LOSS_REGISTRY.register()
 class L2NormBatchAvgMLE(nn.Module):

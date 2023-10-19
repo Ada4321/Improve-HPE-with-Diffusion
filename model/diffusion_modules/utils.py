@@ -27,12 +27,10 @@ class AddEmbeds(nn.Module):
 
 # PositionalEncoding Source： https://github.com/lmnt-com/wavegrad/blob/master/src/wavegrad/model.py
 class PositionalEncoding(nn.Module):
-    def __init__(self, dim, use_coord_type_embeds=False, coord_type_embeds=None):
+    def __init__(self, dim):
         super().__init__()
         self.dim = dim
-        self.use_coord_type_embeds = use_coord_type_embeds
-        self.coord_type_embeds = coord_type_embeds
-
+        
     def forward(self, noise_level):
         count = self.dim // 2
         step = torch.arange(count, dtype=noise_level.dtype,
@@ -41,15 +39,11 @@ class PositionalEncoding(nn.Module):
         # step.unsqueeze(0) -- (1,count)
         if noise_level.ndim == 2:
             noise_level = noise_level.unsqueeze(-1)
-        step = step.unsqueeze(0).expand(noise_level.shape[-1], -1)
+        step = step.unsqueeze(0).expand(noise_level.shape[-1], -1) # (d, count)
         # encoding = noise_level * torch.exp(-math.log(1e4) * step)  # (B,n,1) * (1,N) => (B,n,N)
-        encoding = torch.matmul(noise_level, torch.exp(-math.log(1e4) * step))  # (B,n,1) * (1,N) => (B,n,N)
+        encoding = torch.matmul(noise_level, torch.exp(-math.log(1e4) * step))  # (B,n,d) * (d,count) => (B,n,count)
         encoding = torch.cat(
-            [torch.sin(encoding), torch.cos(encoding)], dim=-1)    # (B,n,2N)
-        if self.use_coord_type_embeds:
-            assert self.coord_type_embeds is not None
-            encoding[...,-1:] += self.coord_type_embeds[0].expand(encoding.shape[0], -1, -1)
-            encoding[...,:-1] += self.coord_type_embeds[1].expand(encoding.shape[0], encoding.shape[1], -1)
+            [torch.sin(encoding), torch.cos(encoding)], dim=-1)    # (B,n,2*count)
 
         return encoding
     

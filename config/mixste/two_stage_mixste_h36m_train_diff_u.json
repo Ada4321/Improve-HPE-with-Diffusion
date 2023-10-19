@@ -8,7 +8,7 @@
         "log": "logs",
         "checkpoint": "checkpoint",
         "resume_state": null
-        //"resume_state": "/root/experiments/mixste_diff_u_231018_020143/checkpoint" //pretrain model or training state,
+        //"resume_state": "/root/experiments/mixste_diff_u_231019_104732/checkpoint" //pretrain model or training state,
     },
     "datasets": {
         "type": "H36M",
@@ -64,8 +64,8 @@
             "norm_res": false,
             "clip_denoised": true,
             "predict_x_start": true,
-            "condition_on_preds": false, // condition on current preds from the regressor
-            "condition_on_2d": true,
+            "condition_on_preds": true, // condition on current preds from the regressor
+            "condition_on_2d": false,
             "cond_drop_prob": 0.0,
             "cond_scale": 1.0
         },
@@ -88,7 +88,7 @@
     "loss": {
         "type": "FixedResDiff",
         "regress": "MixSTELoss",
-        "diffusion": "L1LossBatchAvg",
+        "diffusion": "L2Norm",
         "reg_weight": 1.0,
         "diff_weight":  1.0,
         "weights_joints": [1, 1, 2.5, 2.5, 1, 2.5, 2.5, 1, 1, 1, 1.5, 1.5, 4, 4, 1.5, 4, 4],
@@ -119,7 +119,7 @@
     },
     "wandb": {
         "project_name": "DiffHPE_3D_with_pretrained",
-        "run_name": "mixste+l1diff*17_nodrop_nonull_xstart_bz1024_lr4e-4_u"
+        "run_name": "mixste+l2normdiff_pe_cond3d_xstart_bz1024_lr4e-4_u"
     },
     "world_size": 1,
     "seed": 123123

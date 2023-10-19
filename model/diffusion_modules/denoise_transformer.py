@@ -399,9 +399,27 @@ class DenoiseTransformer(nn.Module):
             nn.Linear(self.dim * 2, self.dim),
         )
 
-        self.to_res_embeds = nn.Linear(3, self.dim)
-        self.to_kps_embeds_3d = nn.Linear(3, self.kps_dim)  # in case using current preds from the regressor
-        self.to_kps_embeds_2d = nn.Linear(2, self.kps_dim)  # in case using 2d keypoint inputs
+        self.to_res_embeds = nn.Sequential(
+            PositionalEncoding(self.dim),
+            nn.Linear(self.dim, self.dim * 2),
+            Swish(),
+            nn.Linear(self.dim * 2, self.dim),
+        )
+
+        self.to_kps_embeds_3d = nn.Sequential(  # in case using current preds from the regressor
+            PositionalEncoding(self.kps_dim),
+            nn.Linear(self.kps_dim, self.kps_dim * 2),
+            Swish(),
+            nn.Linear(self.kps_dim * 2, self.kps_dim),
+        )
+
+        self.to_kps_embeds_2d = nn.Sequential(  # in case using 2d keypoint inputs
+            PositionalEncoding(self.kps_dim),
+            nn.Linear(self.kps_dim, self.kps_dim * 2),
+            Swish(),
+            nn.Linear(self.kps_dim * 2, self.kps_dim),
+        )
+
         self.to_condition_embeds = nn.Linear(self.st_dim, self.dim) if not self.st_dim == self.dim else nn.Identity()
 
         self.learned_query = nn.Embedding(self.num_keypoints, self.dim)
