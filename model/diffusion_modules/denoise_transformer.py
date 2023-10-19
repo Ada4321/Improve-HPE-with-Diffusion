@@ -153,9 +153,9 @@ class Attention(nn.Module):
 
         # add null key / value for classifier free guidance in prior net
 
-        nk, nv = map(lambda t: repeat(t, 'd -> b 1 d', b = b), self.null_kv.unbind(dim = -2))
-        k = torch.cat((nk, k), dim = -2)  # k,v -- (b,n+1,d)
-        v = torch.cat((nv, v), dim = -2)
+        # nk, nv = map(lambda t: repeat(t, 'd -> b 1 d', b = b), self.null_kv.unbind(dim = -2))
+        # k = torch.cat((nk, k), dim = -2)  # k,v -- (b,n+1,d)
+        # v = torch.cat((nv, v), dim = -2)
 
         # whether to use cosine sim
 
@@ -241,8 +241,8 @@ class CausalTransformer(nn.Module):
 
         x = self.init_norm(x)
 
-        attn_bias = self.rel_pos_bias(n, n + 1, device = device)
-        #attn_bias = self.rel_pos_bias(n, n, device = device)
+        #attn_bias = self.rel_pos_bias(n, n + 1, device = device)
+        attn_bias = self.rel_pos_bias(n, n, device = device)
 
         for attn, ff in self.layers:  # transformer encoder layers
             x = attn(x, attn_bias = attn_bias) + x  # self-attention layer
@@ -467,8 +467,8 @@ class DenoiseTransformer(nn.Module):
 
         # concat all tokens
         tokens = torch.cat((
-            final_conditions,
             time_embed,
+            final_conditions,
             noisy_res_embed,
             learned_queries
         ), dim = -2)

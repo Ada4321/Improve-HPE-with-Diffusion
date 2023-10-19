@@ -164,7 +164,7 @@ def main_worker(gpu, opt, args):
 
             # end of epoch evaluation
             #if current_epoch % 5 == 0 and current_epoch != 0:
-            if current_epoch % 5 == 0:
+            if current_epoch % 1 == 0:
                 diffusion.set_new_noise_schedule(
                     opt['model']['beta_schedule']['val'], schedule_phase='val')
                 diffusion.validate(val_dataset.kps_left, val_dataset.kps_right, val_dataset.joints_left, val_dataset.joints_right, opt["datasets"]["num_frames"], val_generator, all_actions_val)
@@ -216,9 +216,6 @@ def main_worker(gpu, opt, args):
                 message += '{:s}: {:.4e} '.format(k, v)
             logger.info(message)
             wandb.log(eval_logs)
-            # avp1 = eval_logs["Average_p1"]
-            # avp1_diff = eval_logs["Average_diff_p1"]
-            # a=1
 
 def main(opt, args):
     # launch main_worker
